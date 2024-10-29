@@ -19,7 +19,7 @@ Borgar is employed by [GRID][work] as a data visualization and JavaScript progra
 ## Send your fan letters to
 
 Borgar Þorsteinsson  
-Nökkvavogur 15  
+Austurbrún 25  
 104 Reykjavík  
 Iceland
 
