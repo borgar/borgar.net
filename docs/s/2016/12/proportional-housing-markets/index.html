@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Proportional housing markets &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-12-12">12. December 2016</a>
+</p>
+
+<article id="proportional-housing-markets" lang="en">
+
+  <h1><a href="/s/2016/12/proportional-housing-markets/" rel="bookmark">Proportional housing markets</a></h1>
+
+  <style>
+#phm {
+  font: 12px sans-serif;
+}
+#phm .axis path {
+  shape-rendering: crispEdges;
+}
+#phm .axis path {
+  fill: none;
+}
+#phm .axis line {
+  stroke: #aaa;
+}
+#phm .y.axis line {
+  stroke-dasharray: 2 2;
+}
+#phm .axis .tick text {
+  font: 12px sans-serif;
+}
+#phm .x.axis path {
+  display: none;
+}
+#phm .dot {
+  stroke : white;
+  stroke-width: 1.2px;
+}
+#phm .line {
+  fill: none;
+  stroke: black;
+  stroke-width: 2px;
+}
+#phm .fig rect {
+  fill: white;
+  stroke: #aaa;
+}
+</style>
+
+<div class="viz" id="phm"></div>
+
+<p>There is an <a href="https://xkcd.com/1138/">XKCD joke about maps</a> that makes the point that if you present data about the activity of humans without adjusting it for population, the map simply shows where people live.</p>
+
+<p>The National registry of Iceland publishes market data on the urban housing market in Iceland. They have charts on their page for the number of sales, but as it uses only the raw numbers, those charts too really only show where people live. Visible in inset chart A., the answer is: In <a href="http://reykjavik.is/">Reykjavík</a>.</p>
+
+<p>Stories in data often only emerge after the data has been normalised to an index, or adjusted to per-capita, or for inflation. Thankfully the National registry also publishes the data shown in inset chart B., the number of residencies per municipality.</p>
+
+<p>Combine these to end up with the large chart, the number of sales contracts for each municipality as a proportion of the size of the market. The percentages may be slightly off, but what emerges are at least two stories:</p>
+
+<ul>
+  <li><p>A significantly higher portion of the real-estates in <a href="http://www.hafnarfjordur.is/">Hafnarfjörður</a> changes hands every year than in the capital. But why?</p></li>
+  <li><p>The difference in Reykjavík and Seltjarnarnes has vanished post-financial crash. Is Reykjavík still to pick up steam or has Seltjarnarnes become a hotter market? Who knows.</p></li>
+</ul>
+
+<p>What we do know is that without the adjustment, we were not able to see far enough to even ask these questions.</p>
+
+<script type="text/x-data" id="phm-data" src="/s/2016/12/proportional-housing-markets/data.json"></script>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+var margin = {top: 25, right: 110, bottom: 30, left: 65},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x = d3.time.scale()
+    .range([5, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .tickSize(-width)
+    .tickFormat(d3.format(",.0%"))
+    .orient("left");
+
+var line = d3.svg.line()
+    .x(d => x(d.date))
+    .y(d => y(d.value));
+
+var svg = d3.select("#phm").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate("+[margin.left, margin.top]+")");
+
+function byDate ( a, b ) {
+  return d3.ascending( a.date * 1, b.date * 1 );
+}
+
+d3.json(d3.select('#phm-data').attr('src'), (err, data) => {
+  if (err) throw err;
+
+  data
+    .forEach(d => {
+      d.date = new Date(Date.parse(d.date))
+      d.value = d.sales / d.houses;
+    });
+  data.sort(byDate);
+
+  var pal = {
+    Reykjavík: '#5DA5DA',
+    Hafnarfjörður: '#FAA43A',
+    Seltjarnarnes: '#60BD68',
+  };
+
+  var timeseries = d3.nest()
+    .key(d => d.municipality)
+    .entries(data)
+    .filter(d => d.key in pal)
+    .map(d => {
+      return {
+        title: d.key,
+        color: pal[d.key] || 'black',
+        values: d.values
+          //.filter(d => d.date.getUTCFullYear() > 2007)
+          .sort(byDate),
+      };
+    });
+
+  x.domain(d3.extent(timeseries[0].values, d => d.date));
+  y.domain([
+    d3.min(timeseries, c => d3.min(c.values, v => v.value)),
+    d3.max(timeseries, c => d3.max(c.values, v => v.value))
+  ]).nice();
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", `translate(0,${height})`)
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .selectAll('.tick text')
+        .attr('x', -8)
+
+  svg.append("text")
+      .attr("transform", `translate(-50,${height / 2}) rotate(-90)`)
+      .attr("dy", ".71em")
+      .style("text-anchor", "middle")
+      .text("Hlutfall þinglýstra kaupsamninga af fjölda íbúða.");
+
+  var series = svg.selectAll(".series")
+      .data(timeseries)
+    .enter().append("g")
+      .attr("class", "series");
+
+  series.append("path")
+      .attr("class", "line")
+      .attr("d", d => line(d.values))
+      .style("stroke", d => d.color);
+
+  series.append('g')
+    .style("fill", d => d.color)
+    .selectAll(".dot")
+      .data(p => p.values).enter()
+    .append('path')
+      .attr("class", "dot")
+      .attr("transform", d => "translate("+[x(d.date), y(d.value)]+")")
+      .attr("d", d3.svg.symbol().size(32));
+
+  series.append("text")
+      .attr("transform", d => {
+        var last = d.values[d.values.length - 1]
+        return "translate("+[x(last.date), y(last.value)]+")"
+      })
+      .style('font', '12px sans-serif')
+      .attr("x", 10)
+      .attr("dy", ".35em")
+      .text(d => d.title);
+
+  function plot_mini ( title, pos, size, fn ) {
+    var _x = d3.time.scale()
+        .range([2, size[0] - 2])
+        .domain(x.domain());
+
+    var _y = d3.scale.linear()
+        .range([size[1] - 2, 2])
+        .domain([
+          d3.min(timeseries, c => d3.min(c.values, fn)),
+          d3.max(timeseries, c => d3.max(c.values, fn))
+        ]).nice();
+
+    var line = d3.svg.line()
+        .x(d => _x(d.date))
+        .y(d => _y(fn(d)));
+
+    var fig = svg.append('g')
+        .attr('class', 'fig')
+        .attr('transform', d => 'translate('+pos+')');
+
+    fig.append("text")
+        .attr("transform", `translate(${size[0]/2},${size[1]+5})`)
+        .attr("dy", ".71em")
+        .style("text-anchor", "middle")
+        .text(title);
+
+    fig.append('rect')
+        .attr('width', size[0])
+        .attr('height', size[1]);
+
+    fig.selectAll('path')
+        .data(timeseries).enter()
+      .append('path')
+        .attr('class', 'line')
+        .attr('d', d => line(d.values))
+        .style('stroke', d => d.color);
+  }
+
+  plot_mini( "A. – Þinglýstir kaupsamningar",
+      [420, -6], [200, 120], v => v.sales );
+
+  plot_mini( "B. – Fjöldi íbúða",
+      [660, -6], [200, 120], v => v.houses );
+
+});
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/12/proportional-housing-markets/" rel="bookmark">12. December 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/12/election-turnout-pyramid/" title="Election turnout pyramid">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/12/decreed-salaries/" title="Decreed salaries"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

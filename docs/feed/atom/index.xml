@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title type="text">Borgar.net</title>
+  <link rel="alternate" href="http://borgar.net/" />
+  <link rel="self" href="http://borgar.net/feed/atom/" />
+  <id>http://borgar.net/</id>
+  <updated>2023-02-02T21:21:21.000Z</updated>
+  <category term="consumerism"></category>
+  <category term="dataviz"></category>
+  <category term="elections"></category>
+  <category term="feminism"></category>
+  <category term="game"></category>
+  <category term="politics"></category>
+  <entry>
+    <title>Orðla means Wordle</title>
+    <link href="http://borgar.net/s/2023/02/ordla-means-wordle/" rel="alternate"></link>
+    <updated>2023-02-02T21:21:21.000Z</updated>
+    <id>tag:borgar.net,2023-02-02:/s/2023/02/ordla-means-wordle/</id>
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;/s/2023/02/ordla-means-wordle/ordla-skaup-2.png&quot; alt=&quot;ordla-skaup-1.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;In January 2022 when the &lt;a href=&quot;https://en.wikipedia.org/wiki/Wordle&quot;&gt;Wordle&lt;/a&gt; was the talk of the internet, I adapted the game to Icelandic. A few other …&lt;/p&gt;</summary>
+    <category term="game"></category>
+  </entry>
+  <entry>
+    <title>Barneignir á Íslandi</title>
+    <link href="http://borgar.net/s/2020/01/barneignir-a-islandi/is/" rel="alternate"></link>
+    <updated>2020-01-11T09:39:00.000Z</updated>
+    <id>tag:borgar.net,2020-01-11:/s/2020/01/barneignir-a-islandi/is/</id>
+    <summary type="html">&lt;style&gt;
+.slider {
+  margin-block-end: 1em;
+  margin-block-start: 1em;
+}
+.slider label {
+  font-size: .9em;
+  line-height: 1.6;
+  font-weight: bold;
+  display: block;
+}
+.slider input …&lt;/style&gt;</summary>
+    <category term="dataviz"></category>
+  </entry>
+  <entry>
+    <title>FIFA World Cup Appearances</title>
+    <link href="http://borgar.net/s/2019/03/fifa-world-cup-appearances/" rel="alternate"></link>
+    <updated>2019-03-19T23:11:11.000Z</updated>
+    <id>tag:borgar.net,2019-03-19:/s/2019/03/fifa-world-cup-appearances/</id>
+    <summary type="html">&lt;style&gt;
+#fifa body {
+  background: white;
+}
+#fifa svg {
+  font-family: sans-serif;
+  font-size: 10px;
+}
+#fifa .tie {
+  fill: none;
+  stroke: #999; …&lt;/style&gt;</summary>
+    <category term="dataviz"></category>
+  </entry>
+  <entry>
+    <title>Riddara­kross íslensku fálka­orðunnar</title>
+    <link href="http://borgar.net/s/2019/03/riddarakrossinn/is/" rel="alternate"></link>
+    <updated>2019-03-11T16:51:00.000Z</updated>
+    <id>tag:borgar.net,2019-03-11:/s/2019/03/riddarakrossinn/is/</id>
+    <summary type="html">&lt;p&gt;Í sumar fór allt í háaloft vegna þess að danskur rasisti ávarpaði hið há&amp;shy;æru&amp;shy;verðuga Alþingi Íslendinga. Ég skal strax játa að ég …&lt;/p&gt;</summary>
+    <category term="dataviz"></category>
+    <category term="politics"></category>
+    <category term="feminism"></category>
+  </entry>
+  <entry>
+    <title>Veðráttan, 24. árg 1947. Ágúst, bls. 30.</title>
+    <link href="http://borgar.net/s/2018/12/vedrattan/" rel="alternate"></link>
+    <updated>2018-12-12T10:37:54.000Z</updated>
+    <id>tag:borgar.net,2018-12-12:/s/2018/12/vedrattan/</id>
+    <summary type="html">&lt;style&gt;
+@import url(&apos;https://fonts.googleapis.com/css?family=Noto+Serif&apos;);
+
+#vpage, #vpage text {
+  font-family: &apos;Noto Serif&apos;, serif;
+  -moz-font-feature-settings: &quot;lnum&quot;;
+  -webkit-font-feature-settings: &quot;lnum&quot;;
+  font-feature-settings: &quot;lnum&quot;;
+}
+&lt;/style&gt;
+
+&lt;div class=&quot;viz&quot; id=&quot;vpage&quot;&gt;
+  &lt;svg width=960 height=1420 viewBox=&quot;0 0 1000 1480&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+    &lt;rect width=1000 height=1480 fill=&quot;rgb(230,230,230)&quot; /&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;
+&lt;script src=&quot;/s/2018/12/vedrattan/vedur-1947-aug.json&quot; type=&quot;text/x-data&quot; id=&quot;vpage_data&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;//d3js.org/d3.v5.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/s/2018/12/vedrattan/index.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;I frequent the social …&lt;/p&gt;</summary>
+    <category term="dataviz"></category>
+  </entry>
+  <entry>
+    <title>What&apos;s the deal with airline fares?</title>
+    <link href="http://borgar.net/s/2018/11/airline-fares/" rel="alternate"></link>
+    <updated>2018-11-18T09:44:00.000Z</updated>
+    <id>tag:borgar.net,2018-11-18:/s/2018/11/airline-fares/</id>
+    <summary type="html">&lt;style&gt;
+.example {
+  border: 1px dotted currentColor;
+  border-radius: 3px;
+  padding: 0 1.5em;
+  background: rgba(128,128,128,.2);
+}
+&lt;/style&gt;
+
+&lt;p&gt;For years I&apos;ve been hearing the same …&lt;/p&gt;</summary>
+    <category term="dataviz"></category>
+    <category term="consumerism"></category>
+  </entry>
+  <entry>
+    <title>Lítið eitt um bólusetningar barna</title>
+    <link href="http://borgar.net/s/2018/09/litid-eitt-um-bolusetningar-barna/is/" rel="alternate"></link>
+    <updated>2018-09-29T10:00:00.000Z</updated>
+    <id>tag:borgar.net,2018-09-29:/s/2018/09/litid-eitt-um-bolusetningar-barna/is/</id>
+    <summary type="html">&lt;p&gt;Nú er þeirri hugmynd flaggað í umræðunni á Íslandi að bólusetning við einhverju grunn setti af smitsjúkdómum sé gert að skilyrði …&lt;/p&gt;</summary>
+    <category term="politics"></category>
+  </entry>
+  <entry>
+    <title>Meiri samanburður á frambjóðendum 2018</title>
+    <link href="http://borgar.net/s/2018/06/meiri-samanburdur-a-frambjodendum-2018/is/" rel="alternate"></link>
+    <updated>2018-06-13T16:40:20.000Z</updated>
+    <id>tag:borgar.net,2018-06-13:/s/2018/06/meiri-samanburdur-a-frambjodendum-2018/is/</id>
+    <summary type="html">&lt;style&gt;
+#el2018b {
+  font-family: sans-serif;
+  font-size: 12px;
+  position: relative;
+}
+#el2018b svg {
+  font-family: sans-serif;
+  font-size: 12px;
+}
+#el2018b text {
+  cursor: …&lt;/style&gt;</summary>
+    <category term="dataviz"></category>
+    <category term="elections"></category>
+  </entry>
+  <entry>
+    <title>Samanburður á frambjóðendum 2018</title>
+    <link href="http://borgar.net/s/2018/06/samanburdur-a-frambjodendum-2018/is/" rel="alternate"></link>
+    <updated>2018-06-11T23:11:11.000Z</updated>
+    <id>tag:borgar.net,2018-06-11:/s/2018/06/samanburdur-a-frambjodendum-2018/is/</id>
+    <summary type="html">&lt;style&gt;
+#el2018a {
+  font-family: sans-serif;
+  font-size: 12px;
+  position: relative;
+}
+#el2018a svg {
+  font-family: sans-serif;
+  font-size: 12px;
+}
+#el2018a text {
+  cursor: …&lt;/style&gt;</summary>
+    <category term="dataviz"></category>
+    <category term="elections"></category>
+  </entry>
+  <entry>
+    <title>Dreifing frambjóðenda á pólitíska rófinu</title>
+    <link href="http://borgar.net/s/2017/11/dreifing-a-politiska-rofinu/is/" rel="alternate"></link>
+    <updated>2017-11-22T10:00:00.000Z</updated>
+    <id>tag:borgar.net,2017-11-22:/s/2017/11/dreifing-a-politiska-rofinu/is/</id>
+    <summary type="html">&lt;script src=&quot;//d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/s/2017/11/dreifing-a-politiska-rofinu/is/survey.json&quot; type=&quot;text/x-data&quot; id=&quot;ruv_survey_json&quot;&gt;&lt;/script&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/s/2017/11/dreifing-a-politiska-rofinu/is/style.css&quot;&gt;
+&lt;div class=&quot;viz&quot; id=&quot;dfpr&quot;&gt;
+  &lt;svg width=&quot;960&quot; height=&quot;470&quot;&gt;&lt;/svg&gt;
+  &lt;div id=&quot;controls&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script src=&quot;/s/2017/11/dreifing-a-politiska-rofinu/is/driver.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Reynt er hér að giska á staðsetningu hvers frambjóðanda á &lt;a href=&quot;http://en.wikipedia.org/wiki/Political_compass&quot;&gt;pólitíska rófinu&lt;/a&gt; með því að reikna samtölur byggðar á völdum svörum …&lt;/p&gt;</summary>
+    <category term="dataviz"></category>
+    <category term="elections"></category>
+  </entry>
+</feed>

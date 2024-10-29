@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>William Playfairʼs Price of Wheat &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-04-13">13. April 2016</a>
+</p>
+
+<article id="price-of-wheat" lang="en">
+
+  <h1><a href="/s/2016/04/price-of-wheat/" rel="bookmark">William Playfairʼs Price of Wheat</a></h1>
+
+  <style>
+#wheat svg {
+  font: oblique 10px baskerville;
+  background : #eed;
+}
+.axis {
+  shape-rendering: crispEdges;
+}
+.tick line {
+  stroke : #000;
+  stroke-opacity : .3;
+}
+.minor line {
+  stroke-opacity : .15;
+}
+
+.linetext,
+.title {
+  font-size : 12px;
+}
+.centuries .title {
+  font: bold 11px baskerville;
+}
+
+.heading {
+  font: bold 18px baskerville;
+}
+
+.monarchs rect {
+  stroke : #000;
+  fill : #000;
+}
+.monarchs .empty {
+  fill : none;
+}
+
+.description .inner {
+  fill : #eed;
+}
+
+.frame {
+  fill: none;
+  stroke: black;
+}
+.wages .area {
+  fill: #7ad;
+  fill-opacity: .4;
+}
+.wages .line {
+  fill: none;
+  stroke: black;
+  stroke-width: 1.3;
+}
+.wages .line-em {
+  fill: none;
+  stroke: #f46;
+  stroke-width: 3;
+}
+</style>
+
+<div class="viz" id="wheat"></div>
+
+<p>This is a recreation of a beautiful chart by <a href="http://en.wikipedia.org/wiki/William_Playfair">William Playfair</a> (credited as the inventor of the bar chart) that was published in 1822 in a letter to Parliament. While it is considered a milestone in the development of infographics it has issues which would make it considered a failure today.</p>
+
+<p>It plots the wages of mechanics and the price of wheat of together and is intended to show that “never at any former period was wheat so cheap, in proportion to mechanical labour, as it is at the present time.” Playfair was correct. However, the dominant visual message in the chart is that the price of wheat varies but wages are stable.</p>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="//d3js.org/queue.v1.min.js"></script>
+<script>
+var margin = { top: 45, right: 65, bottom: 40, left: 30 },
+    width = 960 - margin.left - margin.right,
+    height = 515 - margin.top - margin.bottom,
+    x = d3.scale.linear()
+      .domain([ 1565, 1830 ])
+      .range([ 0, width ]),
+    y = d3.scale.linear()
+      .domain([ 100,  0 ])
+      .range([ 0, height ]);
+
+var svg = d3.select( '#wheat' ).append( 'svg' )
+    .attr( 'width', width + margin.left + margin.right )
+    .attr( 'height', height + margin.top + margin.bottom )
+  .append( 'g' )
+    .attr( 'transform', `translate(${margin.left},${margin.top})` );
+
+var gradient = svg.append( 'defs' )
+  .append( 'linearGradient' )
+    .attr( 'id', 'gradient' )
+    .attr( 'x2', '0%' )
+    .attr( 'y2', '100%' )
+    .attr( 'spreadMethod', 'pad' );
+
+gradient.append( 'stop' )
+    .attr( 'offset', '0%' )
+    .attr( 'stop-color', '#444' )
+    .attr( 'stop-opacity', 1 );
+
+gradient.append( 'stop' )
+    .attr( 'offset', '40%' )
+    .attr( 'stop-color', '#444' )
+    .attr( 'stop-opacity', .9 );
+
+gradient.append( 'stop' )
+    .attr( 'offset', '100%' )
+    .attr( 'stop-color', '#444' )
+    .attr( 'stop-opacity', 0 );
+
+
+function parseWheat ( r ) {
+  r.wages = r.wages ? +r.wages : null;
+  r.wheat = +r.wheat;
+  r.year = +r.year;
+  return r;
+}
+
+function parseMonarchs ( r ) {
+  r.start = +r.start;
+  r.end = +r.end;
+  r.commonwealth = ( r.commonwealth === 'true' );
+  return r;
+}
+
+queue()
+    .defer( d3.csv, 'wheat_and_wages.csv', parseWheat )
+    .defer( d3.csv, 'monarchs.csv', parseMonarchs )
+    .await( ready );
+
+function ready ( err, data, monarchs ) {
+
+  // Heading
+  svg.append( 'text' )
+      .attr( 'class', 'heading' )
+      .attr( 'x', x( 1700 ) )
+      .attr( 'y', -15 )
+      .style( 'text-anchor', 'middle' )
+      .text( d => `№1.` );
+
+
+  // Centuries
+  var area = d3.svg.area()
+      .x( x )
+      .y0( d => -Math.sin( ( d % 100 ) / 31.73 ) * 35 )
+      .y1( d => -Math.sin( ( d % 100 ) / 31.73 ) * 28 );
+
+  var centuries = svg.append( 'g' )
+      .attr( 'class', 'centuries' );
+
+  centuries.append( 'path' )
+      .datum( x.ticks( 400 ) )
+      .attr( 'd', area );
+
+  centuries.selectAll( '.title' )
+      .data([ 1575, 1650, 1750, 1820 ]).enter()
+    .append( 'text' )
+      .attr( 'class', 'title' )
+      .attr( 'x', x )
+      .attr( 'y', -5 )
+      .style( 'text-anchor', 'middle' )
+      .text( d => `${Math.floor(d/100)+1}th Century` );
+
+
+  // Frame
+  svg.append( 'rect' )
+      .attr( 'class', 'frame' )
+      .attr( 'width', width )
+      .attr( 'height', height );
+
+
+  // X-axis
+  var x_axis = svg.append( 'g' )
+      .attr( 'class', 'x axis' );
+
+  var xticks = x_axis.selectAll( '.tick' )
+      .data( x.ticks( 40 ) ).enter()
+    .append( 'g' )
+      .attr( 'transform', d => `translate(${x(d)},${height})` )
+      .attr( 'class', d => 'tick ' + ( d % 50 ? 'minor' : '' ) );
+
+  xticks.append( 'line' )
+      .attr( 'y2', -height );
+
+  xticks.append( 'text' )
+      .attr( 'y', 12 )
+      .style( 'text-anchor', (d, i) => !i ? 'end' : 'middle' )
+      .text( (d, i) => {
+        return !( d % 50 && i ) ? d :     // century
+               !( d % 10 ) ? d % 100 : ''; // decade
+      });
+
+  x_axis.selectAll( '.title' )
+      .data([ 1650, 1780 ]).enter()
+    .append( 'text' )
+      .attr( 'class', 'title' )
+      .attr( 'transform', d => `translate(${x(d)},${height+26})` )
+      .style( 'text-anchor', 'middle' )
+      .text( '5 Years each division.' );
+
+
+  // Y-axis
+  var y_axis = svg.append( "g" )
+      .attr( "class", "y axis" );
+
+  var yticks = y_axis.selectAll( '.tick' )
+      .data( y.ticks( 20 ) ).enter()
+    .append( 'g' )
+      .attr( 'transform', d => `translate(0,${y(d)})` )
+      .attr( 'class', d => 'tick ' + ( d % 10 ? 'minor' : '' ) );
+
+  yticks.append( 'line' )
+      .attr( 'x2', width );
+
+  yticks.append( 'text' )
+      .attr( 'x', -4 )
+      .attr( 'dy', '.32em' )
+      .style( 'text-anchor', 'end' )
+      .text( d => !d ? '' : !( d % 5 ) ? d : '' );
+
+  yticks.append( 'text' )
+      .attr( 'x', width + 4 )
+      .attr( 'dy', '.32em' )
+      .style( 'text-anchor', 'start' )
+      .text( d => {
+        if ( d === 100 || d === 5 ) return d + ' Shillings.';
+        return d && !( d % 5 ) ? d : '';
+      });
+
+  y_axis.append( 'text' )
+      .attr( 'class', 'title' )
+      .attr( 'transform', d => `translate(${width+35},${y(50)}) rotate(-90)` )
+      .style( 'text-anchor', 'middle' )
+      .text( "Price of The Quarter of Wheat in Shillings." );
+
+
+  // Description
+  var desctext = [
+    { text: 'Chart,', y: -44,
+      font: 'small-caps bold 20px baskerville' },
+    { text: 'Showing at One View', y: -26,
+      font: 'oblique 16px baskerville' },
+    { text: 'The Price of The Quarter of Wheat,', y: -10 },
+    { text: '& Wages of Labour by the Week,', y: 6 },
+    { text: '–– from ––', y: 17,
+      font: 'oblique 11px baskerville' },
+    { text: 'The Year 1565 to 1821,', y: 30 },
+    { text: '–– by ––', y: 39,
+      font: 'oblique 11px baskerville' },
+    { text: 'William Playfair', y: 52,
+      font: 'normal small-caps 16px baskerville' } ];
+
+  var desc = svg.append( 'g' )
+      .attr( 'class', 'description' )
+      .attr( 'transform', `translate(${x(1653)},${y(73)})` );
+
+  desc.append( 'ellipse' )
+      .attr( 'class', 'outer' )
+      .attr({ 'rx': 66*1.7, 'ry': 66 });
+
+  desc.append( 'ellipse' )
+      .attr( 'class', 'inner' )
+      .attr({ 'rx': 65.7*1.7, 'ry': 64 });
+
+  desc.selectAll( 'text' )
+      .data( desctext ).enter()
+    .append( 'text' )
+      .text( d => d.text )
+      .attr( 'y', d => d.y )
+      .style( 'font', d => d.font || 'oblique 15px baskerville' )
+      .style( 'text-anchor', 'middle' );
+
+
+  // Price of The Quarter of Wheat.
+  var whe_area = d3.svg.area()
+      .x( d => x( d.year ) )
+      .y0( d => y( d.wheat ) )
+      .y1( height )
+      .interpolate( 'step-after' );
+
+  svg.append( 'path' )
+      .datum( data )
+      .attr( 'd', whe_area )
+      .style( 'fill', 'url(#gradient)' );
+
+
+  // Weekly Wages of a Good Mechanic.
+  var mec_area = d3.svg.area()
+      .x( d => x( d.year ) )
+      .y0( d => y( d.wages ) )
+      .y1( height );
+
+  var mec_line = d3.svg.line()
+      .x( d => x( d.year ) )
+      .y( d => y( d.wages ) );
+
+  var data_filt = data.filter( d => d.wages != null );
+
+  var mechanic = svg.append( 'g' )
+      .attr( 'class', 'wages' );
+
+  mechanic.append( 'defs' )
+      .datum( data_filt )
+      .append( 'path' )
+      .attr( 'd', mec_line )
+      .attr( 'id', 'wagesPath' );
+
+  mechanic.append( 'path' )
+      .datum( data_filt )
+      .attr( 'd', mec_area )
+      .attr( 'class', 'area' );
+
+  mechanic.append( 'use' )
+      .attr( 'transform', 'translate(0,-1)' )
+      .attr( 'xlink:href', '#wagesPath' )
+      .attr( 'class', 'line-em' );
+
+  mechanic.append( 'use' )
+      .attr( 'xlink:href', '#wagesPath' )
+      .attr( 'class', 'line' );
+
+  mechanic.selectAll( '.linetext' )
+      .data([ 25, 75 ]).enter()
+    .append( 'text' )
+      .attr( 'class', 'linetext' )
+      .attr( 'transform', 'translate(0,-7)' )
+    .append( 'textPath' )
+      .attr( 'startOffset', d => d + '%' )
+      .attr( 'xlink:href', '#wagesPath' )
+      .text( 'Weekly Wages of a Good Mechanic' );
+
+  // Monarchs.
+  var mons = svg.append( 'g' )
+      .attr( 'class', 'monarchs' )
+      .selectAll( 'g' )
+      .data( monarchs ).enter()
+    .append( 'g' )
+      .attr( 'transform', (d,i) => `translate(${x(d.start)},
+             ${!d.commonwealth && i % 2 ? 15 : 10})` );
+
+  mons.append( 'rect' )
+      .attr( 'height', 5 )
+      .attr( 'width', d => x( d.end ) - x( d.start ) )
+      .attr( 'class', d => d.commonwealth ? 'empty' : '' );
+
+  mons.append( 'text' )
+      .text( d => d.name )
+      .attr( 'x', d => ( x( d.end ) - x( d.start ) ) / 2 )
+      .attr( 'y', 15 )
+      .style( 'text-anchor', 'middle' );
+
+};
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/04/price-of-wheat/" rel="bookmark">13. April 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/04/octopus/" title="Octopus">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/04/slopegraph/" title="Slopegraph"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

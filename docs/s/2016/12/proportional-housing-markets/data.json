@@ -1,0 +1,782 @@
+[
+  {
+    "sales": 3260,
+    "municipality": "Reykjavík",
+    "houses": 51231,
+    "date": "2016"
+  },
+  {
+    "sales": 4037,
+    "municipality": "Reykjavík",
+    "houses": 51231,
+    "date": "2015"
+  },
+  {
+    "sales": 3573,
+    "municipality": "Reykjavík",
+    "houses": 50914,
+    "date": "2014"
+  },
+  {
+    "sales": 3328,
+    "municipality": "Reykjavík",
+    "houses": 50516,
+    "date": "2013"
+  },
+  {
+    "sales": 3072,
+    "municipality": "Reykjavík",
+    "houses": 50287,
+    "date": "2012"
+  },
+  {
+    "sales": 2635,
+    "municipality": "Reykjavík",
+    "houses": 50155,
+    "date": "2011"
+  },
+  {
+    "sales": 1627,
+    "municipality": "Reykjavík",
+    "houses": 50149,
+    "date": "2010"
+  },
+  {
+    "sales": 1039,
+    "municipality": "Reykjavík",
+    "houses": 49721,
+    "date": "2009"
+  },
+  {
+    "sales": 1894,
+    "municipality": "Reykjavík",
+    "houses": 49638,
+    "date": "2008"
+  },
+  {
+    "sales": 5521,
+    "municipality": "Reykjavík",
+    "houses": 49190,
+    "date": "2007"
+  },
+  {
+    "sales": 4444,
+    "municipality": "Reykjavík",
+    "houses": 48523,
+    "date": "2006"
+  },
+  {
+    "sales": 5724,
+    "municipality": "Reykjavík",
+    "houses": 47721,
+    "date": "2005"
+  },
+  {
+    "sales": 6261,
+    "municipality": "Reykjavík",
+    "houses": 47036,
+    "date": "2004"
+  },
+  {
+    "sales": 5500,
+    "municipality": "Reykjavík",
+    "houses": 46131,
+    "date": "2003"
+  },
+  {
+    "sales": 4613,
+    "municipality": "Reykjavík",
+    "houses": 45076,
+    "date": "2002"
+  },
+  {
+    "sales": 3751,
+    "municipality": "Reykjavík",
+    "houses": 44365,
+    "date": "2001"
+  },
+  {
+    "sales": 124,
+    "municipality": "Seltjarnarnes",
+    "houses": 1678,
+    "date": "2016"
+  },
+  {
+    "sales": 121,
+    "municipality": "Seltjarnarnes",
+    "houses": 1678,
+    "date": "2015"
+  },
+  {
+    "sales": 121,
+    "municipality": "Seltjarnarnes",
+    "houses": 1646,
+    "date": "2014"
+  },
+  {
+    "sales": 116,
+    "municipality": "Seltjarnarnes",
+    "houses": 1616,
+    "date": "2013"
+  },
+  {
+    "sales": 89,
+    "municipality": "Seltjarnarnes",
+    "houses": 1615,
+    "date": "2012"
+  },
+  {
+    "sales": 91,
+    "municipality": "Seltjarnarnes",
+    "houses": 1617,
+    "date": "2011"
+  },
+  {
+    "sales": 39,
+    "municipality": "Seltjarnarnes",
+    "houses": 1615,
+    "date": "2010"
+  },
+  {
+    "sales": 22,
+    "municipality": "Seltjarnarnes",
+    "houses": 1615,
+    "date": "2009"
+  },
+  {
+    "sales": 38,
+    "municipality": "Seltjarnarnes",
+    "houses": 1586,
+    "date": "2008"
+  },
+  {
+    "sales": 111,
+    "municipality": "Seltjarnarnes",
+    "houses": 1588,
+    "date": "2007"
+  },
+  {
+    "sales": 103,
+    "municipality": "Seltjarnarnes",
+    "houses": 1589,
+    "date": "2006"
+  },
+  {
+    "sales": 127,
+    "municipality": "Seltjarnarnes",
+    "houses": 1588,
+    "date": "2005"
+  },
+  {
+    "sales": 131,
+    "municipality": "Seltjarnarnes",
+    "houses": 1590,
+    "date": "2004"
+  },
+  {
+    "sales": 106,
+    "municipality": "Seltjarnarnes",
+    "houses": 1588,
+    "date": "2003"
+  },
+  {
+    "sales": 106,
+    "municipality": "Seltjarnarnes",
+    "houses": 1586,
+    "date": "2002"
+  },
+  {
+    "sales": 95,
+    "municipality": "Seltjarnarnes",
+    "houses": 1585,
+    "date": "2001"
+  },
+  {
+    "sales": 331,
+    "municipality": "Mosfellsbær",
+    "houses": 3053,
+    "date": "2016"
+  },
+  {
+    "sales": 345,
+    "municipality": "Mosfellsbær",
+    "houses": 3053,
+    "date": "2015"
+  },
+  {
+    "sales": 254,
+    "municipality": "Mosfellsbær",
+    "houses": 2999,
+    "date": "2014"
+  },
+  {
+    "sales": 206,
+    "municipality": "Mosfellsbær",
+    "houses": 2982,
+    "date": "2013"
+  },
+  {
+    "sales": 181,
+    "municipality": "Mosfellsbær",
+    "houses": 2956,
+    "date": "2012"
+  },
+  {
+    "sales": 179,
+    "municipality": "Mosfellsbær",
+    "houses": 2948,
+    "date": "2011"
+  },
+  {
+    "sales": 115,
+    "municipality": "Mosfellsbær",
+    "houses": 2940,
+    "date": "2010"
+  },
+  {
+    "sales": 113,
+    "municipality": "Mosfellsbær",
+    "houses": 2899,
+    "date": "2009"
+  },
+  {
+    "sales": 180,
+    "municipality": "Mosfellsbær",
+    "houses": 2817,
+    "date": "2008"
+  },
+  {
+    "sales": 477,
+    "municipality": "Mosfellsbær",
+    "houses": 2627,
+    "date": "2007"
+  },
+  {
+    "sales": 285,
+    "municipality": "Mosfellsbær",
+    "houses": 2478,
+    "date": "2006"
+  },
+  {
+    "sales": 440,
+    "municipality": "Mosfellsbær",
+    "houses": 2356,
+    "date": "2005"
+  },
+  {
+    "sales": 329,
+    "municipality": "Mosfellsbær",
+    "houses": 2205,
+    "date": "2004"
+  },
+  {
+    "sales": 286,
+    "municipality": "Mosfellsbær",
+    "houses": 2083,
+    "date": "2003"
+  },
+  {
+    "sales": 247,
+    "municipality": "Mosfellsbær",
+    "houses": 1977,
+    "date": "2002"
+  },
+  {
+    "sales": 206,
+    "municipality": "Mosfellsbær",
+    "houses": 1911,
+    "date": "2001"
+  },
+  {
+    "sales": 1103,
+    "municipality": "Kópavogur",
+    "houses": 12814,
+    "date": "2016"
+  },
+  {
+    "sales": 1285,
+    "municipality": "Kópavogur",
+    "houses": 12814,
+    "date": "2015"
+  },
+  {
+    "sales": 1153,
+    "municipality": "Kópavogur",
+    "houses": 12497,
+    "date": "2014"
+  },
+  {
+    "sales": 949,
+    "municipality": "Kópavogur",
+    "houses": 12221,
+    "date": "2013"
+  },
+  {
+    "sales": 877,
+    "municipality": "Kópavogur",
+    "houses": 11946,
+    "date": "2012"
+  },
+  {
+    "sales": 796,
+    "municipality": "Kópavogur",
+    "houses": 11865,
+    "date": "2011"
+  },
+  {
+    "sales": 510,
+    "municipality": "Kópavogur",
+    "houses": 11682,
+    "date": "2010"
+  },
+  {
+    "sales": 393,
+    "municipality": "Kópavogur",
+    "houses": 11563,
+    "date": "2009"
+  },
+  {
+    "sales": 529,
+    "municipality": "Kópavogur",
+    "houses": 11524,
+    "date": "2008"
+  },
+  {
+    "sales": 1611,
+    "municipality": "Kópavogur",
+    "houses": 11104,
+    "date": "2007"
+  },
+  {
+    "sales": 1170,
+    "municipality": "Kópavogur",
+    "houses": 10538,
+    "date": "2006"
+  },
+  {
+    "sales": 1394,
+    "municipality": "Kópavogur",
+    "houses": 9946,
+    "date": "2005"
+  },
+  {
+    "sales": 1374,
+    "municipality": "Kópavogur",
+    "houses": 9582,
+    "date": "2004"
+  },
+  {
+    "sales": 1196,
+    "municipality": "Kópavogur",
+    "houses": 9249,
+    "date": "2003"
+  },
+  {
+    "sales": 1070,
+    "municipality": "Kópavogur",
+    "houses": 9002,
+    "date": "2002"
+  },
+  {
+    "sales": 785,
+    "municipality": "Kópavogur",
+    "houses": 8770,
+    "date": "2001"
+  },
+  {
+    "sales": 974,
+    "municipality": "Hafnarfjörður",
+    "houses": 9951,
+    "date": "2016"
+  },
+  {
+    "sales": 1003,
+    "municipality": "Hafnarfjörður",
+    "houses": 9951,
+    "date": "2015"
+  },
+  {
+    "sales": 894,
+    "municipality": "Hafnarfjörður",
+    "houses": 9734,
+    "date": "2014"
+  },
+  {
+    "sales": 793,
+    "municipality": "Hafnarfjörður",
+    "houses": 9626,
+    "date": "2013"
+  },
+  {
+    "sales": 735,
+    "municipality": "Hafnarfjörður",
+    "houses": 9571,
+    "date": "2012"
+  },
+  {
+    "sales": 565,
+    "municipality": "Hafnarfjörður",
+    "houses": 9474,
+    "date": "2011"
+  },
+  {
+    "sales": 392,
+    "municipality": "Hafnarfjörður",
+    "houses": 9422,
+    "date": "2010"
+  },
+  {
+    "sales": 263,
+    "municipality": "Hafnarfjörður",
+    "houses": 9342,
+    "date": "2009"
+  },
+  {
+    "sales": 544,
+    "municipality": "Hafnarfjörður",
+    "houses": 9244,
+    "date": "2008"
+  },
+  {
+    "sales": 1467,
+    "municipality": "Hafnarfjörður",
+    "houses": 8644,
+    "date": "2007"
+  },
+  {
+    "sales": 1089,
+    "municipality": "Hafnarfjörður",
+    "houses": 8255,
+    "date": "2006"
+  },
+  {
+    "sales": 1398,
+    "municipality": "Hafnarfjörður",
+    "houses": 7739,
+    "date": "2005"
+  },
+  {
+    "sales": 1420,
+    "municipality": "Hafnarfjörður",
+    "houses": 7396,
+    "date": "2004"
+  },
+  {
+    "sales": 1021,
+    "municipality": "Hafnarfjörður",
+    "houses": 7128,
+    "date": "2003"
+  },
+  {
+    "sales": 906,
+    "municipality": "Hafnarfjörður",
+    "houses": 6847,
+    "date": "2002"
+  },
+  {
+    "sales": 738,
+    "municipality": "Hafnarfjörður",
+    "houses": 6583,
+    "date": "2001"
+  },
+  {
+    "sales": 488,
+    "municipality": "Garðabær",
+    "houses": 5163,
+    "date": "2016"
+  },
+  {
+    "sales": 556,
+    "municipality": "Garðabær",
+    "houses": 5163,
+    "date": "2015"
+  },
+  {
+    "sales": 370,
+    "municipality": "Garðabær",
+    "houses": 5012,
+    "date": "2014"
+  },
+  {
+    "sales": 354,
+    "municipality": "Garðabær",
+    "houses": 4936,
+    "date": "2013"
+  },
+  {
+    "sales": 297,
+    "municipality": "Garðabær",
+    "houses": 4842,
+    "date": "2012"
+  },
+  {
+    "sales": 300,
+    "municipality": "Garðabær",
+    "houses": 4035,
+    "date": "2011"
+  },
+  {
+    "sales": 220,
+    "municipality": "Garðabær",
+    "houses": 4014,
+    "date": "2010"
+  },
+  {
+    "sales": 185,
+    "municipality": "Garðabær",
+    "houses": 3981,
+    "date": "2009"
+  },
+  {
+    "sales": 206,
+    "municipality": "Garðabær",
+    "houses": 3915,
+    "date": "2008"
+  },
+  {
+    "sales": 579,
+    "municipality": "Garðabær",
+    "houses": 3633,
+    "date": "2007"
+  },
+  {
+    "sales": 336,
+    "municipality": "Garðabær",
+    "houses": 3440,
+    "date": "2006"
+  },
+  {
+    "sales": 352,
+    "municipality": "Garðabær",
+    "houses": 3107,
+    "date": "2005"
+  },
+  {
+    "sales": 442,
+    "municipality": "Garðabær",
+    "houses": 3007,
+    "date": "2004"
+  },
+  {
+    "sales": 270,
+    "municipality": "Garðabær",
+    "houses": 2804,
+    "date": "2003"
+  },
+  {
+    "sales": 277,
+    "municipality": "Garðabær",
+    "houses": 2750,
+    "date": "2002"
+  },
+  {
+    "sales": 243,
+    "municipality": "Garðabær",
+    "houses": 2661,
+    "date": "2001"
+  },
+  {
+    "sales": 577,
+    "municipality": "Akureyri",
+    "houses": 7630,
+    "date": "2016"
+  },
+  {
+    "sales": 669,
+    "municipality": "Akureyri",
+    "houses": 7630,
+    "date": "2015"
+  },
+  {
+    "sales": 641,
+    "municipality": "Akureyri",
+    "houses": 7578,
+    "date": "2014"
+  },
+  {
+    "sales": 551,
+    "municipality": "Akureyri",
+    "houses": 7483,
+    "date": "2013"
+  },
+  {
+    "sales": 450,
+    "municipality": "Akureyri",
+    "houses": 7447,
+    "date": "2012"
+  },
+  {
+    "sales": 403,
+    "municipality": "Akureyri",
+    "houses": 7414,
+    "date": "2011"
+  },
+  {
+    "sales": 294,
+    "municipality": "Akureyri",
+    "houses": 7341,
+    "date": "2010"
+  },
+  {
+    "sales": 258,
+    "municipality": "Akureyri",
+    "houses": 7313,
+    "date": "2009"
+  },
+  {
+    "sales": 345,
+    "municipality": "Akureyri",
+    "houses": 7233,
+    "date": "2008"
+  },
+  {
+    "sales": 721,
+    "municipality": "Akureyri",
+    "houses": 7024,
+    "date": "2007"
+  },
+  {
+    "sales": 613,
+    "municipality": "Akureyri",
+    "houses": 6870,
+    "date": "2006"
+  },
+  {
+    "sales": 947,
+    "municipality": "Akureyri",
+    "houses": 6685,
+    "date": "2005"
+  },
+  {
+    "sales": 449,
+    "municipality": "Akureyri",
+    "houses": 6488,
+    "date": "2004"
+  },
+  {
+    "sales": 471,
+    "municipality": "Árborgarsvæðið",
+    "houses": 5168,
+    "date": "2016"
+  },
+  {
+    "sales": 515,
+    "municipality": "Árborgarsvæðið",
+    "houses": 5168,
+    "date": "2015"
+  },
+  {
+    "sales": 383,
+    "municipality": "Árborgarsvæðið",
+    "houses": 5114,
+    "date": "2014"
+  },
+  {
+    "sales": 260,
+    "municipality": "Árborgarsvæðið",
+    "houses": 5061,
+    "date": "2013"
+  },
+  {
+    "sales": 229,
+    "municipality": "Árborgarsvæðið",
+    "houses": 5030,
+    "date": "2012"
+  },
+  {
+    "sales": 195,
+    "municipality": "Árborgarsvæðið",
+    "houses": 5012,
+    "date": "2011"
+  },
+  {
+    "sales": 128,
+    "municipality": "Árborgarsvæðið",
+    "houses": 4981,
+    "date": "2010"
+  },
+  {
+    "sales": 127,
+    "municipality": "Árborgarsvæðið",
+    "houses": 4971,
+    "date": "2009"
+  },
+  {
+    "sales": 330,
+    "municipality": "Árborgarsvæðið",
+    "houses": 4924,
+    "date": "2008"
+  },
+  {
+    "sales": 573,
+    "municipality": "Árborgarsvæðið",
+    "houses": 4733,
+    "date": "2007"
+  },
+  {
+    "sales": 513,
+    "municipality": "Árborgarsvæðið",
+    "houses": 4534,
+    "date": "2006"
+  },
+  {
+    "sales": 757,
+    "municipality": "Árborgarsvæðið",
+    "houses": 4088,
+    "date": "2005"
+  },
+  {
+    "sales": 58,
+    "municipality": "Árborgarsvæðið",
+    "houses": 3790,
+    "date": "2004"
+  },
+  {
+    "sales": 881,
+    "municipality": "Suðurnes",
+    "houses": 9766,
+    "date": "2016"
+  },
+  {
+    "sales": 806,
+    "municipality": "Suðurnes",
+    "houses": 9766,
+    "date": "2015"
+  },
+  {
+    "sales": 590,
+    "municipality": "Suðurnes",
+    "houses": 9758,
+    "date": "2014"
+  },
+  {
+    "sales": 407,
+    "municipality": "Suðurnes",
+    "houses": 9790,
+    "date": "2013"
+  },
+  {
+    "sales": 353,
+    "municipality": "Suðurnes",
+    "houses": 9771,
+    "date": "2012"
+  },
+  {
+    "sales": 217,
+    "municipality": "Suðurnes",
+    "houses": 9764,
+    "date": "2011"
+  },
+  {
+    "sales": 229,
+    "municipality": "Suðurnes",
+    "houses": 9754,
+    "date": "2010"
+  },
+  {
+    "sales": 251,
+    "municipality": "Suðurnes",
+    "houses": 9791,
+    "date": "2009"
+  }
+]

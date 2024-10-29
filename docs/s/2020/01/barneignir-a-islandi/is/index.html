@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Barneignir á Íslandi &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2020-01-11">11. janúar 2020</a>
+</p>
+
+<article id="barneignir-a-islandi" lang="is">
+
+  <h1><a href="/s/2020/01/barneignir-a-islandi/is/" rel="bookmark">Barneignir á Íslandi</a></h1>
+
+  <style>
+.slider {
+  margin-block-end: 1em;
+  margin-block-start: 1em;
+}
+.slider label {
+  font-size: .9em;
+  line-height: 1.6;
+  font-weight: bold;
+  display: block;
+}
+.slider input {
+  width: 260px;
+  accent-color: #bb1803;
+  margin: 4px 0px;
+  vertical-align: middle;
+}
+.slider output {
+  font-size: .9em;
+  vertical-align: middle;
+}
+</style>
+
+<p>Hagstofa Íslands var að birta skemmtilega úttekt á <a href="https://hagstofa.is/utgafur/frettasafn/mannfjoldi/mannanofn-og-afmaelisdagar-1-januar-2019/">tíðni nafna og fæðingar&shy;daga Íslendinga</a>. Ég hef endur&shy;gert hér mynd&shy;rit yfir fæðingar&shy;daga eftir mánuði og degi sem ég fann í greininni:</p>
+
+<div class="viz" id="barneignir_chart1"></div>
+
+<p>Það er hægt að taka þetta aðeins lengra og teikna meðal&shy;tal afmælis&shy;daga eftir mánuðum og þá kemur í ljós ákveðið munstur:</p>
+
+<div id="barneignir_chart2"></div>
+
+<p>En það er vel kunnugt <a href="https://www.visindavefur.is/svar.php?id=5192">hversu langan tíma</a> það tekur að þroska barn í móður&shy;kviði svo það er auðvelt að reikna út hvenær hvenær allir íslendingar voru ca. getnir. Þá fáum við annað, svipað, myndrit...</p>
+
+<h2>Fengitími á Íslandi?</h2>
+
+<p>Hér getum við þá horft á getnaði á Íslandi eftir mánuði og degi, miðað við 268 daga (eða 38 vikna) meðgöngu...</p>
+
+<div class="viz" id="barneignir_chart3"></div>
+
+<p>Og aftur eftir mánuðum:</p>
+
+<div id="barneignir_chart4"></div>
+
+<div class="slider">
+  <label>Lengd meðgöngu í dögum</label>
+  <input
+    id="gestation_slider"
+    type="range"
+    min="0"
+    max="365"
+    value="268"
+    step="1"
+    />
+  <output id="gestation_value">268</output>
+</div>
+
+<p>Lesandi er beðinn um að túlka þessi myndrit með hæfilegum skammti af efa&shy;hyggju. Þótt það geti virst sem svo að "flestir Íslendingar" séu getnir í svartasta vetrar&shy;myrkrinu, þá eru með&shy;göngur ekki allar jafn langar, og margar enda með inn&shy;gripum starfs&shy;fólks fæðingar&shy;deilda (sem kannski skýrir hversu grun&shy;sam&shy;lega fáir fæðast á jóla&shy;dag?).</p>
+
+<p>Þegar mynd&shy;ritin eru ekki gagn&shy;gert að draga fram sveiflurnar þá sést vel að dreifingin er, heilt yfir, mjög jöfn:</p>
+
+<div id="barneignir_chart5"></div>
+
+<hr />
+
+<p><small>
+  Gögnin eru fengin af Hagstofu Íslands, <a href="https://hagstofa.is/utgafur/frettasafn/mannfjoldi/mannanofn-og-afmaelisdagar-1-januar-2019/">Afmælis&shy;dagar 1. janúar 2019</a>, og miðast þau við skráningar í Þjóð&shy;skrá í byrjun árs 2019. Í mörgum mynd&shy;ritum hefur 29. febrúar hefur verið fjar&shy;lægður úr gögnunum til þess að skekkja ekki meðaltöl.
+</small></p>
+
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script type="text/x-data" id="barneignir-data" src="/s/2020/01/barneignir-a-islandi/is/barneignir.csv"></script>
+<script src="/s/2020/01/barneignir-a-islandi/is/barneignir.js"></script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2020/01/barneignir-a-islandi/is/" rel="bookmark">11. janúar 2020</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+  
+<nav id="pager">
+  
+  
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

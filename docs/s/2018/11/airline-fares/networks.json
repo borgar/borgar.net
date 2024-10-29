@@ -1,0 +1,1594 @@
+{
+"tigressAirNetwork": {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          58.2832364,
+          23.5839457
+        ]
+      },
+      "properties": {
+        "name": "Muscat",
+        "code": "MCT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.36,
+          25.25
+        ]
+      },
+      "properties": {
+        "name": "Dubai",
+        "code": "DXB"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          23.93,
+          37.93
+        ]
+      },
+      "properties": {
+        "name": "Athens",
+        "code": "ATH"
+      }
+    },    
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          153.0142739,
+          -27.4704263
+        ]
+      },
+      "properties": {
+        "name": "Brisbane",
+        "code": "BNE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          144.800821,
+          -37.6756902
+        ]
+      },
+      "properties": {
+        "name": "Melbourne",
+        "code": "MEL"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.3996984,
+          -32.0388252
+        ]
+      },
+      "properties": {
+        "name": "Perth",
+        "code": "PER"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          150.6510975,
+          -33.8479255
+        ]
+      },
+      "properties": {
+        "name": "Sydney",
+        "code": "SYD"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          90.2788959,
+          23.7805729
+        ]
+      },
+      "properties": {
+        "name": "Dhaka",
+        "code": "DAC"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          116.6009181,
+          40.0798573
+        ]
+      },
+      "properties": {
+        "name": "Beijing",
+        "code": "PEK"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          102.987853,
+          25.133618
+        ]
+      },
+      "properties": {
+        "name": "Kunming",
+        "code": "KMG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.3057759,
+          23.3959079
+        ]
+      },
+      "properties": {
+        "name": "Guangzhou",
+        "code": "CAN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.6874583,
+          31.1459616
+        ]
+      },
+      "properties": {
+        "name": "Shanghai",
+        "code": "PVG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.9470996,
+          30.567456
+        ]
+      },
+      "properties": {
+        "name": "Chengdu",
+        "code": "CTU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          109.1576981,
+          24.6371911
+        ]
+      },
+      "properties": {
+        "name": "Xiamen",
+        "code": "XMN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          113.9162868,
+          22.308047
+        ]
+      },
+      "properties": {
+        "name": "Hong Kong",
+        "code": "HKG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          97.6592064,
+          29.819564
+        ]
+      },
+      "properties": {
+        "name": "Chongqing",
+        "code": "CKG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          112.0925169,
+          28.2082231
+        ]
+      },
+      "properties": {
+        "name": "Changsha",
+        "code": "CSX"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          121.2530283,
+          25.0735426
+        ]
+      },
+      "properties": {
+        "name": "Taipei",
+        "code": "TPE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.7497561,
+          11.5793304
+        ]
+      },
+      "properties": {
+        "name": "Phnom Penh",
+        "code": "PNH"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          77.4905089,
+          12.9539598
+        ]
+      },
+      "properties": {
+        "name": "Bengaluru",
+        "code": "BLR"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          80.0685811,
+          13.0474876
+        ]
+      },
+      "properties": {
+        "name": "Chennai",
+        "code": "MAA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          76.9509206,
+          28.6923325
+        ]
+      },
+      "properties": {
+        "name": "Delhi",
+        "code": "DEL"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          75.9626199,
+          24.8381353
+        ]
+      },
+      "properties": {
+        "name": "Gaya",
+        "code": "GAY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          78.2676152,
+          17.4122996
+        ]
+      },
+      "properties": {
+        "name": "Hyderabad",
+        "code": "HYD"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          88.0488466,
+          22.6757509
+        ]
+      },
+      "properties": {
+        "name": "Kolkata",
+        "code": "CCU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.7407559,
+          19.0821976
+        ]
+      },
+      "properties": {
+        "name": "Mumbai",
+        "code": "BOM"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          82.9208968,
+          25.320746
+        ]
+      },
+      "properties": {
+        "name": "Varanasi",
+        "code": "VNS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          115.1540608,
+          -8.6726769
+        ]
+      },
+      "properties": {
+        "name": "Denpasar",
+        "code": "DPS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          99.1523232,
+          -3.7346458
+        ]
+      },
+      "properties": {
+        "name": "Jakarta",
+        "code": "CGK"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          130.317038,
+          33.5987302
+        ]
+      },
+      "properties": {
+        "name": "Fukuoka",
+        "code": "FUK"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          134.669531,
+          35.1749289
+        ]
+      },
+      "properties": {
+        "name": "Nagoya",
+        "code": "NGO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          135.4600446,
+          34.678395
+        ]
+      },
+      "properties": {
+        "name": "Osaka",
+        "code": "ITM"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          141.3002884,
+          43.0594285
+        ]
+      },
+      "properties": {
+        "name": "Sapporo",
+        "code": "CTS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          139.5699594,
+          35.6732615
+        ]
+      },
+      "properties": {
+        "name": "Tokyo",
+        "code": "HND"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.0734476,
+          35.1795543
+        ]
+      },
+      "properties": {
+        "name": "Busan",
+        "code": "PUS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.8491217,
+          37.5650168
+        ]
+      },
+      "properties": {
+        "name": "Seoul",
+        "code": "ICN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          102.1280049,
+          19.885636
+        ]
+      },
+      "properties": {
+        "name": "Luang Prabang",
+        "code": "LPQ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          102.5355533,
+          17.960427
+        ]
+      },
+      "properties": {
+        "name": "Vientiane",
+        "code": "VTE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          101.616777,
+          3.1385035
+        ]
+      },
+      "properties": {
+        "name": "Kuala Lumpur",
+        "code": "KUL"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          96.1330678,
+          16.9027736
+        ]
+      },
+      "properties": {
+        "name": "Yangon",
+        "code": "RGN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.2910274,
+          27.7089559
+        ]
+      },
+      "properties": {
+        "name": "Kathmandu",
+        "code": "KTM"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          174.5845937,
+          -36.8626926
+        ]
+      },
+      "properties": {
+        "name": "Auckland",
+        "code": "AKL"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          72.8052306,
+          33.6157988
+        ]
+      },
+      "properties": {
+        "name": "Islamabad",
+        "code": "RWP"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          66.5936112,
+          25.1921413
+        ]
+      },
+      "properties": {
+        "name": "Karachi",
+        "code": "KHI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          74.0705893,
+          31.4826337
+        ]
+      },
+      "properties": {
+        "name": "Lahore",
+        "code": "LHE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          120.9444543,
+          14.5964957
+        ]
+      },
+      "properties": {
+        "name": "Manila",
+        "code": "MNL"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          103.7038191,
+          1.3139961
+        ]
+      },
+      "properties": {
+        "name": "Singapore",
+        "code": "SIN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          79.7859931,
+          6.9218335
+        ]
+      },
+      "properties": {
+        "name": "Colombo",
+        "code": "CMB"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          104.683334,
+          21.219948
+        ]
+      },
+      "properties": {
+        "name": "Hanoi",
+        "code": "HAN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          106.1039036,
+          10.8079235
+        ]
+      },
+      "properties": {
+        "name": "Ho Chi Minh",
+        "code": "SGN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          37.6176,
+          55.7557
+        ]
+      },
+      "properties": {
+        "name": "Moscow",
+        "code": "MOS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          100.3522261,
+          13.7244409
+        ]
+      },
+      "properties": {
+        "name": "Bangkok",
+        "code": "BKK"
+      }
+    }
+  ]
+},
+"simpleAirNetwork": {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          55.36,
+          25.25
+        ]
+      },
+      "properties": {
+        "name": "Dubai",
+        "code": "DXB"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.83,
+          41.416
+        ]
+      },
+      "properties": {
+        "name": "Tirana",
+        "code": "TIA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.55,
+          48.116
+        ]
+      },
+      "properties": {
+        "name": "Vienna",
+        "code": "VIE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.3,
+          43.816
+        ]
+      },
+      "properties": {
+        "name": "Sarajevo",
+        "code": "SJJ"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          33.63,
+          34.86
+        ]
+      },
+      "properties": {
+        "name": "Cyprus-Larnaca",
+        "code": "LCA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          14.26,
+          50.1
+        ]
+      },
+      "properties": {
+        "name": "Prague",
+        "code": "PRG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.7,
+          48.13
+        ]
+      },
+      "properties": {
+        "name": "Munich",
+        "code": "MUC"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.5,
+          52.36
+        ]
+      },
+      "properties": {
+        "name": "Berlin",
+        "code": "SXF"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10,
+          53.63
+        ]
+      },
+      "properties": {
+        "name": "Hamburg",
+        "code": "HAM"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.15,
+          50.86
+        ]
+      },
+      "properties": {
+        "name": "Cologne Bonn",
+        "code": "CGN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.65,
+          55.616
+        ]
+      },
+      "properties": {
+        "name": "Copenhagen",
+        "code": "CPH"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          9.15,
+          55.73
+        ]
+      },
+      "properties": {
+        "name": "Billund",
+        "code": "BLL"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.816,
+          59.416
+        ]
+      },
+      "properties": {
+        "name": "Tallinn",
+        "code": "TLL"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -15.383,
+          27.93
+        ]
+      },
+      "properties": {
+        "name": "Las Palmas",
+        "code": "LPA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.083,
+          41.3
+        ]
+      },
+      "properties": {
+        "name": "Barcelona",
+        "code": "BCN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.816,
+          37.76
+        ]
+      },
+      "properties": {
+        "name": "Alicante",
+        "code": "MJV"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.73,
+          39.55
+        ]
+      },
+      "properties": {
+        "name": "Palma Mallorca",
+        "code": "PMI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          21.76,
+          63.05
+        ]
+      },
+      "properties": {
+        "name": "Vaasa",
+        "code": "VAA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.35,
+          64.93
+        ]
+      },
+      "properties": {
+        "name": "Oulu",
+        "code": "OUL"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.83,
+          66.56
+        ]
+      },
+      "properties": {
+        "name": "Rovaniemi",
+        "code": "RVN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.96,
+          60.316
+        ]
+      },
+      "properties": {
+        "name": "Helsinki",
+        "code": "HEL"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.216,
+          43.6
+        ]
+      },
+      "properties": {
+        "name": "Nice",
+        "code": "NCE"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.383,
+          48.716
+        ]
+      },
+      "properties": {
+        "name": "Paris",
+        "code": "ORY"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.883,
+          54.616
+        ]
+      },
+      "properties": {
+        "name": "Belfast",
+        "code": "BFS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.183,
+          51.15
+        ]
+      },
+      "properties": {
+        "name": "London",
+        "code": "LGW"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -3.36,
+          55.95
+        ]
+      },
+      "properties": {
+        "name": "Edinburgh",
+        "code": "EDI"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.916,
+          39.6
+        ]
+      },
+      "properties": {
+        "name": "Corfu",
+        "code": "CFU"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          23.93,
+          37.93
+        ]
+      },
+      "properties": {
+        "name": "Athens",
+        "code": "ATH"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          16.06,
+          45.75
+        ]
+      },
+      "properties": {
+        "name": "Zagreb",
+        "code": "ZAG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.25,
+          47.45
+        ]
+      },
+      "properties": {
+        "name": "Budapest",
+        "code": "BUD"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.25,
+          53.43
+        ]
+      },
+      "properties": {
+        "name": "Dublin",
+        "code": "DUB"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.883,
+          32.016
+        ]
+      },
+      "properties": {
+        "name": "Tel Aviv",
+        "code": "TLV"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -22.616,
+          63.983
+        ]
+      },
+      "properties": {
+        "name": "",
+        "code": "KEF"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.25,
+          41.816
+        ]
+      },
+      "properties": {
+        "name": "Rome",
+        "code": "FCO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.383,
+          38.16
+        ]
+      },
+      "properties": {
+        "name": "Palermo",
+        "code": "PMO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.716,
+          45.63
+        ]
+      },
+      "properties": {
+        "name": "Milan",
+        "code": "MXP"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          25.283,
+          54.63
+        ]
+      },
+      "properties": {
+        "name": "Vilnius",
+        "code": "VNO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          24.1,
+          56.95
+        ]
+      },
+      "properties": {
+        "name": "Riga",
+        "code": "RIX"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          14.55,
+          35.83
+        ]
+      },
+      "properties": {
+        "name": "Malta",
+        "code": "MLA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.76,
+          52.3
+        ]
+      },
+      "properties": {
+        "name": "Amsterdam",
+        "code": "AMS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.116,
+          62.56
+        ]
+      },
+      "properties": {
+        "name": "Ålesund",
+        "code": "AES"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.216,
+          60.283
+        ]
+      },
+      "properties": {
+        "name": "Bergen",
+        "code": "BGO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          14.36,
+          67.26
+        ]
+      },
+      "properties": {
+        "name": "Bodø",
+        "code": "BOO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.1,
+          58.2
+        ]
+      },
+      "properties": {
+        "name": "Kristiansand",
+        "code": "KRS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          29.9,
+          69.73
+        ]
+      },
+      "properties": {
+        "name": "Kirkenes",
+        "code": "KKN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.93,
+          63.45
+        ]
+      },
+      "properties": {
+        "name": "Trondheim",
+        "code": "TRD"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.916,
+          69.683
+        ]
+      },
+      "properties": {
+        "name": "Tromsø",
+        "code": "TOS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.63,
+          58.883
+        ]
+      },
+      "properties": {
+        "name": "Stavanger",
+        "code": "SVG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.083,
+          60.2
+        ]
+      },
+      "properties": {
+        "name": "Oslo",
+        "code": "OSL"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.96,
+          52.16
+        ]
+      },
+      "properties": {
+        "name": "Warsaw",
+        "code": "WAW"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.46,
+          54.383
+        ]
+      },
+      "properties": {
+        "name": "Gdansk",
+        "code": "GDN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -7.96,
+          37.016
+        ]
+      },
+      "properties": {
+        "name": "Algarve",
+        "code": "FAO"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.316,
+          44.816
+        ]
+      },
+      "properties": {
+        "name": "Belgrade",
+        "code": "BEG"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          22.13,
+          65.55
+        ]
+      },
+      "properties": {
+        "name": "Lulea",
+        "code": "LLA"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.283,
+          57.65
+        ]
+      },
+      "properties": {
+        "name": "Gothenburg",
+        "code": "GOT"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.916,
+          59.65
+        ]
+      },
+      "properties": {
+        "name": "Stockholm",
+        "code": "ARN"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.283,
+          63.8
+        ]
+      },
+      "properties": {
+        "name": "Umea",
+        "code": "UME"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.783,
+          40.63
+        ]
+      },
+      "properties": {
+        "name": "New York",
+        "code": "JFK"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71,
+          42.36
+        ]
+      },
+      "properties": {
+        "name": "Boston",
+        "code": "BOS"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          37.6176,
+          55.7557
+        ]
+      },
+      "properties": {
+        "name": "Moscow",
+        "code": "MOS"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Baku",
+        "code": "GYD"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          49.68,
+          40.547
+        ]
+      }
+    }
+  ]
+}
+}

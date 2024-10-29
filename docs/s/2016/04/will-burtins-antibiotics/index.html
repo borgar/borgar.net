@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Will Burtin’s Antibiotics &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-04-21">21. April 2016</a>
+</p>
+
+<article id="will-burtins-antibiotics" lang="en">
+
+  <h1><a href="/s/2016/04/will-burtins-antibiotics/" rel="bookmark">Will Burtin’s Antibiotics</a></h1>
+
+  <style>
+#burtin {
+  background: rgb(240, 225, 210);
+}
+#burtin svg {
+  font: italic 10.5px serif;
+}
+svg .positive { fill: rgba(174, 174, 184, .8); }
+svg .negative { fill: rgba(230, 130, 110, .8); }
+
+svg .penicillin { fill: rgb(10, 50, 100); }
+svg .streptomycin { fill: rgb(200, 70, 50); }
+svg .neomycin { fill: rgb(0, 0, 0); }
+
+svg .tick circle {
+  fill: none;
+  stroke: #eee;
+  stroke-width: .75;
+}
+svg .tick text {
+  fill: black;
+  font: 10px sans-serif;
+}
+svg .separator {
+  stroke-width : 1.1;
+  stroke: black;
+}
+svg .label {
+  fill: black;
+  font-size: 11px;
+}
+</style>
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script type="text/x-data" id="eruption-data" src="/s/2016/04/will-burtins-antibiotics/bacteria.csv"></script>
+
+<div class="viz" id="burtin"></div>
+
+<p>In the fall of 1951, <a href="http://en.wikipedia.org/wiki/Will_Burtin">Will Burtin</a> published this graph showing the effectiveness of three popular antibiotics on 16 different bacteria, measured in terms of <a href="http://en.wikipedia.org/wiki/Minimum_inhibitory_concentration">minimum inhibitory concentration</a>.</p>
+
+<p>This is a D3 version of <a href="https://bost.ocks.org/mike/">@mbostock</a>’s <a href="http://mbostock.github.io/protovis/ex/antibiotics-burtin.html">orignal Protovis remake</a>. Some minor details have been changed to match the <a href="http://graphics8.nytimes.com/images/2008/06/01/books/heller-1.jpg">original design</a> more closely.</p>
+
+<script>
+// @borgar: The source comments are @mbostock's
+var antibiotics = [ "penicillin", "streptomycin", "neomycin" ];
+
+// Basic dimensions.
+var margin = { top: 0, right: 0, bottom: 50, left: 0 },
+    width  = 700,
+    height = 700,
+    innerRadius = 90,
+    outerRadius = 300 - 10;
+
+function parseRow ( d ) {
+  antibiotics.forEach( a => d[ a ] = +d[ a ] );
+  return d;
+}
+
+d3.csv(d3.select('#eruption-data').attr('src'), parseRow, function ( data ) {
+
+  // Burtin's radius encoding is, as far as I can tell, sqrt(log(mic)).
+  var min = Math.sqrt( Math.log( .001 * 1E4 ) ),
+      max = Math.sqrt( Math.log( 1000 * 1E4 ) ),
+      a = ( outerRadius - innerRadius ) / ( min - max ),
+      b = innerRadius - a * max,
+      radius = function ( mic ) {
+        return a * Math.sqrt( Math.log( mic * 1E4 ) ) + b
+      };
+
+  // The pie is split into equal sections for each bacteria, with a blank
+  // section at the top for the grid labels. Each wedge is further
+  // subdivided to make room for the three antibiotics, equispaced.
+  var bigAngle = Math.PI * 2 / ( data.length + 1 ),
+      smallAngle = bigAngle / 7,
+      bigDeg = 360 / ( data.length + 1 );
+
+
+  // The root panel.
+  var svg = d3.select( '#burtin' ).append( 'svg' )
+      .attr( 'width', width + margin.left + margin.right )
+      .attr( 'height', height + margin.top + margin.bottom )
+    .append( 'g' )
+      .attr( 'transform', `translate(${margin.left+width/2},${margin.top+height/2})` );
+
+
+  var wedge = svg.selectAll( '.bacteria' )
+      .data( data ) // assumes Burtin's order
+      .enter()
+    .append( 'g' )
+      .attr( 'class', 'bacteria' )
+      .attr( 'transform', (d,i) => `rotate(${bigDeg * (i + .5)})` )
+
+
+  // Background wedges to indicate gram staining color.
+  var bgWedge = d3.svg.arc()
+      .innerRadius( innerRadius )
+      .outerRadius( outerRadius )
+      .startAngle( 0 )
+      .endAngle( bigAngle );
+
+  wedge.append( 'path' )
+      .attr( 'class', d => d.gram )
+      .attr( 'd', bgWedge );
+
+
+  // Antibiotics.
+  var abWedge = d3.svg.arc()
+      .innerRadius( innerRadius )
+      .outerRadius( d => radius( d ) )
+      .startAngle( (d,i) => smallAngle * ( i * 2 + 1 ) )
+      .endAngle( (d,i) => smallAngle * ( i * 2 + 2 ) );
+
+  wedge.selectAll( '.antibiotic' )
+      .data( antibiotics ).enter()
+        .append( 'path' )
+        .attr( 'class', d => 'antibiotic ' + d )
+        .attr( 'd', (d,i,p) => abWedge( wedge.data()[ p ][ d ], i ) );
+
+
+  // Circular grid lines.
+  var ticks = svg.append( 'g' )
+      .attr( 'class', 'axis' )
+      .selectAll( '.tick' )
+      .data( d3.range( -3, 4 ) )
+      .enter()
+    .append( 'g' )
+      .attr( 'class', 'tick' );
+
+  ticks.append( 'circle' )
+      .attr( 'r', d => radius( Math.pow( 10, d ) ) );
+
+  ticks.append( 'text' )
+      .style( 'text-anchor', 'middle' )
+      .attr( 'dy', '.32em' )
+      .attr( 'y', d => -radius( Math.pow( 10, d ) ) )
+      .text( d => (d < 3) ? Math.pow( 10, d ).toFixed( (d > 0) ? 0 : -d ) : '' );
+
+
+  // Radial grid lines.
+  svg.selectAll( '.separator' )
+      .data( d3.range( data.length + 1 ) )
+      .enter()
+    .append( 'line' )
+      .attr( 'class', 'separator' )
+      .attr( 'transform', i => `rotate(${180 + bigDeg * (i + .5)})` )
+      .attr( 'y1', innerRadius * 0.84 )
+      .attr( 'y2', outerRadius * 1.1 );
+
+  svg.selectAll( '.label' )
+      .data( data )
+      .enter()
+    .append( 'text' )
+      .attr( 'class', 'label' )
+      .attr( 'transform', (d,i) => `rotate(${((i + 1 > data.length / 2) ? 90 : -90) + bigDeg * (i + 1)})` )
+      .style( 'text-anchor', (d,i) => (i + 1 > data.length / 2) ? 'start' : 'end' )
+      .attr( 'dy', '.32em' )
+      .attr( 'x', (d,i) => ( i + 1 > data.length / 2 ) ? -outerRadius * 1.1 :  outerRadius * 1.1 )
+      .text( d => d.name );
+
+
+  // Antibiotic legend.
+  var ab_legend = svg.append( 'g' )
+      .attr( 'class', 'antibiotic legend' )
+      .selectAll( 'g' )
+      .data( antibiotics )
+      .enter()
+    .append( 'g' )
+      .attr( 'class', String )
+      .attr( 'transform', (d,i) => `translate(-8,${-18 + i * 18})` );
+
+  ab_legend.append( 'text' )
+      .attr( 'class', 'label' )
+      .attr( 'dy', '.32em' )
+      .attr( 'x', 3 )
+      .text( d => d[0].toUpperCase() + d.slice(1) );
+
+  ab_legend.append( 'rect' )
+      .attr( 'x', -40 )
+      .attr( 'y', -4 )
+      .attr( 'width', 36 )
+      .attr( 'height', 8 );
+
+  // Gram-stain legend.
+  var stain_legend = svg.append( 'g' )
+      .attr( 'class', 'gram legend' )
+      .selectAll( 'g' )
+      .data([ 'negative', 'positive' ])
+      .enter()
+    .append( 'g' )
+      .attr( 'class', String )
+      .attr( 'transform', (d,i) => `translate(0,${height/2 + i * 18})` );
+
+  stain_legend.append( 'text' )
+      .attr( 'class', 'label' )
+      .attr( 'dy', '.32em' )
+      .attr( 'x', 3 )
+      .text( d => 'Gram-' + d );
+
+  stain_legend.append( 'circle' )
+      .attr( 'cx', -12 )
+      .attr( 'r', 5 );
+
+});
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/04/will-burtins-antibiotics/" rel="bookmark">21. April 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/10/us-murder-rate/" title="U.S. murder rate from 1960 to 2012">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/04/tooth-eruption/" title="Tooth Eruption"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

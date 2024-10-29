@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Mareyʼs Train Timetable &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-04-10">10. April 2016</a>
+</p>
+
+<article id="mareys-train-timetable" lang="en">
+
+  <h1><a href="/s/2016/04/mareys-train-timetable/" rel="bookmark">Mareyʼs Train Timetable</a></h1>
+
+  <style>
+#trains svg {
+  font: 10px sans-serif;
+}
+.grid rect,
+.grid line {
+  stroke: #ccc;
+  fill: none;
+}
+.grid .min {
+  stroke: #eee;
+  font-family: serif;
+}
+.grid .x text {
+  text-anchor: middle;
+}
+.grid .y text {
+  text-anchor: start;
+}
+.grid .y text.major {
+  text-transform : uppercase;
+}
+.grid .y text.minor {
+  font: italic 1em serif;
+}
+.trains {
+  stroke: #866;
+  fill: none;
+  stroke-width: 1;
+}
+.trains path {
+  stroke-opacity: .5;
+}
+.trains .north {
+  stroke: #c00;
+  stroke-width: 1;
+}
+.trains .major {
+  stroke-opacity: 1;
+  stroke-width: 1.2;
+}
+</style>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<div class="viz" id="trains"></div>
+
+<p>This recreates <a href="http://en.wikipedia.org/wiki/%C3%89tienne-Jules_Marey">E. J. Marey's</a> Paris-Lyon 1880's graphical train schedule using aproximate data.</p>
+
+<p>Stations are separated vertically in proportion to geography; thus, the slope of the line reflects the actual speed of the train: the steeper the line, the faster the train.</p>
+
+<script>
+var margin = { top: 13, right: 15, bottom: 13, left: 77 },
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom,
+    time_domain = [ new Date( 1882, 0, 1, 6, 0 ),
+                    new Date( 1882, 0, 2, 6, 0 ) ],
+    x = d3.time.scale().domain( time_domain ).range([ 0, width ]),
+    timeFmt = function ( d ) {
+      if ( d.getMinutes() ) return '';
+      var h = d.getHours();
+      if ( h === 12 ) { return 'MIDI'; }
+      if ( h === 0  ) { return 'MINUIT'; }
+      return h % 12;
+    };
+
+var svg = d3.select( '#trains' ).append( 'svg' )
+    .attr( 'width', width + margin.left + margin.right )
+    .attr( 'height', height + margin.top + margin.bottom )
+  .append( 'g' )
+    .attr( 'transform', `translate(${margin.left},${margin.top})` );
+
+svg.append( 'defs' )
+  .append( 'clipPath' )
+    .attr( 'id', 'plotclip' )
+  .append( 'rect' )
+    .attr( 'x', 0 )
+    .attr( 'y', 0 )
+    .attr( 'width', width )
+    .attr( 'height', height );
+
+// frame
+var grid = svg.append( 'g' )
+    .attr( 'class', 'grid' );
+
+grid.append( 'rect' )
+    .attr( 'id', 'plot' )
+    .attr( 'width', width )
+    .attr( 'height', height );
+
+// time axis
+var timeTicks = grid.selectAll( '.x' )
+  .data( x.ticks( d3.time.minute, 10 ) ).enter()
+  .append( 'g' )
+    .attr( 'class', 'x' )
+    .attr( 'transform', d => `translate(${x(d)},0)` );
+
+timeTicks.append( 'line' )
+    .attr( 'class', d => d.getMinutes() ? 'min' : 'x' )
+    .attr( 'y2', height );
+
+timeTicks.append( 'text' )
+    .attr( 'y', -3 )
+    .text( timeFmt );
+
+timeTicks.append( 'text' )
+    .attr( 'y', height )
+    .attr( 'dy', '1em' )
+    .text( timeFmt );
+
+d3.json( 'trains.json', function ( train ) {
+  var stations = d3.values( train.station )
+          .sort( (a, b) => a.km - b.km ),
+      y = d3.scale.linear()
+          .domain([ 0, stations[stations.length-1].km ])
+          .range([ 0, height ]);
+
+  // stops
+  var stopTicks = grid.selectAll( '.y' )
+    .data( stations ).enter().append( 'g' )
+      .attr( 'class', 'y' )
+      .attr( 'transform', d => `translate(0,${y(d.km)})` );
+
+  stopTicks.append( 'line' )
+      .attr( 'x2', width );
+
+  stopTicks.append( 'text' )
+      .attr( 'x', 5 - margin.left )
+      .attr( 'dy', '.32em' )
+      .attr( 'class', d => d.major ? 'major' : 'minor' )
+      .text( d => d.title );
+
+  // trains
+  var line = d3.svg.line()
+      .x( d => x( Date.parse( d.date ) ) )
+      .y( d => y( train.station[ d.station ].km ) );
+
+  var tracks = svg.append( 'g' )
+      .attr( 'class', 'trains' )
+      .attr( 'clip-path', 'url(#plotclip)' )
+      .selectAll( 'path' )
+    .data( train.lines ).enter();
+
+  tracks.append( 'path' )
+      .attr( 'd', d => line( d.stops ) )
+      .attr( 'class', d => d.direction + (d.major?' major':''));
+
+  // redrawn to create a circular overlap
+  tracks.append( 'path' )
+      .attr( 'd', d => line( d.stops ) )
+      .attr( 'transform', `translate(${-width},0)` )
+      .attr( 'class', d => d.direction + (d.major?' major':'') );
+});
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/04/mareys-train-timetable/" rel="bookmark">10. April 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/04/slopegraph/" title="Slopegraph">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/04/prs-b1919-21/" title="PRS B1919+21"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

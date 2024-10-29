@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/borgar
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://borgar.net
+  * I am borgar (https://keybase.io/borgar) on keybase.
+  * I have a public key with fingerprint 1964 9E49 702A CC81 3B14  14F0 5A96 CA4A A3F8 E964
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "010110e97b979fae85b1a7daad907a5912e2cf09ef66a880c8a8b05eabd56628ddae0a",
+            "fingerprint": "19649e49702acc813b1414f05a96ca4aa3f8e964",
+            "host": "keybase.io",
+            "key_id": "5a96ca4aa3f8e964",
+            "kid": "010110e97b979fae85b1a7daad907a5912e2cf09ef66a880c8a8b05eabd56628ddae0a",
+            "uid": "ea7003814a7aa111bca0cc28f4ee9100",
+            "username": "borgar"
+        },
+        "service": {
+            "hostname": "borgar.net",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1443611459,
+    "expire_in": 157680000,
+    "prev": "0076b2e4d00cc51b5e6e09df45db6e72f70558d97c4d41db057c6ddb4d0c7f9a",
+    "seqno": 5,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.47
+Comment: https://keybase.io/crypto
+
+yMIgAnicrVJbSBVBGD5HTVGRJKTUDGPRhDKZOe71IJlFllDWS1IhnGZ3ZnW97K57
+9ljekMgo6QbdKCTrIRR601C7YKVpKFJUEip5K8ysnjKr44PRrNRD0GPzMsw33/fN
+Nx9/X0yoK8rd3vim4SMwJ91DPRcCroLoJ9trGNnAVYy3hiklyxspw8Rv+0o1zHgZ
+AAGEgEiCLAmSiojIyRAJGCEsAQFxEvQQj6ICiag8j0QRKCISZcARJGOO5z0ixogA
+xKQzqqYXEcu0NN2mtlDiWYmwkgA8SFFEmClDFrIq4JDEK4hFKFMVCeVQYbHhdxQ0
+nIz8JEMzKEYPvuV4/+D/59yBZTuCBAAyRcgiASEIoawgoCgeUWUJkSAADtFPLB2V
+E8qWDasIWUxdOkOxSk0hTq3OP/66z9CJTXWmZdiGYpRRvNi2Ta8js6tMh3eEyL7f
+Dj5Z0zGtkAoqieXXDJ3xQspUbM2xhCybyUPIclI6Q46amkV8msPgBF4EdDnPkEqn
+FyDwsoewGND8HJQ5whMgYZXlsMwTwaMKgONELAkKi1mIaSWCwmMsU4EiqJLTiJ9U
+6Abj5WhMVEQt/VqRjuyARZi63seFYS53lCt8RYgzWq6oyNg/A2eGRSwld2pxh06f
+PXmjI7kqu4O5szC3cJzPHp5edz8uIRAaOxO76UXsvcK3zbVK7sB4/+aUhLbraHL0
+aUJxeF/73m0/XpVEfpkIq7cPMWkHp6I+zF6e3jGUdK7+cHVEy4Hmsb4mc/TqdNLW
+tMY94WN1WdlMSXx+67GDI1usteUpj1IGEjPeV+/U8d3b3eibPhNcODFV0v9sX8TK
+l+Nn9l/NTVy9a7gv+Xznu4TUS11dV7LM9SXBn20hpfXNr9s2ng52p857wmrnl3rz
+cr5uGEwK5EtW7uzzCfe1B6cWL2537yy4+X1V6+7Pc10tPdGfRhYrBoNpDTF5axrj
+F5p64y7mPAzGXEu8lf8LupFDOQ==
+=i6mZ
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/borgar
+
+==================================================================

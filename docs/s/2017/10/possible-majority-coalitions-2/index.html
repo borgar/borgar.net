@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Possible majority coalitions &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2017-10-28">28. October 2017</a>
+</p>
+
+<article id="possible-majority-coalitions-2" lang="en">
+
+  <h1><a href="/s/2017/10/possible-majority-coalitions-2/" rel="bookmark">Possible majority coalitions</a></h1>
+
+  <style>
+#pmc2017 svg {
+  font: 11px sans-serif;
+}
+#pmc2017 .header {
+  text-anchor: start;
+  font: bold 16px sans-serif;
+}
+#pmc2017 .legend {
+  text-anchor: start;
+  font: 13px sans-serif;
+}
+#pmc2017 .legend-r {
+  text-anchor: end;
+  font: 13px sans-serif;
+}
+#pmc2017 rect.seat {
+  stroke-width: .5;
+}
+#pmc2017 line {
+  shape-rendering: crispEdges;
+}
+</style>
+
+<div class="viz" id="pmc2017"></div>
+
+<p>This is a remix of <a href="/s/2016/10/possible-majority-coalitions/">the same chart</a> for last year's elections.</p>
+
+<p>7 or more parties will in all likelyhood get parlimentary seats in Iceland's 2017 parlimentary elections, so it is quite challenging to understand what majority posibilities exist post-election.</p>
+
+<p>What this attempts to do is show what majority coalitions are possible using <a href="http://kosningaspa.is/">latest poll data</a>, ruling out coalitions which been rejected by the parties themselves or are obviously not going to happen. What remains indicates that forming a viable majority will be challenging.</p>
+
+<p>In order to determine seats per-party a predictive model is used. National percentages, provided by <a href="http://kosningaspa.is/">kosningaspa.is</a>, are distributed among constituencies using <a href="/s/2017/10/constituency-bias/">known historical biases</a>. The resulting outcome is then run through a full implementation of the Icelandic election system.</p>
+
+<p>The chart will continually update until the elections on the 28th of october, 2017.</p>
+
+<script src="/s/2017/10/possible-majority-coalitions-2/bias.json" type="text/x-data" id="bias_json"></script>
+<script src="/s/2017/10/possible-majority-coalitions-2/althingi2017.csv" type="text/x-data" id="althingi2017_csv"></script>
+
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="/s/2017/10/possible-majority-coalitions-2/election-system.js"></script>
+<script src="/s/2017/10/possible-majority-coalitions-2/force-allotment.js"></script>
+<script src="/s/2017/10/possible-majority-coalitions-2/util.js"></script>
+<script>
+function toSeats ( lineup ) {
+  var _lineup = [];
+  lineup.forEach(d => {
+    for (var i=0; i<parties[d].seats; i++) {
+      _lineup.push({ id: d, index: _lineup.length });
+    }
+  });
+  while (_lineup.length < total_mps) {
+    _lineup.push({ id: '?', index: _lineup.length });
+  }
+  return _lineup;
+}
+
+var margin = { top: 1, right: 3, bottom: 1, left: 3 },
+    width = 960 - margin.left - margin.right,
+    height = 1500 - margin.top - margin.bottom,
+    cx = width / 2;
+
+var total_mps = 63;
+var half_mps = total_mps / 2;
+
+var parties = {
+  'A': { id: 'A', label: 'Björt framtíð', color: '#a151e9' },
+  'B': { id: 'B', label: 'Framsókn', color: '#b8d887' },
+  'C': { id: 'C', label: 'Viðreisn', color: '#62b8e7' },
+  'D': { id: 'D', label: 'Sjálfstæðisfl.', color: '#517cb6' },
+  'P': { id: 'P', label: 'Píratar', color: '#7f7f7f' },
+  'S': { id: 'S', label: 'Samfylkingin', color: '#cf5163' },
+  'V': { id: 'V', label: 'Vinstri græn', color: '#7ca772' },
+  'F': { id: 'F', label: 'Flokkur fólksins', color: '#FF6FCF' },
+  'T': { id: 'T', label: 'Dögun', color: '#222222' },
+  'M': { id: 'M', label: 'Miðflokkurinn', color: '#256676' },
+  '?': { id: '?', label: 'Aðrir', percent: 0 }
+};
+
+var common_coalitions = [
+  ['D','A','C'],     // núverandi stjórn
+  ['B','D'],         // the all time classic stjórn
+  ['D','C','B','M'], // hægri stórn
+];
+
+var root = d3.select( '#pmc2017' ).append( 'svg' )
+    .attr( 'width', width + margin.left + margin.right )
+    .attr( 'height', height + margin.top + margin.bottom );
+var svg = root.append( 'g' )
+    .attr( 'transform', `translate(${margin.left},${margin.top})` );
+
+svg.append('defs')
+  .append('pattern')
+    .attr('id', 'stripes')
+    .attr('patternUnits', 'userSpaceOnUse')
+    .attr('width', 4)
+    .attr('height', 4)
+    .append('path')
+      .attr('d', "M0,4 l4,-4 M-1,1 l2,-2 M3,5 l2,-2")
+      .attr('stroke-width', 1)
+      .attr('shape-rendering', 'auto')
+      .attr('stroke', '#aaa')
+      .attr('stroke-linecap', 'square');
+
+let polldata = null;
+let biasdata = null;
+let seats_by_party = null;
+
+Promise.all([
+  loadJSON(d3.select('#bias_json').attr('src')),
+  loadCSV(d3.select('#althingi2017_csv').attr('src'))
+])
+  .then((arr) => {
+    const [ bias, data ] = arr;
+    const row = data[0];
+    const pt = {};
+    polldata = [];
+    biasdata = bias;
+    Object.keys(parties)
+      .forEach(k => {
+        const p = parties[k];
+        pt[p.label.slice(0, 5).toLowerCase()] = p;
+      });
+    Object.keys(row).forEach(k => {
+      const m = /^\s*(.{5}).*?(?:\(([A-Z])\))?\s*$/.exec(k.toLowerCase());
+      if (m && pt[m[1]]) {
+        pt[m[1]].percent = +row[k]
+        polldata.push(pt[m[1]])
+      }
+    });
+  })
+  .then(() => {
+    // allot "votes" into constituencies
+    const fylgi = polldata.reduce((o, d) => { o[d.id] = d.percent * 0.01; return o; }, {});
+    const votes = allotment(fylgi, undefined, biasdata);
+
+    // run the election system calculations as normal
+    const electionData = elections(votes);
+    // console.log( electionData );
+    polldata.forEach(d => { d.seats = electionData.seats_by_party[d.id] || 0; });
+
+    return votes;
+  })
+  .then(() => render(polldata))
+
+
+
+function render ( data ) {
+  var sections = [];
+  var pool = d3.comb(polldata.filter(d => d.seats).map(d => d.id))
+    .map(lineup => {
+      // filter out obvious "won't work"s
+      var set = d3.set(lineup);
+      if (// Píratar vinna ekki með D
+          (set.has('P') && set.has('D')) ||
+          // Það er afar ósennilegt að C og V vinni saman
+          (set.has('C') && set.has('V'))
+        ) {
+        return null;
+      }
+      var id = lineup.sort(d3.ascending).join(''),
+          counts = lineup.map(d => parties[d].seats).sort(d3.descending),
+          mps = d3.sum(counts),
+          but_last = d3.sum(counts.slice(0,-1));
+
+      if (but_last > half_mps) { return null; }
+
+      if (mps && mps > half_mps) {
+        lineup = lineup.sort((a,b) => d3.descending(parties[a].percent, parties[b].percent));
+        return {
+          'id': id,
+          'mps': mps,
+          'seats': toSeats(lineup),
+          'lineup': lineup,
+        };
+      }
+    })
+    .filter(Boolean)
+    .sort((a,b) => b.mps - a.mps);
+
+  sections.push({
+    'offset': 0,
+    'title': "Mögulegar meirihlutastjórnir",
+    'combinations': pool,
+  });
+
+  var runners_up = common_coalitions
+    .map(lineup => {
+      var id = lineup.sort(d3.ascending).join('');
+      if (pool.filter( d=> d.id === id).length) {
+        // already exists in pool
+        return null;
+      }
+      lineup = lineup.sort((a,b) => d3.descending(parties[a].percent, parties[b].percent));
+      return {
+        'id': id,
+        'mps': d3.sum(lineup, d => parties[d].seats),
+        'seats': toSeats(lineup),
+        'lineup': lineup,
+      };
+    });
+
+  sections.push({
+    'offset': d3.sum(sections, d => d.combinations.length + 1),
+    'title': 'Pólitískur ómöguleiki',
+    'combinations': runners_up.filter(Boolean),
+  });
+
+  // reconfigure chart height:
+  height = d3.sum(sections, d => 1 + d.combinations.length) * 45;
+  root.attr('height', height + margin.top + margin.bottom);
+
+  svg.append('rect')
+    .attr('width', width)
+    .attr('height', height)
+    .attr('fill', 'white');
+
+  var x = d3.scale.linear()
+      .domain([ 0, total_mps ])
+      .range([ 0, Math.floor(width/total_mps) * total_mps ]);
+
+  var y = d3.scale.ordinal()
+      .domain(pool.map(d => d.id))
+      .rangeBands([ 0, pool.length * 45 ]);
+
+  var sects = svg.selectAll('.section')
+      .data(sections).enter()
+    .append('g')
+      .attr('class', 'section')
+      .attr('transform', d => `translate(0,${(1+d.offset) * 45})`);
+
+  sects.append('text')
+      .attr('class', 'header')
+      .attr('y', -30)
+      .text(d => d.title);
+
+  var stacks = sects.selectAll('.stack')
+      .data(d => d.combinations).enter()
+    .append('g')
+      .attr('class', 'stack')
+      .attr('transform', (d, i) => `translate(0,${i * 45})`);
+
+  stacks.append('text')
+    .attr('class', 'legend')
+    .attr('dy', -5)
+    .text(d => {
+      var t = d.lineup.map(d => parties[d].label).join(', ');
+      return `${d.mps} þingsæti: ${t}.`;
+    });
+
+  stacks.append('text')
+    .attr('class', 'legend-r')
+    .attr('x', x(total_mps))
+    .attr('dy', -5)
+    .text(d => {
+      if (d.mps < half_mps) {
+        return `Vantar ${-Math.floor(d.mps - half_mps)} þingsæti.`;
+      }
+      var seats = (d.mps - half_mps) * 2;
+      if (seats === 1) {
+        return '1 sætis meirihluti.';
+      }
+      return `${seats} sæta meirihluti.`;
+    });
+
+  var bars = stacks.selectAll('.seat')
+      .data(d => d.seats).enter();
+
+  bars.append('rect')
+      .attr('class', 'seat')
+      .attr('x', d => x(d.index))
+      .attr('height', x(1))
+      .attr('width', x(1))
+      .attr('fill', d => parties[d.id].color || 'url(#stripes)')
+      .attr('stroke', 'white');
+
+  bars.append('circle')
+      .attr('class', 'empty-seat')
+      .attr('cy', x(1) / 2)
+      .attr('cx', d => x(d.index) + x(1) / 2)
+      .attr('r', x(1) / 5)
+      .attr('fill', d => {
+        if ( d.index < half_mps && d.id === '?' ) {
+          return 'gray';
+        }
+        if ( d.index > half_mps - 1 && d.id !== '?' ) {
+          return 'white';
+        }
+        return 'none';
+      })
+      .attr('stroke', d => {
+        if ( d.index < half_mps && d.id === '?' ) {
+          return 'white';
+        }
+        if ( d.index > half_mps - 1 && d.id !== '?' ) {
+          return 'gray';
+        }
+        return 'none';
+      });
+
+}
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2017/10/possible-majority-coalitions-2/" rel="bookmark">28. October 2017</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>,</i>
+      <a rel="tag" href="/s/tagged/elections/">elections</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2017/11/constituency-bias/" title="Constituency bias">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/12/election-turnout-pyramid/" title="Election turnout pyramid"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

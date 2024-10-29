@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Forritunargátan &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2005-06-24">24. júní 2005</a>
+</p>
+
+<article id="forritunargatan" lang="is">
+
+  <h1><a href="/s/2005/06/forritunargatan/is/" rel="bookmark">Forritunargátan</a></h1>
+
+  <p>Það var lögð fyrir mig forritunargáta áðan sem er svona:</p>
+<pre><code>if (substr($fjoldi, strlen($fjoldi) - 1, 1) == 1
+    &amp;&amp; substr($fjoldi, strlen($fjoldi) - 2, 1) != 1)
+</code></pre>
+<p><em>Hvað gerir þetta og í hvað er það notað?</em></p>
+<p>Svarið er sennilega ekki augljóst.  Það var það þó fyrir mig vegna þess að ég hef gert þetta áður. Þetta athugar hvort að síðusta stafurinn í tölu sé 1 og hvort að næst síðasti stafurinn sé það ekki.</p>
+<p>Þetta er notað til þess að athuga hvort að orð eru í fleirtölu í íslensku. Töluorð sem enda á 1 stýra eintölu nema ef þau enda á 11, þá krefjast þau fleirtölu.</p>
+<p>Eina vandamálið er að þessi kóði virkar ekki. Hann klikkar ef hann fær töluna 1 inn.</p>
+<p>Vandamálið er undarleg hegðun í PHP sem veldur því að ef byrjunin á streng sem á að klippa úr öðrum lendir fram fyrir byrjun strengsins þá virðist vera talið frá fyrsta staf.</p>
+<pre><code>return substr(&quot;test&quot;, -16, 1) // skilar &quot;t&quot;.
+</code></pre>
+<p>Það er svosem hægt að komast hjá þessu vandamáli með því að skella t.d. bili framan á strenginn áður en hann er metinn, en það er ekki alvöru lausn.</p>
+<p>Mér finnst besta leiðin til þess að gera þetta vera reikniaðferð. Þá er þetta gert svona:</p>
+<pre><code>function is_plural($val) {
+  return (($val-1) % 10) &amp;&amp; (($val-11) % 100);
+}
+</code></pre>
+<p>Verði ykkur að góðu.</p>
+<h3>Uppfært: 22. Maí 2006:</h3>
+<p>Ég lagaði bæði færsluna og einfaldaði kóðann örlítið. Það má einnig skrifa þetta svona:</p>
+<pre><code>function is_plural($val) {
+  return !(($val % 10) == 1) &amp;&amp; (($val % 100) !== 11);
+}
+</code></pre>
+<p>Það verður örlítið lengri kóði í PHP, en í öðrum forritunarmálum gæti þetta verið styttra.</p>
+
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2005/06/forritunargatan/is/" rel="bookmark">24. júní 2005</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/code/">code</a><i>,</i>
+      <a rel="tag" href="/s/tagged/php/">php</a><i>,</i>
+      <a rel="tag" href="/s/tagged/programming/">programming</a><i>,</i>
+      <a rel="tag" href="/s/tagged/snippet/">snippet</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+  
+<nav id="pager">
+  
+  
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

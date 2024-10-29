@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Borgar.net</title>
+    <link>http://borgar.net/</link>
+    <description></description>
+    <lastBuildDate>Thu, 02 Feb 2023 21:21:21 GMT</lastBuildDate>
+    <item>
+      <title>Orðla means Wordle</title>
+      <link>http://borgar.net/s/2023/02/ordla-means-wordle/</link>
+      <description>&lt;p&gt;&lt;img src=&quot;/s/2023/02/ordla-means-wordle/ordla-skaup-2.png&quot; alt=&quot;ordla-skaup-1.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;In January 2022 when the &lt;a href=&quot;https://en.wikipedia.org/wiki/Wordle&quot;&gt;Wordle&lt;/a&gt; was the talk of the internet, I adapted the game to Icelandic. A few other …&lt;/p&gt;</description>
+      <pubDate>Thu, 02 Feb 2023 21:21:21 GMT</pubDate>
+      <category>game</category>
+    </item>
+    <item>
+      <title>Barneignir á Íslandi</title>
+      <link>http://borgar.net/s/2020/01/barneignir-a-islandi/is/</link>
+      <description>&lt;style&gt;
+.slider {
+  margin-block-end: 1em;
+  margin-block-start: 1em;
+}
+.slider label {
+  font-size: .9em;
+  line-height: 1.6;
+  font-weight: bold;
+  display: block;
+}
+.slider input …&lt;/style&gt;</description>
+      <pubDate>Sat, 11 Jan 2020 09:39:00 GMT</pubDate>
+      <category>dataviz</category>
+    </item>
+    <item>
+      <title>FIFA World Cup Appearances</title>
+      <link>http://borgar.net/s/2019/03/fifa-world-cup-appearances/</link>
+      <description>&lt;style&gt;
+#fifa body {
+  background: white;
+}
+#fifa svg {
+  font-family: sans-serif;
+  font-size: 10px;
+}
+#fifa .tie {
+  fill: none;
+  stroke: #999; …&lt;/style&gt;</description>
+      <pubDate>Tue, 19 Mar 2019 23:11:11 GMT</pubDate>
+      <category>dataviz</category>
+    </item>
+    <item>
+      <title>Riddara­kross íslensku fálka­orðunnar</title>
+      <link>http://borgar.net/s/2019/03/riddarakrossinn/is/</link>
+      <description>&lt;p&gt;Í sumar fór allt í háaloft vegna þess að danskur rasisti ávarpaði hið há&amp;shy;æru&amp;shy;verðuga Alþingi Íslendinga. Ég skal strax játa að ég …&lt;/p&gt;</description>
+      <pubDate>Mon, 11 Mar 2019 16:51:00 GMT</pubDate>
+      <category>dataviz</category>
+      <category>politics</category>
+      <category>feminism</category>
+    </item>
+    <item>
+      <title>Veðráttan, 24. árg 1947. Ágúst, bls. 30.</title>
+      <link>http://borgar.net/s/2018/12/vedrattan/</link>
+      <description>&lt;style&gt;
+@import url(&apos;https://fonts.googleapis.com/css?family=Noto+Serif&apos;);
+
+#vpage, #vpage text {
+  font-family: &apos;Noto Serif&apos;, serif;
+  -moz-font-feature-settings: &quot;lnum&quot;;
+  -webkit-font-feature-settings: &quot;lnum&quot;;
+  font-feature-settings: &quot;lnum&quot;;
+}
+&lt;/style&gt;
+
+&lt;div class=&quot;viz&quot; id=&quot;vpage&quot;&gt;
+  &lt;svg width=960 height=1420 viewBox=&quot;0 0 1000 1480&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+    &lt;rect width=1000 height=1480 fill=&quot;rgb(230,230,230)&quot; /&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;
+&lt;script src=&quot;/s/2018/12/vedrattan/vedur-1947-aug.json&quot; type=&quot;text/x-data&quot; id=&quot;vpage_data&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;//d3js.org/d3.v5.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/s/2018/12/vedrattan/index.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;I frequent the social …&lt;/p&gt;</description>
+      <pubDate>Wed, 12 Dec 2018 10:37:54 GMT</pubDate>
+      <category>dataviz</category>
+    </item>
+    <item>
+      <title>What&apos;s the deal with airline fares?</title>
+      <link>http://borgar.net/s/2018/11/airline-fares/</link>
+      <description>&lt;style&gt;
+.example {
+  border: 1px dotted currentColor;
+  border-radius: 3px;
+  padding: 0 1.5em;
+  background: rgba(128,128,128,.2);
+}
+&lt;/style&gt;
+
+&lt;p&gt;For years I&apos;ve been hearing the same …&lt;/p&gt;</description>
+      <pubDate>Sun, 18 Nov 2018 09:44:00 GMT</pubDate>
+      <category>dataviz</category>
+      <category>consumerism</category>
+    </item>
+    <item>
+      <title>Lítið eitt um bólusetningar barna</title>
+      <link>http://borgar.net/s/2018/09/litid-eitt-um-bolusetningar-barna/is/</link>
+      <description>&lt;p&gt;Nú er þeirri hugmynd flaggað í umræðunni á Íslandi að bólusetning við einhverju grunn setti af smitsjúkdómum sé gert að skilyrði …&lt;/p&gt;</description>
+      <pubDate>Sat, 29 Sep 2018 10:00:00 GMT</pubDate>
+      <category>politics</category>
+    </item>
+    <item>
+      <title>Meiri samanburður á frambjóðendum 2018</title>
+      <link>http://borgar.net/s/2018/06/meiri-samanburdur-a-frambjodendum-2018/is/</link>
+      <description>&lt;style&gt;
+#el2018b {
+  font-family: sans-serif;
+  font-size: 12px;
+  position: relative;
+}
+#el2018b svg {
+  font-family: sans-serif;
+  font-size: 12px;
+}
+#el2018b text {
+  cursor: …&lt;/style&gt;</description>
+      <pubDate>Wed, 13 Jun 2018 16:40:20 GMT</pubDate>
+      <category>dataviz</category>
+      <category>elections</category>
+    </item>
+    <item>
+      <title>Samanburður á frambjóðendum 2018</title>
+      <link>http://borgar.net/s/2018/06/samanburdur-a-frambjodendum-2018/is/</link>
+      <description>&lt;style&gt;
+#el2018a {
+  font-family: sans-serif;
+  font-size: 12px;
+  position: relative;
+}
+#el2018a svg {
+  font-family: sans-serif;
+  font-size: 12px;
+}
+#el2018a text {
+  cursor: …&lt;/style&gt;</description>
+      <pubDate>Mon, 11 Jun 2018 23:11:11 GMT</pubDate>
+      <category>dataviz</category>
+      <category>elections</category>
+    </item>
+    <item>
+      <title>Dreifing frambjóðenda á pólitíska rófinu</title>
+      <link>http://borgar.net/s/2017/11/dreifing-a-politiska-rofinu/is/</link>
+      <description>&lt;script src=&quot;//d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/s/2017/11/dreifing-a-politiska-rofinu/is/survey.json&quot; type=&quot;text/x-data&quot; id=&quot;ruv_survey_json&quot;&gt;&lt;/script&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/s/2017/11/dreifing-a-politiska-rofinu/is/style.css&quot;&gt;
+&lt;div class=&quot;viz&quot; id=&quot;dfpr&quot;&gt;
+  &lt;svg width=&quot;960&quot; height=&quot;470&quot;&gt;&lt;/svg&gt;
+  &lt;div id=&quot;controls&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script src=&quot;/s/2017/11/dreifing-a-politiska-rofinu/is/driver.js&quot;&gt;&lt;/script&gt;
+
+&lt;p&gt;Reynt er hér að giska á staðsetningu hvers frambjóðanda á &lt;a href=&quot;http://en.wikipedia.org/wiki/Political_compass&quot;&gt;pólitíska rófinu&lt;/a&gt; með því að reikna samtölur byggðar á völdum svörum …&lt;/p&gt;</description>
+      <pubDate>Wed, 22 Nov 2017 10:00:00 GMT</pubDate>
+      <category>dataviz</category>
+      <category>elections</category>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>FIFA World Cup Appearances &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2019-03-19">19. March 2019</a>
+</p>
+
+<article id="fifa-world-cup-appearances" lang="en">
+
+  <h1><a href="/s/2019/03/fifa-world-cup-appearances/" rel="bookmark">FIFA World Cup Appearances</a></h1>
+
+  <style>
+#fifa body {
+  background: white;
+}
+#fifa svg {
+  font-family: sans-serif;
+  font-size: 10px;
+}
+#fifa .tie {
+  fill: none;
+  stroke: #999;
+}
+#fifa .cell {
+  cursor: pointer;
+}
+#fifa .cell text {
+  fill: #999;
+}
+#fifa .active text {
+  fill: #000;
+}
+#fifa .x text {
+  font-size: 14px;
+}
+#fifa .hint {
+  font-size: 11px;
+  fill: #999;
+}
+#fifa .track {
+  fill: none;
+  stroke-width: 2;
+}
+</style>
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script type="text/x-data" src="/s/2019/03/fifa-world-cup-appearances/fifa.csv" id="fifa_csv"></script>
+<script type="text/x-data" src="/s/2019/03/fifa-world-cup-appearances/teams.json" id="teams_json"></script>
+<div class="viz" id="fifa">
+  <svg width="960" height="560"></svg>
+</div>
+<script src="/s/2019/03/fifa-world-cup-appearances/driver.js"></script>
+
+<p>Anticipating the 2010 FIFA World Cup, <a href="https://en.wikipedia.org/wiki/DataMarket">DataMarket</a> decided the tournament was a great excuse to spend a little time cooking up something fun. Someone suggested going with a World Cup riff on <a href="http://fathom.info/fortune500/">Ben Fry</a>'s <a href="http://vis4.net/labs/fortune500/">Fortune 500</a> visualization. Lacking a better suggestion we ran with it.</p>
+
+<p>The result is a schoolbook example of how a simple thing can scale in complexity incredibly quickly. In hindsight, it should have been immediately obvious that this wasn't going to work. </p>
+
+<p>Ignoring the fact that the visualization doesn't suit the data at all. The data, once we starting really looking at it, was <em>way</em> too complicated:</p>
+
+<ul>
+  <li><p>Countries fragment and even rejoin (in the case of Germany). FIFA has official decisions on what happens where. This fragmentation needed to be shown, however, somehow.</p></li>
+  <li><p>The final order of the teams may have joint seat placing. Because no one really cares about anything other than the first 3-4 places.</p></li>
+  <li><p>We prepared flags for all countries, this takes time for 81 countries (some of which no longer exist). Unless you have a system to do so (we didn't).</p></li>
+  <li><p>At the time, we had not properly solved vector graphics for Internet Explorer. I can't remember what our plan was for that (we ended up with only text highlighting).</p></li>
+</ul>
+
+<p>Things like this can cost you a <em>lot</em> of time to work around. In order to show the history of Yugoslavia, you first need to understand the <a href="https://en.wikipedia.org/wiki/Breakup_of_Yugoslavia">breakup of Yugoslavia</a>. And then you need to annotate the data.</p>
+
+<p>So the short of it is that we simply ran out of the time we had to spend on it. We pushed what we had managed to do live. Despite having had fun working on it, I guess none of us felt super proud of it. At least, it always bothered me that the thing never looked anything like our original vision for it.</p>
+
+<p>So I've finally gone back and finished it. Not great, but at least it looks closer to how we envisioned it. For many of us, what it <em>really</em> ended up being was a harsh lesson in effort estimation.</p>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2019/03/fifa-world-cup-appearances/" rel="bookmark">19. March 2019</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2020/01/barneignir-a-islandi/is/" title="Barneignir á Íslandi">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2019/03/riddarakrossinn/is/" title="Riddara­kross íslensku fálka­orðunnar"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Slopegraph &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-04-11">11. April 2016</a>
+</p>
+
+<article id="slopegraph" lang="en">
+
+  <h1><a href="/s/2016/04/slopegraph/" rel="bookmark">Slopegraph</a></h1>
+
+  <style>
+#slopegraph svg {
+  font: 13px serif;
+}
+#slopegraph .years {
+  font-size: 15px;
+}
+#slopegraph .desc {
+  font-size: 16px;
+}
+#slopegraph .lines path {
+  fill: none;
+  stroke: black;
+  stroke-width: 1.1;
+}
+</style>
+
+<div class="viz" id="slopegraph"><svg></svg></div>
+
+<p>Edward Tufte introduced <a href="http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk">Slopegraphs</a> in his 1983 book <a href="http://www.amazon.com/Visual-Display-Quantitative-Information/dp/0961392142">The Visual Display of Quantitative Information</a>. He describes them as “compar[ing] changes over time for a list of nouns located on an ordinal or interval scale”.</p>
+
+<p>This example recreates Tufte’s original chart. Getting the labeling correct is a little tricky so it makes a perfect example of something that belongs in a <a href="https://github.com/mbostock/d3/wiki/Layouts">layout</a>.</p>
+
+<p><small>Layout source code: <a href="/s/2016/04/slopegraph/d3.slopegraph.js">d3.slopegraph.js</a></small></p>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="/s/2016/04/slopegraph/d3.slopegraph.js"></script>
+<script>
+d3.csv('data.csv', parseRow, ready);
+
+function parseRow (d) {
+  return { 'year': +d.year,
+           'country': d.country,
+           'value': +d.value };
+}
+
+function ready (data) {
+  const margin = { top: 70, right: 0, bottom: 40, left: 0 };
+  const width = 710 - margin.left - margin.right;
+  const height = 940 - margin.top - margin.bottom;
+
+  const y_dom  = d3.extent(data, d => d.value).reverse();
+  const x_dom  = d3.extent(data, d => d.year);
+
+  const y = d3.scale.linear().domain(y_dom).range([ 0, height ]);
+  const x = d3.scale.linear().domain(x_dom).range([ 390, 570 ]);
+
+  const layout = d3.layout.slopegraph()(data)
+    .j('country').y('value').x('year')
+    .textHeight((y_dom[0] - y_dom[1]) / height * 14);
+
+  const textAlign = m => {
+    return (d, i) => i ? 'start' : 'end';
+  };
+  const textMargin = m => {
+    return (d, i) => i ? m * 1 : m * -1;
+  };
+
+  const svg = d3.select('#slopegraph svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
+
+  svg.append('g')
+      .attr('class', 'years')
+      .selectAll('text').data(x_dom).enter()
+    .append('text')
+      .attr('x', x)
+      .attr('dx', (d, i) => i ? 10 : -10)
+      .attr('y', -40)
+      .style('text-anchor', textAlign())
+      .text(String);
+
+  const line = d3.svg.line()
+      .x(d => x(d.year))
+      .y(d => y(d.y));
+
+  const pairs = svg.append('g')
+      .attr('class', 'lines')
+      .selectAll('g')
+      .data(layout.pairs()).enter()
+    .append('g');
+
+  pairs.append('path')
+      .attr('d', line);
+
+  pairs.selectAll('.country')
+      .data(d => d).enter()
+    .append('text')
+      .attr('class', 'country')
+      .attr('x', d => x(d.year))
+      .attr('dx', textMargin(48))
+      .attr('dy', '.32em')
+      .attr('y', d => y(d.y))
+      .style('text-anchor', textAlign())
+      .text(d => d.country);
+
+  pairs.selectAll('.value')
+      .data(d => d).enter()
+    .append('text')
+      .attr('class', 'value')
+      .attr('x', d => x(d.year))
+      .attr('dy', '.32em')
+      .attr('dx', textMargin(10))
+      .attr('y', d => y(d.y))
+      .style('text-anchor', textAlign())
+      .text(d => d.value.toFixed(1));
+
+  svg.append('g')
+      .attr('class', 'desc')
+      .selectAll('text')
+      .data([ 'Current Receipts of Government as a'
+            , 'Percentage of Gross Domestic'
+            , 'Product, 1970 and 1979'
+            ]).enter()
+    .append('text')
+      .attr('y', (d,i) => i * 20)
+      .attr('dy', '-.32em')
+      .attr('x', 13)
+      .text(String);
+}
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/04/slopegraph/" rel="bookmark">11. April 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/04/price-of-wheat/" title="William Playfairʼs Price of Wheat">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/04/mareys-train-timetable/" title="Mareyʼs Train Timetable"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

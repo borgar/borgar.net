@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Polls vs. Elections &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-11-28">28. November 2016</a>
+</p>
+
+<article id="polls-vs-elections" lang="en">
+
+  <h1><a href="/s/2016/11/polls-vs-elections/" rel="bookmark">Polls vs. Elections</a></h1>
+
+  <style>
+#pve {
+  width: 940px;
+  display: inline-block;
+}
+#pve text {
+  font: 12px sans-serif;
+  fill: #555;
+}
+#pve text.title {
+  font-size: 14px;
+}
+#pve .bar {
+  fill: #ddd;
+}
+#pve .poll {
+  stroke: white;
+  stroke-width: .75;
+}
+#pve .err {
+  stroke: none;
+  stroke-width: .75;
+}
+#pve .axis-y line {
+  stroke: #888;
+  stroke-dasharray: 2 2;
+}
+#pve .axis-y .zero {
+  stroke-dasharray: none;
+}
+#pve .axis-y path,
+#pve .axis-x path {
+  display: none;
+}
+#pve:hover .err,
+#pve:hover .have-err {
+  stroke: black;
+}
+</style>
+
+<div class="viz">
+  <div id="pve"></div>
+</div>
+
+<p>It is a fact that nuances of election polling is largely incomprehensible to the general public in Iceland. The media tries its utmost to cause even more confusion by representing all polls as if they were of equal importance, and each swing in party-following from one to the next as if it were significant and not a statistical variation from pollster to pollster.</p>
+
+<p>As long as I remember people have been singing the same song, that the established conservative parties are under-measured in the polls and will somehow get more on election day. Most recent example by <a href="http://www.mbl.is/frettir/kosning/2016/10/22/hefur_ekki_ahyggur_af_thvi_ad_detta_ut/">Karl Garðarsson</a>, an MP for the Progressive party (Framsóknarflokkurinn).</p>
+
+<blockquote>
+  <p>"I think history shows that the polls tend to underestimate support for the Progressive party. Many dutiful supporters of the party don't participate in online surveys or when they are phoned and I am certain that these people and more will add up on election day."</p>
+</blockquote>
+
+<p>This might be dismissed as keeping hopes up were it not for the fact that this is regurgitated by someone every election.</p>
+
+<p>It is obvious to anyone who cares to take a moment for critical thought, that if there were a predictable trend to this effect, the pollsters would adjust for it. And, indeed, they do!</p>
+
+<p>The plots above are of the last poll by pollsters prior to an election against the election outcome. Three things are evident:</p>
+
+<ol>
+  <li><p>Elections have character. Some are evidently harder to predict than others.</p></li>
+  <li><p>Pollster accuracy varies. Some are simply better than others.</p></li>
+  <li><p>If there ever was a skew, it has not been there for two decades. During which time the constituency sizes have been changed and 2 of the 4 major parties have been re-invented. Most differences shown would not account for more than a single MP difference overall.</p></li>
+</ol>
+
+<p>It is worth mentioning that these polls are not predictions. While some pollsters weigh the outcome, they are trying to measure the party following, not to predict the election outcome. Despite this, the better pollsters seem to be doing a pretty accurate job. Even when, as is done here, we disregard the confidence intervals and just go with the reported numbers.</p>
+
+<p>So why do people think they see this happening?</p>
+
+<ol>
+  <li><p>Maybe it was true at some point. Possibly this was something that was true 30 years ago and we keep repeating despite it being out of date?</p></li>
+  <li><p>The Progressive party have a history of making somewhat last minute bold promises to <a href="https://en.wikipedia.org/wiki/Icelandic_parliamentary_election,_2013">ramp up following</a> at the final period before election. For those not paying attention to the last polls this might translate as a leap.</p></li>
+  <li><p>Because of the way supplementary seats work, along with a skew between constituencies, it might be that <a href="/s/2016/10/a-single-constituency/">the Progressive party gains more seats through the constituencies</a> than overall numbers would indicate.</p></li>
+</ol>
+
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script type="text/x-data" id="er_csv" src="/s/2016/11/polls-vs-elections/election-results.csv"></script>
+<script type="text/x-data" id="p_json" src="/s/2016/11/polls-vs-elections/polls.json"></script>
+<script>
+var margin = {top: 40, right: 10, bottom: 20, left: 40},
+    width = 470 - margin.left - margin.right,
+    height = 220 - margin.top - margin.bottom;
+
+var x = d3.scaleBand().rangeRound([0, width]).padding(0.2),
+    y = d3.scaleLinear().rangeRound([height, 0]);
+
+var palette = {
+  'Félagsvísindastofnun': '#F15854',
+  'Gallup': '#5DA5DA',
+  'Stöð 2 / Bylgjan': '#FAA43A',
+  'Fréttablaðið': '#FAA43A',
+  'Fréttablaðið / Stöð 2': '#FAA43A',
+  '365 miðlar': '#FAA43A',
+  'DV': '#60BD68',
+  'PricewaterhouseCoopers': '#DECF3F',
+  'Blaðið': '#B2912F',
+  'MMR': '#B276B2',
+};
+
+// standard error with 95% confidence
+function stderr95 (p, n) {
+  return Math.sqrt(p * (1 - p) / n) * 1.96;
+}
+
+function commonKey (a, b) {
+  for (var k in a) {
+    if (k in b) { return k; }
+  }
+  return null;
+}
+
+var rowParse = d => {
+  d.date = new Date(Date.parse(d.date));
+  d.year = d.date.getUTCFullYear();
+  d.percent = d.percent ? +d.percent : d.percent;
+  return d;
+};
+
+const elresUrl = d3.select('#er_csv').attr('src');
+const pollsUrl = d3.select('#p_json').attr('src');
+
+d3.json(pollsUrl, polls => {
+
+  polls.forEach(d => {
+    var dt = new Date(Date.parse(d.date.published));
+    d.year = dt.getUTCFullYear();
+  });
+
+  d3.csv(elresUrl, rowParse, data => {
+
+    y.domain([0, .5]);
+    x.domain(data.map(d => d.year).sort(d3.ascending));
+
+    plot([ 'Sjálfstæðisflokkurinn' ], data, polls);
+    plot([ 'Framsóknarflokkurinn' ], data, polls);
+    plot([ 'Samfylkingin' ], data, polls);
+    plot([ 'Vinstrihreyfingin – grænt framboð' ], data, polls);
+    // plot(['Íslandshreyfingin', 'Borgarahreyfingin', 'Píratar'], data, polls);
+
+    // draw a legend
+    var svg = d3.select("#pve").append("svg")
+        .attr("width", (width + margin.left + margin.right)*2)
+        .attr("height", 50);
+
+    var legend = svg.selectAll('g')
+          .data([
+            'Félagsvísindastofnun',
+            'Gallup',
+            '365 miðlar',
+            'DV',
+            'PricewaterhouseCoopers',
+            'Blaðið',
+            'MMR'
+          ])
+          .enter().append('g');
+
+    legend.append('text')
+        .text(String)
+        .call(sel => {
+          var offs = 0;
+          sel.each(function ( s ) {
+            d3.select(this.parentNode)
+              .attr('transform', `translate(${margin.left + offs},30)`);
+            offs += this.getComputedTextLength() + 30;
+          });
+        });
+
+    legend.append('circle')
+      .attr("class", "poll")
+      .attr("r", x.bandwidth() / 15)
+      .attr("cx", -x.bandwidth() / 7.5)
+      .attr("cy", -5)
+      .attr("fill", d => palette[d] || 'black');
+
+  });
+});
+
+
+function plot ( parties, data, polls ) {
+  var pset = {};
+  parties.forEach(d => pset[d] = 1);
+
+  var _data = data
+      .filter(d => d.party in pset)
+      .sort((a,b) => a.Year - b.Year);
+
+  var _polls = d3.nest()
+    .key(d => d.year)
+    .entries(polls.filter(d => commonKey(d.parties, pset)));
+
+  var svg = d3.select("#pve").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  // axis
+  svg.append("g")
+      .attr("class", "axis axis-x")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x).tickSize(3));
+  svg.append("g")
+      .attr("class", "axis axis-y")
+      .call(d3.axisLeft(y).tickSize(-width).ticks(5, "%"))
+      .selectAll('line')
+        .attr('class', d => d ? '' : 'zero');
+
+  // title
+  svg.append("text")
+      .attr("class", "title")
+      .attr("x", width/2)
+      .attr("y", -18)
+      .attr("dy", ".32em")
+      .attr("text-anchor", "middle")
+      .text(parties.join('; '));
+
+  // actual percentage of votes
+  svg.selectAll(".bar")
+      .data(_data).enter()
+    .append("rect")
+      .attr("class", "bar")
+      .attr("x", d => x(d.year) )
+      .attr("y", d => y(d.percent) )
+      .attr("width", x.bandwidth())
+      .attr("height", d => height - y(d.percent) );
+
+  // last poll by pollster before election
+  var polls = svg.selectAll(".polls")
+      .data(_data).enter()
+    .append("g")
+      .attr("class", "polls")
+      .attr("transform", d => `translate(${x(d.year)},0)`)
+      .selectAll(".poll").data(p => {
+          return polls.filter(d => {
+              return (commonKey(pset, d.parties) &&
+                      d.year == p.year &&
+                      d.made_by in palette);
+            })
+            .map((d, i, arr) => {
+              var b = x.bandwidth();
+              return {
+                'x': b / 2 + ( i + -( arr.length - 1) / 2 ) * b / 5,
+                'percent': d.parties[commonKey(d.parties, pset)],
+                'poll': d,
+              };
+            });
+        }).enter();
+
+  polls.append('path')
+    .attr("class", "err")
+    .attr("transform", d => `translate(${d.x},${y(d.percent)})`)
+    .attr("stroke", 'black')
+    .attr("d", d => {
+      if ( d.poll.sample_size ) {
+        var pop = d.poll.population,
+            n = 1 - ((pop.undecided_or_refuse || 0) + (pop.wont_or_blank || 0)),
+            ci = stderr95(d.percent, d.poll.sample_size * (d.poll.response_rate || 1) * n);
+        return `M0,-${height - y(ci)} L0,${height - y(ci)}`;
+      }
+    });
+  polls.append('circle')
+      .attr("class", d => (d.poll.sample_size ? "have-err " : "") + "poll")
+      .attr("r", x.bandwidth() / 15)
+      .attr("cx", d => d.x)
+      .attr("cy", d => y(d.percent))
+      .attr("fill", d => palette[d.poll.made_by] || 'black');
+
+}
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/11/polls-vs-elections/" rel="bookmark">28. November 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>,</i>
+      <a rel="tag" href="/s/tagged/elections/">elections</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/12/decreed-salaries/" title="Decreed salaries">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/11/a-single-constituency/" title="A single constituency"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

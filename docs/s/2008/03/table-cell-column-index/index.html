@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>What is the column index of a table cell &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2008-03-27">27. March 2008</a>
+</p>
+
+<article id="table-cell-column-index" lang="en">
+
+  <h1><a href="/s/2008/03/table-cell-column-index/" rel="bookmark">What is the column index of a table cell</a></h1>
+
+  <p>A peculiar but fascinating problem presented itself to me today. It was one of those; &quot;oh yeah, I&#39;d better look at that&quot; kind of problems that you think you&#39;ll solve in a few minutes but eventually grow to take hours.</p>
+<blockquote>
+<p>Given a cell in a HTML table, what is it&#39;s column index?</p>
+</blockquote>
+<p>This seems like it&#39;s simple. You just count the cells preceding it. Fine. Works for 99% of cases. But what if the table looks like this?:</p>
+<table border="1">
+<tbody>
+<tr>
+<td rowspan="4">cell 1</td>
+<td>cell 2</td>
+<td colspan="2">cell 3</td>
+<td rowspan="4">cell 4</td>
+<td rowspan="2">cell 5</td>
+<td id="last">cell 6</td>
+</tr>
+<tr>
+<td>cell 7</td>
+<td rowspan="3">cell 8</td>
+<td rowspan="2" id="">cell 9</td>
+<td>cell 10</td>
+</tr>
+<tr>
+<td rowspan="2">cell 11</td>
+<td>cell 12</td>
+<td rowspan="2">cell 13</td>
+</tr>
+<tr>
+<td><strong>My index?</strong></td>
+<td>cell 15</td>
+</tr>
+</tbody>
+</table>
+
+<p>Suddenly things are very complicated again. The last row really only contains two cells and the browser reports cell indexes 0 and 1 on those, respectively. Not the 3 and 4 I was hoping for.</p>
+<p>My first thought was simply adding up the number of cells preceding this one which had a greater <em>row index</em> + <em>row span</em> than the <em>row index</em> of my subject cell. This doesn&#39;t work because of cells like #4 &amp; #13.</p>
+<p>Eventually I simply ended up with a brute force method that does the job. But is unfortunately neither fast nor elegant. But then, what code of mine is?</p>
+<p>It&#39;s presented here in case anyone else needs to solve the same annoying problem. Or if anyone can suggest a nicer (or preferably a faster) method of doing this.</p>
+<p><a href="/programs/cell-offset/">View demo and code</a>.</p>
+
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2008/03/table-cell-column-index/" rel="bookmark">27. March 2008</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/javascript/">javascript</a><i>,</i>
+      <a rel="tag" href="/s/tagged/programming/">programming</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2008/05/angel-kiss-31/is/" title="Þekkið þið þessar stelpur?">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2008/03/ad-standa-vid-ord-sin/is/" title="Að standa við orð sín"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>
