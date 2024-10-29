@@ -1,0 +1,109 @@
+Title: What's the deal with airline fares?
+Slug: airline-fares
+Date: 2018-10-18 09:44:00
+Lang: en
+Tags: dataviz, consumerism
+
+<style>
+.example {
+  border: 1px dotted currentColor;
+  border-radius: 3px;
+  padding: 0 1.5em;
+  background: rgba(128,128,128,.2);
+}
+</style>
+
+<p>For years I've been hearing the same myth which is that flights shift in price when people search for them. I've encountered some pretty wild things like: If you search with a <i>Mac</i> the prices will go up because you supposedly have money to spend. Most versions conform to the pattern that the act of searching for a flight will raise its price, and that the very act of searching was what drove the price up.</p>
+
+<h4>Do booking engines adapt to specific user searches?</h4>
+
+<p>The short answer is <em>no</em>. I don't believe that they do.</p>
+
+<p>But of course, you are here for the long answer:</p>
+
+<h2 id="part-1-the-gds">Part 1 – The GDS.</h2>
+
+<p>Airlines hook up to centralized systems to allow sales of their tickets by other parties than themselves. This is called a global distribution system (GDS). There are several reasons for this:</p>
+
+<ul>
+  <li>Airlines want <em>travel agents</em> to be able sell their tickets.</li>
+  <li>Airlines want <em>other airlines</em> to be able to sell their tickets.</li>
+  <li>Airlines contract with other airlines to <em>extend their network</em>.</li>
+</ul>
+
+<p>So let's say you live in Helsinki, Finland, and want to travel to Yangon, Burma. We'll pretend that a made up airline, <em>SimpleAir</em> operates out of neighbouring country Norway. SimpleAir has a network that is dense around northen Europe, but does not have many destinations outside of Europe.</p>
+
+<div id="wdaf-map1" class="viz"></div>
+
+<p>Through contracts or alliances, however, the european carriers like <em>SimpleAir</em> can book flights through someone like the made up Thai airline <em>TigressAir</em> which has good coverage around southern Asia, but few destinations in Europe.</p>
+
+<div id="wdaf-map2" class="viz"></div>
+
+<p>So maybe you go to a travel agent in Helsinki. The agent can make a single booking for you on flights from Helsinki to Yangon, the booking will include two flights, with two different carriers. You can check your bag the entire distance and you will have certain rights ensuring your passage on the second leg of your journey which would not be in place if you had bought two single tickets.</p>
+
+<div id="wdaf-map3" class="viz"></div>
+
+<p>All of this is possible through the distribution system. To make this happen all inventory on flight prices and seat availability is kept the GDS. The GDS is run by a separate company (such as <em>Amadeus</em> or <em>Sabre</em>). A result of this is that airlines don't have a quick way of messing around with prices.</p>
+
+<p>Further points:</p>
+
+<ul>
+  <li><p>The GDS are incredibly complicated systems. Simply keeping them running correctly requires amazing effort. Trying to gain a few dollars here and there from altering prices on-the-fly would cost more to add than the money gained by the practice.</p></li>
+  <li><p>The aviation and airline industry is heavily regulated. There are laws for how airlines can price their flights and how they can display them. Violations are subject to fines that would quickly make the practice lose money.</p></li>
+  <li><p>Would you be willing to run a store where you couldn't predict how much people were paying for your wares? Most buisnesses, even those with complex pricing, prefer their income to be deterministic.</p></li>
+</ul>
+
+<h2 id="part-2-booking-engines">Part 2 – Booking engines.</h2>
+
+<p>So despite being illogical, why does the myth persist? Because people keep seeing it confirmed! It usually works like this:</p>
+
+<div class="example">
+  <p>You search for a flight, explore it a bit. Decide not to and close your browser (or maybe it crashed because booking engines are terrible). You then return to the page, perform the same search: <em>Different price!?</em></p>
+</div>
+
+<p>Or maybe:</p>
+
+<div class="example">
+  <p>You search for a flight and find a perfect one. You send a link or info to a friend, they open it up: <em>Different price!?</em></p>
+</div>
+
+<h3 id="what-is-going-on">What is going on here?</h3>
+
+<p>Let's examine how airlines price their seats:</p>
+
+<p>Our airline, <em>SimpleAir</em>, has a tiny airplane. It seats 20 passengers in a single standard cabin class. We begin by segmenting the airplane into price areas, and pricing those.</p>
+
+<div id="wdaf-chart1"></div>
+
+<p>When passengers start to book seats, they are sold in this order. So as demand rises, so does the price. And because we'd rather have <em>some</em> money than nothing, we sell the final seats really cheap to try to maximize what we get out of each flight.</p>
+
+<p>But we also monitor sales and if we feel the airplane is filling up quickly we may raise prices, or lower them if there are no sales. This is carefully done by humans, by hand, at a much slower tempo. Keep in mind that:</p>
+
+<ul>
+  <li><p>We want passengers to feel like our scheduled routes are always available and predictable (so don't randomly fill planes blocking valued frequent travelers).</p></li>
+  <li><p>We want to maximize the money we can get for each flight.</p></li>
+  <li><p>We don't want to give tickets away because that devalues them.</p></li>
+  <li><p>We don't want passengers to feel like flight prices fluxuate wildly (because they would just "try again tomorrow"...).</p></li>
+</ul>
+
+<h4 id="what-is-happening">So what is happening is this:</h4>
+
+<p>Passenger searches for a flight and starts the booking process. We <em>reserve</em> the last <em>A</em> seat so the price will remains the same until booking is completed, or some period of inactivity has passed.</p>
+
+<div id="wdaf-chart2"></div>
+
+<p>Passenger goes away. Passenger comes back and preforms the same search. Only this time, because the last fare in <em>A</em> is still reserved...</p>
+
+<div id="wdaf-chart3"></div>
+
+<p>Boom!💥 They now get a <em>B</em> fare. <em>And they just witnessed the price go up!</em></p>
+
+<p>But doesn't this mean that the opposite can also happen? That when the seat comes back from reservation that someone who has previously found a more expensive seat will re-search and get a cheaper one? <em>Yes!</em> But because of how our brains are wired, that passenger is much less likely to complain about it.</p>
+
+<p>We, passengers, are trying to minimize cost, and when we succeed we'll attribute it to good fortune, when we fail we blame the Airline.</p>
+
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="//unpkg.com/topojson@3"></script>
+<script type="text/x-data" id="worldmap-json" src="worldmap.json"></script>
+<script type="text/x-data" id="networks-json" src="networks.json"></script>
+<script src="airline-fares.js"></script>

@@ -1,0 +1,78 @@
+Title: Meiri samanburður á frambjóðendum 2018
+Slug: meiri-samanburdur-a-frambjodendum-2018
+Date: 2018-05-13 16:40:20
+Lang: is
+Tags: dataviz, elections
+Thumbnail: ./thumbnail.png
+
+<style>
+#el2018b {
+  font-family: sans-serif;
+  font-size: 12px;
+  position: relative;
+}
+#el2018b svg {
+  font-family: sans-serif;
+  font-size: 12px;
+}
+#el2018b text {
+  cursor: default;
+}
+#el2018b .domain {
+  stroke: none;
+}
+#el2018b .tick line {
+  stroke: #aaa;
+  stroke-dasharray: 2 2;
+}
+#el2018b select {
+  width: 160px;
+}
+#el2018b #tip {
+  position: absolute;
+  height: 0;
+}
+#el2018b #info {
+  box-sizing: border-box;
+  width: 250px;
+  position: absolute;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 5px rgba(0,0,0,.2);
+  background: white;
+  padding: 0 1em;
+}
+#info small {
+  display: block;
+}
+#info em {
+  display: block;
+  font-weight: bold;
+  font-style: normal;
+}
+#ctrl {
+  height: 18px;
+}
+</style>
+
+<script src="//d3js.org/d3.v5.min.js"></script>
+<script src="/s/2018/05/samanburdur-a-frambjodendum-2018/is/data.json" type="text/x-data" id="el2018b_data"></script>
+<div class="viz" id="el2018b">
+  <div id="ctrl">
+    <label for="muni">Sveitarfélag</label>
+    <select id="muni"></select>
+    &mdash;
+    <label for="order">Raða eftir</label>
+    <select id="order">
+      <option value="party">Framboði</option>
+      <option value="name">Nafni</option>
+      <option value="agree">Þvermóðsku (hversu sammála öllum öðrum)</option>
+    </select>
+  </div>
+  <svg width="960" height="960"></svg>
+  <div id="tip"><div id="info"></div></div>
+</div>
+<script src="main.js"></script>
+
+<p>Hversu sammála eru frambjóðendur í sveitastjórnarkosningunum 2018? Ef eitthvað er að marka þetta fylkisrit sem byggir á svörum frambjóðenda í <a href="http://www.ruv.is/x18/kosningaprof">Kosningaprófi RÚV</a> þá virðist svarið vera "heilt yfir, ágætlega". Hægt er þó að sjá hvaða frambjóðendur skera sig úr, og hvernig frambjóðendur eru almennt meira sammála meðframbjóðendum en öðrum.</p>
+
+<p>Hér byggir auðvitað á þeirri forsendu að <a href="http://www.ruv.is/x18/kosningaprof">Kosningapróf RÚV</a> hafi náð að kjarna helstu hjartans mál framboða, sem er nánast öruggt að það gerir ekki í einungis 31 spurningu.</p>

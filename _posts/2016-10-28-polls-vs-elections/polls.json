@@ -1,0 +1,774 @@
+[
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.376,
+      "Framsóknarflokkurinn": 0.211,
+      "Alþýðuflokkurinn": 0.106,
+      "Alþýðubandalagið": 0.128,
+      "Kvennalistinn": 0.0509,
+      "Þjóðvaki": 0.113
+    },
+    "date": {
+      "made": "1995-04-02/1995-04-04",
+      "published": "1995-04-07"
+    },
+    "made_by": "Félagsvísindastofnun",
+    "made_for": null,
+    "sample_size": 1500,
+    "respondents": null,
+    "response_rate": 0.718,
+    "population": {
+      "undecided_or_refuse": 0.0559,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.365,
+      "Framsóknarflokkurinn": 0.22,
+      "Alþýðuflokkurinn": 0.115,
+      "Alþýðubandalagið": 0.11,
+      "Kvennalistinn": 0.06,
+      "Þjóðvaki": 0.099,
+      "Aðrir": 0.027
+    },
+    "date": {
+      "made": null,
+      "published": "1995-04-06"
+    },
+    "made_by": "Gallup",
+    "made_for": null,
+    "sample_size": 1880,
+    "respondents": null,
+    "response_rate": 0.7,
+    "population": {
+      "undecided_or_refuse": 0.19,
+      "wont_or_blank": 0.044,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.362,
+      "Framsóknarflokkurinn": 0.196,
+      "Alþýðuflokkurinn": 0.111,
+      "Alþýðubandalagið": 0.153,
+      "Kvennalistinn": 0,
+      "Þjóðvaki": 0.096
+    },
+    "date": {
+      "made": "1995-04-05/1995-04-06",
+      "published": "1995-04-07"
+    },
+    "made_by": "Stöð 2 / Bylgjan",
+    "made_for": null,
+    "sample_size": 1800,
+    "respondents": null,
+    "response_rate": 0.7,
+    "population": {
+      "undecided_or_refuse": 0.25,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Anarkistar á Íslandi": 0.001,
+      "Framsóknarflokkurinn": 0.211,
+      "Frjálslyndi flokkurinn": 0.029,
+      "Húmanistaflokkurinn": 0,
+      "Kristilegi lýðræðisflokkurinn": 0.002,
+      "Samfylkingin": 0.252,
+      "Sjálfstæðisflokkurinn": 0.428,
+      "Vinstrihreyfingin – grænt framboð": 0.077
+    },
+    "date": {
+      "made": "1999-05-06",
+      "published": "1999-05-07"
+    },
+    "made_by": "DV",
+    "made_for": null,
+    "sample_size": 1200,
+    "respondents": null,
+    "response_rate": 0.697,
+    "population": {
+      "undecided_or_refuse": 0.303,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Framsóknarflokkurinn": 0.18,
+      "Frjálslyndi flokkurinn": 0.025,
+      "Húmanistaflokkurinn": 0.003,
+      "Samfylkingin": 0.286,
+      "Sjálfstæðisflokkurinn": 0.419,
+      "Vinstrihreyfingin – grænt framboð": 0.0869
+    },
+    "date": {
+      "made": "1999-05-06",
+      "published": "1999-05-07"
+    },
+    "made_by": "Félagsvísindastofnun",
+    "made_for": "Morgunblaðið",
+    "sample_size": 1200,
+    "respondents": null,
+    "response_rate": 0.73,
+    "population": {
+      "undecided_or_refuse": 0.059,
+      "wont_or_blank": 0.016,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Anarkistar á Íslandi": 0,
+      "Framsóknarflokkurinn": 0.18,
+      "Frjálslyndi flokkurinn": 0.034,
+      "Húmanistaflokkurinn": 0.002,
+      "Kristilegi lýðræðisflokkurinn": 0,
+      "Samfylkingin": 0.273,
+      "Sjálfstæðisflokkurinn": 0.432,
+      "Vinstrihreyfingin – grænt framboð": 0.079
+    },
+    "date": {
+      "made": "1999-05-03/1999-05-04",
+      "published": "1999-05-04"
+    },
+    "made_by": "Gallup",
+    "made_for": null,
+    "sample_size": 1000,
+    "respondents": null,
+    "response_rate": 0.71,
+    "population": {
+      "undecided_or_refuse": 0.165,
+      "wont_or_blank": 0.042,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Anarkistar á Íslandi": 0.002,
+      "Framsóknarflokkurinn": 0.17,
+      "Frjálslyndi flokkurinn": 0.008,
+      "Húmanistaflokkurinn": 0.01,
+      "Kristilegi lýðræðisflokkurinn": 0.002,
+      "Samfylkingin": 0.245,
+      "Sjálfstæðisflokkurinn": 0.492,
+      "Vinstrihreyfingin – grænt framboð": 0.0709
+    },
+    "date": {
+      "made": null,
+      "published": "1999-05-01"
+    },
+    "made_by": "PricewaterhouseCoopers",
+    "made_for": "Stöð 2",
+    "sample_size": 1100,
+    "respondents": null,
+    "response_rate": 0.7,
+    "population": {
+      "undecided_or_refuse": 0.33,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.264,
+      "Framsóknarflokkurinn": 0.117,
+      "Samfylkingin": 0.218,
+      "Vinstrihreyfingin – grænt framboð": 0.06,
+      "Frjálslyndi flokkurinn": 0.069,
+      "Nýtt afl": 0.008,
+      "Framboð óháðra í Suðurkjördæmi": 0.002
+    },
+    "date": {
+      "made": "2003-05-08",
+      "published": "2003-05-09"
+    },
+    "made_by": "DV",
+    "made_for": null,
+    "sample_size": 2500,
+    "respondents": null,
+    "response_rate": 0.738,
+    "population": {
+      "undecided_or_refuse": 0.262,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.327,
+      "Framsóknarflokkurinn": 0.1669,
+      "Samfylkingin": 0.326,
+      "Vinstrihreyfingin – grænt framboð": 0.08,
+      "Frjálslyndi flokkurinn": 0.089
+    },
+    "date": {
+      "made": "2003-05-07/2003-05-08",
+      "published": "2003-05-09"
+    },
+    "made_by": "Fréttablaðið",
+    "made_for": null,
+    "sample_size": 3000,
+    "respondents": null,
+    "response_rate": 0.91,
+    "population": {
+      "undecided_or_refuse": 0.145,
+      "wont_or_blank": 0.03,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.361,
+      "Framsóknarflokkurinn": 0.185,
+      "Samfylkingin": 0.2849,
+      "Vinstrihreyfingin – grænt framboð": 0.084,
+      "Frjálslyndi flokkurinn": 0.076,
+      "Nýtt afl": 0.009
+    },
+    "date": {
+      "made": "2003-05-05/2003-05-07",
+      "published": "2003-05-05"
+    },
+    "made_by": "Félagsvísindastofnun",
+    "made_for": "Morgunblaðið",
+    "sample_size": 1200,
+    "respondents": null,
+    "response_rate": 0.679,
+    "population": {
+      "undecided_or_refuse": 0.154,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.3439,
+      "Framsóknarflokkurinn": 0.161,
+      "Samfylkingin": 0.33,
+      "Vinstrihreyfingin – grænt framboð": 0.0709,
+      "Frjálslyndi flokkurinn": 0.084,
+      "Nýtt afl": 0.003,
+      "Framboð óháðra í Suðurkjördæmi": 0.008,
+      "T-listinn": 0.008
+    },
+    "date": {
+      "made": "2003-05-06/2003-05-07",
+      "published": "2003-05-08"
+    },
+    "made_by": "Gallup",
+    "made_for": "Ríkisútvarpið",
+    "sample_size": 800,
+    "respondents": null,
+    "response_rate": 0.67,
+    "population": {
+      "undecided_or_refuse": 0.18,
+      "wont_or_blank": 0.02,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.447,
+      "Framsóknarflokkurinn": 0.083,
+      "Samfylkingin": 0.253,
+      "Vinstrihreyfingin – grænt framboð": 0.1409,
+      "Frjálslyndi flokkurinn": 0.047,
+      "Íslandshreyfingin": 0.029
+    },
+    "date": {
+      "made": "2007-05-08/2007-05-09",
+      "published": "2007-05-11"
+    },
+    "made_by": "Blaðið",
+    "made_for": null,
+    "sample_size": 1040,
+    "respondents": null,
+    "response_rate": 0.861,
+    "population": {
+      "undecided_or_refuse": 0.305,
+      "wont_or_blank": 0.035,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.424,
+      "Framsóknarflokkurinn": 0.091,
+      "Samfylkingin": 0.246,
+      "Vinstrihreyfingin – grænt framboð": 0.161,
+      "Frjálslyndi flokkurinn": 0.054,
+      "Íslandshreyfingin": 0.026
+    },
+    "date": {
+      "made": "2007-05-05/2007-05-09",
+      "published": "2007-05-11"
+    },
+    "made_by": "Fréttablaðið",
+    "made_for": null,
+    "sample_size": 3600,
+    "respondents": null,
+    "response_rate": 0.64,
+    "population": {
+      "undecided_or_refuse": null,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.36,
+      "Framsóknarflokkurinn": 0.103,
+      "Samfylkingin": 0.293,
+      "Vinstrihreyfingin – grænt framboð": 0.155,
+      "Frjálslyndi flokkurinn": 0.057,
+      "Íslandshreyfingin": 0.032
+    },
+    "date": {
+      "made": "2007-05-07/2007-05-11",
+      "published": "2007-05-12"
+    },
+    "made_by": "Félagsvísindastofnun",
+    "made_for": "Stöð 2",
+    "sample_size": null,
+    "respondents": null,
+    "response_rate": null,
+    "population": {
+      "undecided_or_refuse": null,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.389,
+      "Framsóknarflokkurinn": 0.11,
+      "Samfylkingin": 0.256,
+      "Vinstrihreyfingin – grænt framboð": 0.16,
+      "Frjálslyndi flokkurinn": 0.063,
+      "Íslandshreyfingin": 0.022
+    },
+    "date": {
+      "made": "2007-05-05/2007-05-10",
+      "published": "2007-05-12"
+    },
+    "made_by": "Gallup",
+    "made_for": "RÚV og Morgunblaðið",
+    "sample_size": 1194,
+    "respondents": null,
+    "response_rate": 0.637,
+    "population": {
+      "undecided_or_refuse": 0.11,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.2189,
+      "Framsóknarflokkurinn": 0.113,
+      "Samfylkingin": 0.318,
+      "Vinstrihreyfingin – grænt framboð": 0.241,
+      "Frjálslyndi flokkurinn": 0.026,
+      "Borgarahreyfingin": 0.0709,
+      "Lýðræðishreyfingin": 0.012
+    },
+    "date": {
+      "made": "2009-04-20/2009-04-22",
+      "published": "2009-04-24"
+    },
+    "made_by": "Fréttablaðið / Stöð 2",
+    "made_for": null,
+    "sample_size": 3600,
+    "respondents": null,
+    "response_rate": 0.753,
+    "population": {
+      "undecided_or_refuse": null,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.232,
+      "Framsóknarflokkurinn": 0.12,
+      "Samfylkingin": 0.298,
+      "Vinstrihreyfingin – grænt framboð": 0.263,
+      "Frjálslyndi flokkurinn": 0.015,
+      "Borgarahreyfingin": 0.068,
+      "Lýðræðishreyfingin": 0.005
+    },
+    "date": {
+      "made": "2009-04-21/2009-04-23",
+      "published": "2009-04-25"
+    },
+    "made_by": "Gallup",
+    "made_for": "Morgunblaðið og RÚV",
+    "sample_size": 2433,
+    "respondents": null,
+    "response_rate": 0.602,
+    "population": {
+      "undecided_or_refuse": 0.092,
+      "wont_or_blank": 0.084,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.288,
+      "Framsóknarflokkurinn": 0.09,
+      "Samfylkingin": 0.298,
+      "Vinstrihreyfingin – grænt framboð": 0.259,
+      "Frjálslyndi flokkurinn": 0.015,
+      "Borgarahreyfingin": 0.072,
+      "Lýðræðishreyfingin": 0.006
+    },
+    "date": {
+      "made": "2009-04-06/2009-04-14",
+      "published": "2009-04-14"
+    },
+    "made_by": "MMR",
+    "made_for": null,
+    "sample_size": 876,
+    "respondents": null,
+    "response_rate": 1,
+    "population": {
+      "undecided_or_refuse": null,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.23,
+      "Framsóknarflokkurinn": 0.256,
+      "Samfylkingin": 0.148,
+      "Vinstrihreyfingin – grænt framboð": 0.11,
+      "Björt framtíð": 0.077,
+      "Dögun": 0.03,
+      "Píratar": 0.064
+    },
+    "date": {
+      "made": "2013-04-22/2013-04-24",
+      "published": "2013-04-25"
+    },
+    "made_by": "Fréttablaðið / Stöð 2",
+    "made_for": null,
+    "sample_size": 2699,
+    "respondents": null,
+    "response_rate": 0.74,
+    "population": {
+      "undecided_or_refuse": 0.3,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.238,
+      "Framsóknarflokkurinn": 0.259,
+      "Samfylkingin": 0.133,
+      "Vinstrihreyfingin – grænt framboð": 0.104,
+      "Björt framtíð": 0.081,
+      "Hægri grænir": 0.025,
+      "Flokkur heimilanna": 0.025,
+      "Regnboginn": 0.0069,
+      "Lýðræðisvaktin": 0.026,
+      "Landsbyggðarflokkurinn": 0,
+      "Dögun": 0.024,
+      "Alþýðufylkingin": 0,
+      "Píratar": 0.063,
+      "Húmanistaflokkurinn": 0.001
+    },
+    "date": {
+      "made": "2013-04-22/2013-04-23",
+      "published": "2013-04-24"
+    },
+    "made_by": "Fréttablaðið",
+    "made_for": null,
+    "sample_size": 1390,
+    "respondents": null,
+    "response_rate": 0.719,
+    "population": {
+      "undecided_or_refuse": 0.326,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.248,
+      "Framsóknarflokkurinn": 0.244,
+      "Samfylkingin": 0.136,
+      "Vinstrihreyfingin – grænt framboð": 0.108,
+      "Björt framtíð": 0.073,
+      "Hægri grænir": 0.0279,
+      "Lýðræðisvaktin": 0.026,
+      "Dögun": 0.032,
+      "Píratar": 0.064,
+      "Samstaða": 0.04
+    },
+    "date": {
+      "made": "2013-04-17/2013-04-23",
+      "published": "2013-04-25"
+    },
+    "made_by": "Félagsvísindastofnun",
+    "made_for": "Morgunblaðið",
+    "sample_size": 3865,
+    "respondents": null,
+    "response_rate": 0.62,
+    "population": {
+      "undecided_or_refuse": 0.1765,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.2789,
+      "Framsóknarflokkurinn": 0.247,
+      "Samfylkingin": 0.146,
+      "Vinstrihreyfingin – grænt framboð": 0.1,
+      "Björt framtíð": 0.066,
+      "Hægri grænir": 0.026,
+      "Flokkur heimilanna": 0.013,
+      "Lýðræðisvaktin": 0.0279,
+      "Dögun": 0.026,
+      "Píratar": 0.061
+    },
+    "date": {
+      "made": "2013-04-18/2013-04-25",
+      "published": "2013-04-25"
+    },
+    "made_by": "Gallup",
+    "made_for": null,
+    "sample_size": 5415,
+    "respondents": null,
+    "response_rate": 0.6,
+    "population": {
+      "undecided_or_refuse": null,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.267,
+      "Framsóknarflokkurinn": 0.2239,
+      "Samfylkingin": 0.13,
+      "Vinstrihreyfingin – grænt framboð": 0.116,
+      "Björt framtíð": 0.077,
+      "Hægri grænir": 0.013,
+      "Flokkur heimilanna": 0.018,
+      "Regnboginn": 0.005,
+      "Lýðræðisvaktin": 0.035,
+      "Dögun": 0.029,
+      "Píratar": 0.075
+    },
+    "date": {
+      "made": "2013-04-22/2013-04-25",
+      "published": "2013-04-25"
+    },
+    "made_by": "MMR",
+    "made_for": null,
+    "sample_size": 1101,
+    "respondents": null,
+    "response_rate": null,
+    "population": {
+      "undecided_or_refuse": 0.064,
+      "wont_or_blank": 0.055,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.273,
+      "Framsóknarflokkurinn": 0.099,
+      "Samfylkingin": 0.057,
+      "Vinstrihreyfingin – grænt framboð": 0.1639,
+      "Viðreisn": 0.105,
+      "Píratar": 0.184,
+      "Björt framtíð": 0.063
+    },
+    "date": {
+      "made": "2016-10-25/2016-10-26",
+      "published": "2016-10-28"
+    },
+    "made_by": "Fréttablaðið / Stöð 2",
+    "made_for": null,
+    "sample_size": 2206,
+    "respondents": null,
+    "response_rate": 0.709,
+    "population": {
+      "undecided_or_refuse": 0.26,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.225,
+      "Framsóknarflokkurinn": 0.1019,
+      "Samfylkingin": 0.057,
+      "Vinstrihreyfingin – grænt framboð": 0.168,
+      "Viðreisn": 0.114,
+      "Píratar": 0.212,
+      "Björt framtíð": 0.067,
+      "Dögun": 0.022,
+      "Flokkur fólksins": 0.021
+    },
+    "date": {
+      "made": "2016-10-20/2016-10-27",
+      "published": "2016-10-28"
+    },
+    "made_by": "Félagsvísindastofnun",
+    "made_for": "Morgunblaðið",
+    "sample_size": 4000,
+    "respondents": null,
+    "response_rate": 0.607,
+    "population": {
+      "undecided_or_refuse": 0.166,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.27,
+      "Framsóknarflokkurinn": 0.093,
+      "Samfylkingin": 0.074,
+      "Vinstrihreyfingin – grænt framboð": 0.165,
+      "Viðreisn": 0.088,
+      "Píratar": 0.179,
+      "Björt framtíð": 0.068,
+      "Flokkur fólksins": 0.034
+    },
+    "date": {
+      "made": "2016-10-24/2016-10-28",
+      "published": "2016-10-28"
+    },
+    "made_by": "Gallup",
+    "made_for": null,
+    "sample_size": 3508,
+    "respondents": null,
+    "response_rate": 0.55,
+    "population": {
+      "undecided_or_refuse": 0.0518,
+      "wont_or_blank": 0.0529,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  },
+  {
+    "parties": {
+      "Sjálfstæðisflokkurinn": 0.247,
+      "Framsóknarflokkurinn": 0.114,
+      "Samfylkingin": 0.061,
+      "Vinstrihreyfingin – grænt framboð": 0.162,
+      "Viðreisn": 0.089,
+      "Píratar": 0.205,
+      "Björt framtíð": 0.067,
+      "Flokkur fólksins": 0.024,
+      "Dögun": 0.023
+    },
+    "date": {
+      "made": "2016-10-26/2016-10-28",
+      "published": "2016-10-28"
+    },
+    "made_by": "MMR",
+    "made_for": null,
+    "sample_size": 958,
+    "respondents": null,
+    "response_rate": 1,
+    "population": {
+      "undecided_or_refuse": null,
+      "wont_or_blank": null,
+      "undecided": null,
+      "refuse_to_say": null,
+      "wont_vote": null,
+      "vote_blank": null
+    }
+  }
+]

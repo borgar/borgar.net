@@ -1,0 +1,129 @@
+Title: PRS B1919+21
+Slug: prs-b1919-21
+Date: 2016-03-10 10:00:00
+Lang: en
+Tags: dataviz
+Thumbnail: ./thumbnail.png
+
+<style>
+#prs_b1919 svg {
+  font: 12px sans-serif;
+}
+.wave {
+  fill: white;
+  stroke: #444;
+  stroke-width: 1;
+}
+.freq,
+.title {
+  font-size: 16px;
+  fill: #444;
+}
+.freq {
+  text-anchor: end;
+}
+.axis path,
+.axis line {
+  stroke: #444;
+  stroke-width: .75;
+  fill: none;
+}
+.axis text {
+  fill: #444;
+  text-anchor: middle;
+}
+</style>
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+<div id="prs_b1919" style=""></div>
+
+<p>This image is a recreation of a single plot from a collection of charts from <em>Radio Observations of the Pulse Profiles and Dispersion Measures of Twelve Pulsars</em> by Harold D. Carft, Jr.</p>
+
+<p>It presents successive pulses from the first pulsar discovered, <a href="https://en.wikipedia.org/wiki/PSR_B1919%2B21">PSR B1919+21</a> (also known by its older name, CP 1919). It was made famous by its use as the cover of Joy Division’s 1979 debut album, <a href="https://en.wikipedia.org/wiki/Unknown_Pleasures">Unknown Pleasures</a>, and has <a href="http://blogs.scientificamerican.com/sa-visual/pop-culture-pulsar-origin-story-of-joy-division-8217-s-unknown-pleasures-album-cover-video/">a fascinating history</a>.</p>
+
+<p>The chart is generated using aproximate data sourced from a <a href="http://i.document.m05.de/2013/05/23/joy-divisions-unknown-pleasures-printed-in-3d/">vector image by Michael Zoellner</a>.</p>
+
+<script>
+var height = 450
+  , width = height / 1.138
+  , top_margin = ~~( width / 13 )
+  , amplitude = width / 350
+  ;
+
+var container = document.getElementById('prs_b1919');
+const w = container.clientWidth;
+
+var svg = d3.select( container ).append( 'svg' )
+    .attr( 'width', w )
+    .attr( 'height', height + top_margin + 10 + 10 )
+  .append( 'g' )
+    .attr( 'transform', `translate(${w/2-width/2},${10})` );
+
+d3.text('pulsar.csv', function ( raw ) {
+
+  var data = d3.csv.parseRows( raw, r => r.map( Number ) ),
+      x = d3.scale.linear()
+            .domain([ 0, data[0].length - 1 ])
+            .range([ 0, width ]),
+      y = d3.scale.linear()
+            .domain([ 0, data.length - 1 ])
+            .range([ top_margin, height ]);
+
+  var line = d3.svg.line()
+      .x( (d,i) => x( i ) )
+      .y( d => -d * amplitude );
+
+  svg.append( 'g' )
+    .selectAll( '.wave' ).data( data ).enter()
+      .append( 'path' )
+        .attr( 'transform', (d,i) => `translate(0,${y(i)})` )
+        .attr( 'class', 'wave' )
+        .attr( 'd', line )
+        ;
+
+  // top text
+  svg.append( 'text' )
+    .text( 'PRS B1919+21' )
+    .attr( 'class', 'title' )
+    .attr( 'x', 0 )
+    .attr( 'dy', '.9em' );
+
+  svg.append( 'text' )
+    .text( '318 MHz' )
+    .attr( 'class', 'freq' )
+    .attr( 'x', width )
+    .attr( 'dy', '.9em' );
+
+  // bottom axis
+  var axis = svg.append( 'g' )
+    .attr( 'class', 'axis' )
+    .attr( 'transform', `translate(0,${height+15})` );
+
+  // the pulse-width is cropped to 92ms
+  var ax = d3.scale.linear().domain([ 0, 92 ])
+    .range([ 0, width ]);
+
+  axis.append( 'line' )
+    .attr( 'x2', width );
+
+  axis.selectAll( '.tick' )
+    .data( d3.range( 5, 92, 20 ) ).enter()
+    .append( 'line' )
+      .attr( 'x1', ax )
+      .attr( 'x2', ax )
+      .attr( 'y1', -5 );
+
+  axis.append( 'path' )
+    .attr( 'd', `M0,0 L0,9.5
+                 M0,5 L${ax(5)},5
+                 M${ax(20)},0 L${ax(20)},9.5
+                 M${ax(15)},5 L${ax(20)},5` )
+    .attr( 'transform', `translate(${ax(45)},5)` );
+
+  axis.append( 'text' )
+    .text( '20 ms' )
+    .attr( 'x', ax( 5 + 50 ) )
+    .attr( 'y', 3 )
+    .attr( 'dy', '.92em' );
+});
+</script>

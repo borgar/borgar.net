@@ -1,0 +1,99 @@
+Title: Samanburður á frambjóðendum 2018
+Slug: samanburdur-a-frambjodendum-2018
+Date: 2018-05-11 23:11:11
+Lang: is
+Tags: dataviz, elections
+Thumbnail: ./thumbnail.png
+
+<style>
+#el2018a {
+  font-family: sans-serif;
+  font-size: 12px;
+  position: relative;
+}
+#el2018a svg {
+  font-family: sans-serif;
+  font-size: 12px;
+}
+#el2018a text {
+  cursor: default;
+}
+#el2018a .band {
+  fill: #dddddd;
+}
+.legend--cand--a,
+circle.cand--a--null,
+circle.cand--a {
+  fill: teal;
+}
+.legend--cand--b,
+circle.cand--b--null,
+circle.cand--b {
+  fill: orange;
+}
+.cand--a.null.first,
+.cand--b.null.first {
+  fill-opacity: .4;
+}
+.cand--a.null:not(.first),
+.cand--b.null:not(.first) {
+  fill: none;
+}
+text.cand--b,
+text.cand--a {
+  fill: #888;
+}
+#el2018a .bg {
+  fill: none;
+}
+#el2018a .bg.hover {
+  fill: rgba(0,0,0,.05);
+}
+#el2018a .domain {
+  stroke: none;
+}
+#el2018a .tick line {
+  stroke: #aaa;
+  stroke-dasharray: 2 2;
+}
+#el2018a select {
+  width: 160px;
+}
+#tip {
+  position: absolute;
+  height: 0;
+}
+#info {
+  box-sizing: border-box;
+  width: 250px;
+  position: absolute;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 5px rgba(0,0,0,.2);
+  background: white;
+  padding: 0 1em;
+}
+</style>
+
+<div class="viz" id="el2018a">
+  <div>
+    <label for="muni">Sveitarfélag</label>
+    <select id="muni"></select>
+    <span id="cands">
+      &mdash;
+      <label for="cand_a">Bera saman</label>
+      <select id="cand_a"></select>
+      <label for="cand_b">og</label>
+      <select id="cand_b"></select>
+    </span>
+  </div>
+  <svg width="960" height="760"></svg>
+  <div id="tip"><div id="info"></div></div>
+</div>
+
+<script src="//d3js.org/d3.v5.min.js"></script>
+<script type="text/x-data" src="data.json" id="el2018a_data"></script>
+<script src="main.js"></script>
+
+<p>Hér eru svör frambjóðenda úr <a href="http://www.ruv.is/x18/kosningaprof">Kosningaprófi RÚV 2018</a> gerð samanburðarhæf. Það getur verið mjög forvitnilegt að bera t.d. saman frambjóðendur úr sömu flokkum. Vert er að velta fyrir sér hvort, í einhverjum tilvikum, það afhjúpi ónákvæmni spurninga frekar en óeiningu í framboðum?</p>
+
+<p>Til þess að auðvelda lesturinn hefur texti spurninganna hefur verið styttur til muna, og í einhverjum tilvikum hefur spurningum sem eru neikvæðar fullyrðingar verið snúið í jákvæðar. Hægt er að sjá upprunalegu fullyrðingarnar með því að músa yfir hverja röð.</p>

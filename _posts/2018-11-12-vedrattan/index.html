@@ -1,0 +1,42 @@
+Title: Veðráttan, 24. árg 1947. Ágúst, bls. 30.
+Slug: vedrattan
+Date: 2018-11-12 10:37:54
+Lang: en
+Tags: dataviz
+Thumbnail: ./thumbnail.png
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif');
+
+#vpage, #vpage text {
+  font-family: 'Noto Serif', serif;
+  -moz-font-feature-settings: "lnum";
+  -webkit-font-feature-settings: "lnum";
+  font-feature-settings: "lnum";
+}
+</style>
+
+<div class="viz" id="vpage">
+  <svg width=960 height=1420 viewBox="0 0 1000 1480" xmlns="http://www.w3.org/2000/svg">
+    <rect width=1000 height=1480 fill="rgb(230,230,230)" />
+  </svg>
+</div>
+<script src="vedur-1947-aug.json" type="text/x-data" id="vpage_data"></script>
+<script src="//d3js.org/d3.v5.min.js"></script>
+<script src="index.js"></script>
+
+<p>I frequent the social media Twitter. One of the many great accounts I follow there is the fantastic bot <a href="https://twitter.com/slembitimarit">Slembitímarit</a>. Made by my accomplished friend <a href="https://twitter.com/pallih">@pallih</a>. Every hour, on the hour, The bot tweets a random page from the Icelandic archive of magazines, <a href="http://timarit.is">timarit.is</a>.</p>
+
+<p>Occasionally it chooses pages with data on them, usually tables, maybe from half a century ago, or more. These are often beautiful hand-crafted tables which I have no way of conveying to regular sane people why I love so much.</p>
+
+<p>I wanted to make a study of one of these. See what choices went in there to create the result. Does it lose something when converted to modern computer typesetting?</p>
+
+<p>I've picked <a href="http://timarit.is/view_page_init.jsp?pageId=3127490">a page from a 1947 issue</a> of <em>Veðráttan</em>, a monthly overview of the weather in Iceland made by the <a href="https://en.vedur.is/">Icelandic Met Office</a>. I've tried to recreate it faithfully, but fixed a few things:</p>
+
+<ul>
+  <li>Precipitation does not need fractions.</li>
+  <li>Removed footnotes in favour of abbreviating place names.</li>
+  <li>Columns use a fixed rhythm.</li>
+</ul>
+
+<p>The end result looks quite nice, in my own humble opinion.</p>

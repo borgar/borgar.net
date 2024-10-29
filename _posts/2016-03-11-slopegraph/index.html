@@ -1,0 +1,130 @@
+Title: Slopegraph
+Slug: slopegraph
+Date: 2016-03-11 10:00:00
+Lang: en
+Tags: dataviz
+Thumbnail: ./thumbnail.png
+
+<style>
+#slopegraph svg {
+  font: 13px serif;
+}
+#slopegraph .years {
+  font-size: 15px;
+}
+#slopegraph .desc {
+  font-size: 16px;
+}
+#slopegraph .lines path {
+  fill: none;
+  stroke: black;
+  stroke-width: 1.1;
+}
+</style>
+
+<div class="viz" id="slopegraph"><svg></svg></div>
+
+<p>Edward Tufte introduced <a href="http://www.edwardtufte.com/bboard/q-and-a-fetch-msg?msg_id=0003nk">Slopegraphs</a> in his 1983 book <a href="http://www.amazon.com/Visual-Display-Quantitative-Information/dp/0961392142">The Visual Display of Quantitative Information</a>. He describes them as “compar[ing] changes over time for a list of nouns located on an ordinal or interval scale”.</p>
+
+<p>This example recreates Tufte’s original chart. Getting the labeling correct is a little tricky so it makes a perfect example of something that belongs in a <a href="https://github.com/mbostock/d3/wiki/Layouts">layout</a>.</p>
+
+<p><small>Layout source code: <a href="./d3.slopegraph.js">d3.slopegraph.js</a></small></p>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="d3.slopegraph.js"></script>
+<script>
+d3.csv('data.csv', parseRow, ready);
+
+function parseRow (d) {
+  return { 'year': +d.year,
+           'country': d.country,
+           'value': +d.value };
+}
+
+function ready (data) {
+  const margin = { top: 70, right: 0, bottom: 40, left: 0 };
+  const width = 710 - margin.left - margin.right;
+  const height = 940 - margin.top - margin.bottom;
+
+  const y_dom  = d3.extent(data, d => d.value).reverse();
+  const x_dom  = d3.extent(data, d => d.year);
+
+  const y = d3.scale.linear().domain(y_dom).range([ 0, height ]);
+  const x = d3.scale.linear().domain(x_dom).range([ 390, 570 ]);
+
+  const layout = d3.layout.slopegraph()(data)
+    .j('country').y('value').x('year')
+    .textHeight((y_dom[0] - y_dom[1]) / height * 14);
+
+  const textAlign = m => {
+    return (d, i) => i ? 'start' : 'end';
+  };
+  const textMargin = m => {
+    return (d, i) => i ? m * 1 : m * -1;
+  };
+
+  const svg = d3.select('#slopegraph svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
+
+  svg.append('g')
+      .attr('class', 'years')
+      .selectAll('text').data(x_dom).enter()
+    .append('text')
+      .attr('x', x)
+      .attr('dx', (d, i) => i ? 10 : -10)
+      .attr('y', -40)
+      .style('text-anchor', textAlign())
+      .text(String);
+
+  const line = d3.svg.line()
+      .x(d => x(d.year))
+      .y(d => y(d.y));
+
+  const pairs = svg.append('g')
+      .attr('class', 'lines')
+      .selectAll('g')
+      .data(layout.pairs()).enter()
+    .append('g');
+
+  pairs.append('path')
+      .attr('d', line);
+
+  pairs.selectAll('.country')
+      .data(d => d).enter()
+    .append('text')
+      .attr('class', 'country')
+      .attr('x', d => x(d.year))
+      .attr('dx', textMargin(48))
+      .attr('dy', '.32em')
+      .attr('y', d => y(d.y))
+      .style('text-anchor', textAlign())
+      .text(d => d.country);
+
+  pairs.selectAll('.value')
+      .data(d => d).enter()
+    .append('text')
+      .attr('class', 'value')
+      .attr('x', d => x(d.year))
+      .attr('dy', '.32em')
+      .attr('dx', textMargin(10))
+      .attr('y', d => y(d.y))
+      .style('text-anchor', textAlign())
+      .text(d => d.value.toFixed(1));
+
+  svg.append('g')
+      .attr('class', 'desc')
+      .selectAll('text')
+      .data([ 'Current Receipts of Government as a'
+            , 'Percentage of Gross Domestic'
+            , 'Product, 1970 and 1979'
+            ]).enter()
+    .append('text')
+      .attr('y', (d,i) => i * 20)
+      .attr('dy', '-.32em')
+      .attr('x', 13)
+      .text(String);
+}
+</script>

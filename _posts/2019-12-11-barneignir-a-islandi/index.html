@@ -1,0 +1,77 @@
+Title: Barneignir á Íslandi
+Slug: barneignir-a-islandi
+Date: 2019-12-11 09:39:00
+Lang: is
+Tags: dataviz, fertility
+
+<style>
+.slider {
+  margin-block-end: 1em;
+  margin-block-start: 1em;
+}
+.slider label {
+  font-size: .9em;
+  line-height: 1.6;
+  font-weight: bold;
+  display: block;
+}
+.slider input {
+  width: 260px;
+  accent-color: #bb1803;
+  margin: 4px 0px;
+  vertical-align: middle;
+}
+.slider output {
+  font-size: .9em;
+  vertical-align: middle;
+}
+</style>
+
+<p>Hagstofa Íslands var að birta skemmtilega úttekt á <a href="https://hagstofa.is/utgafur/frettasafn/mannfjoldi/mannanofn-og-afmaelisdagar-1-januar-2019/">tíðni nafna og fæðingar&shy;daga Íslendinga</a>. Ég hef endur&shy;gert hér mynd&shy;rit yfir fæðingar&shy;daga eftir mánuði og degi sem ég fann í greininni:</p>
+
+<div class="viz" id="barneignir_chart1"></div>
+
+<p>Það er hægt að taka þetta aðeins lengra og teikna meðal&shy;tal afmælis&shy;daga eftir mánuðum og þá kemur í ljós ákveðið munstur:</p>
+
+<div id="barneignir_chart2"></div>
+
+<p>En það er vel kunnugt <a href="https://www.visindavefur.is/svar.php?id=5192">hversu langan tíma</a> það tekur að þroska barn í móður&shy;kviði svo það er auðvelt að reikna út hvenær hvenær allir íslendingar voru ca. getnir. Þá fáum við annað, svipað, myndrit...</p>
+
+<h2>Fengitími á Íslandi?</h2>
+
+<p>Hér getum við þá horft á getnaði á Íslandi eftir mánuði og degi, miðað við 268 daga (eða 38 vikna) meðgöngu...</p>
+
+<div class="viz" id="barneignir_chart3"></div>
+
+<p>Og aftur eftir mánuðum:</p>
+
+<div id="barneignir_chart4"></div>
+
+<div class="slider">
+  <label>Lengd meðgöngu í dögum</label>
+  <input
+    id="gestation_slider"
+    type="range"
+    min="0"
+    max="365"
+    value="268"
+    step="1"
+    />
+  <output id="gestation_value">268</output>
+</div>
+
+<p>Lesandi er beðinn um að túlka þessi myndrit með hæfilegum skammti af efa&shy;hyggju. Þótt það geti virst sem svo að "flestir Íslendingar" séu getnir í svartasta vetrar&shy;myrkrinu, þá eru með&shy;göngur ekki allar jafn langar, og margar enda með inn&shy;gripum starfs&shy;fólks fæðingar&shy;deilda (sem kannski skýrir hversu grun&shy;sam&shy;lega fáir fæðast á jóla&shy;dag?).</p>
+
+<p>Þegar mynd&shy;ritin eru ekki gagn&shy;gert að draga fram sveiflurnar þá sést vel að dreifingin er, heilt yfir, mjög jöfn:</p>
+
+<div id="barneignir_chart5"></div>
+
+<hr />
+
+<p><small>
+  Gögnin eru fengin af Hagstofu Íslands, <a href="https://hagstofa.is/utgafur/frettasafn/mannfjoldi/mannanofn-og-afmaelisdagar-1-januar-2019/">Afmælis&shy;dagar 1. janúar 2019</a>, og miðast þau við skráningar í Þjóð&shy;skrá í byrjun árs 2019. Í mörgum mynd&shy;ritum hefur 29. febrúar hefur verið fjar&shy;lægður úr gögnunum til þess að skekkja ekki meðaltöl.
+</small></p>
+
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script type="text/x-data" id="barneignir-data" src="barneignir.csv"></script>
+<script src="barneignir.js"></script>

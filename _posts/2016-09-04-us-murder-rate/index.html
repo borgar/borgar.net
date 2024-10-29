@@ -1,0 +1,135 @@
+Title: U.S. murder rate from 1960 to 2012
+Slug: us-murder-rate
+Date: 2016-09-05 10:00:00
+Lang: en
+Tags: dataviz
+Thumbnail: ./thumbnail.png
+
+<style>
+#murder_rate svg {
+  font: 11px sans-serif;
+}
+input[type=checkbox], label {
+  cursor: pointer;
+}
+</style>
+
+<div class="viz" id="murder_rate"></div>
+
+<p>
+  <label><small><input type="checkbox" name="dc" id="include_dc"> Include the District of Columbia</small></label>
+</p>
+
+<p>The above chart plots <a href="https://en.wikipedia.org/wiki/Small_multiple">small multiples</a> of area charts of the <em><a href="https://en.wikipedia.org/wiki/Murder#Incidence">murder rate</a> of the U.S. from 1960 to 2012</em> (<a href="http://www.ucrdatatool.gov/Search/Crime/Crime.cfm">source</a>) into a tile grid map of states. Normally tile grid maps are used as choropleths but, if there is enough space per cell, why not plot something more elaborate?</p>
+
+<script type="text/x-data" id="murder_rate_csv" src="murder_rate.csv"></script>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+const map_noDC = 'AK,0,0|AL,6,6|AR,4,5|AZ,1,5|CA,0,4|CO,2,4|CT,9,3|DE,9,4|FL,8,7|GA,7,6|HI,0,7|IA,4,3|ID,1,2|IL,5,2|IN,5,3|KS,3,5|KY,5,4|LA,4,6|MA,9,2|MD,8,4|ME,10,0|MI,6,2|MN,4,2|MO,4,4|MS,5,6|MT,2,2|NC,6,5|ND,3,2|NE,3,4|NH,10,1|NJ,8,3|NM,2,5|NV,1,3|NY,8,2|OH,6,3|OK,3,6|OR,0,3|PA,7,3|RI,10,3|SC,7,5|SD,3,3|TN,5,5|TX,3,7|UT,1,4|VA,7,4|VT,9,1|WA,0,2|WI,5,1|WV,6,4|WY,2,3';
+const map_DC = 'AK,0,0|AL,6,6|AR,4,5|AZ,1,5|CA,0,4|CO,2,4|CT,9,2|DC,9,3|DE,9,4|FL,8,7|GA,7,6|HI,0,7|IA,4,3|ID,1,2|IL,5,2|IN,5,3|KS,3,5|KY,5,4|LA,4,6|MA,10,2|MD,8,4|ME,10,0|MI,6,2|MN,4,2|MO,4,4|MS,5,6|MT,2,2|NC,6,5|ND,3,2|NE,3,4|NH,10,1|NJ,8,3|NM,2,5|NV,1,3|NY,8,2|OH,6,3|OK,3,6|OR,0,3|PA,7,3|RI,10,3|SC,7,5|SD,3,3|TN,5,5|TX,3,7|UT,1,4|VA,7,4|VT,9,1|WA,0,2|WI,5,1|WV,6,4|WY,2,3';
+
+function parseMap (m) {
+  return m.split('|').reduce((a, c) => {
+    const [ code, x, y ] = c.split(',');
+    a.set(code, { code, x: +x, y: +y });
+    return a;
+  }, new Map);
+}
+
+let alldata = [];
+const containerElm = document.getElementById('murder_rate');
+const dcElm = document.getElementById('include_dc');
+
+d3.csv(
+  d3.select('#murder_rate_csv').attr('src'),
+  d => ({ 'state': d.state, 'code': d.code, 'year': +d.year, 'value': +d.value }),
+  d => { alldata = d; render(); }
+);
+
+d3.select('#include_dc').on('click', render);
+
+function render () {
+  const gridmap = parseMap(dcElm.checked ? map_DC : map_noDC);
+
+  data = alldata.filter( d => gridmap.has( d.code ) );
+
+  const margin = { top: 5, right: 50, bottom: 5, left: 50 },
+      clientWidth = containerElm.clientWidth,
+      width = clientWidth - margin.left - margin.right,
+      height = width * 0.6,
+
+      ry = d3.scale.ordinal()
+          .domain( Array.from(gridmap.values()).map( d => d.y ).sort( d3.ascending ) )
+          .rangeBands([ 0, height ], 0.07),
+      rx = d3.scale.ordinal()
+          .domain( Array.from(gridmap.values()).map( d => d.x ).sort( d3.ascending ) )
+          .rangeBands([ 0, width ], 0.05),
+
+      y = d3.scale.linear()
+          .domain([ 0, d3.max( data, d => d.value ) ])
+          .range([ ry.rangeBand(), 0 ])
+      x = d3.scale.linear()
+          .domain( d3.extent( data, d => d.year ) )
+          .range([ 0, rx.rangeBand() ]);
+
+  const countries = d3.nest()
+      .key( d => d.code )
+      .entries( data )
+      .map( d => {
+        const pos = gridmap.get( d.key );
+        d.title = d.values[0].state;
+        d.x = pos.x;
+        d.y = pos.y;
+        return d;
+      })
+      .filter( Boolean );
+
+  const svg = d3.select( containerElm ).html( null ).append( 'svg' )
+      .attr( 'width', width + margin.left + margin.right )
+      .attr( 'height', height + margin.top + margin.bottom )
+    .append( 'g' )
+      .attr( 'transform', `translate(${[ margin.left, margin.top ]})` );
+
+  const country = svg.selectAll( 'g' ).data( countries ).enter()
+    .append( 'g' )
+      .attr( 'transform', d => `translate(${[ rx( d.x ), ry( d.y ) ]})` );
+
+  country.append( 'rect' )
+      .attr( 'width', rx.rangeBand() )
+      .attr( 'height', ry.rangeBand() )
+      .style( 'stroke', 'none' )
+      .style( 'fill', '#ddd' );
+
+  const line = d3.svg.line()
+      .defined( d => d.value )
+      .x( d => x( d.year ) )
+      .y( d => y( d.value ) );
+
+  const area = d3.svg.area()
+      .defined( line.defined() )
+      .x( line.x() )
+      .y1( line.y() )
+      .y0( y(0) );
+
+  country.append( 'path' )
+      .attr( 'd', d => line( d.values ) )
+      .style( 'stroke-width', 1.5 )
+      .style( 'stroke', '#fff' )
+      .style( 'fill', 'none' );
+
+  country.append( 'path' )
+      .attr( 'd', d => area( d.values ) )
+      .style( 'stroke', 'none' )
+      .style( 'fill', '#c33' );
+
+  country.append( 'text' )
+      .attr( 'class', 'country' )
+      .attr( 'x', 4 )
+      .attr( 'y', 0 )
+      .attr( 'dx', 0 )
+      .attr( 'dy', '1em' )
+      .style( 'fill', 'rgba(0,0,0,.75)' )
+      .text( d => d.title || d.key );
+
+}
+</script>

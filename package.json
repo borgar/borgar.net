@@ -1,0 +1,14 @@
+{
+  "name": "borgar.net",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Borgar Þorsteinsson <borgar@borgar.net> (http://borgar.net/)",
+  "license": "MIT",
+  "dependencies": {
+    "numfmt": "~3.1.3"
+  }
+}
