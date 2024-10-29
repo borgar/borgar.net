@@ -2,7 +2,7 @@ Title: Orðla means Wordle
 Slug: ordla-means-wordle
 Date: 2023-01-02 21:21:21
 Lang: en
-Tags: wordle, game
+Tags: wordle, game, icelandic, javascript, release
 
 ![ordla-skaup-1.png](ordla-skaup-2.png)
 
