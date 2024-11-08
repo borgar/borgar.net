@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Broad Street Pump &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-03-08">8. March 2016</a>
+</p>
+
+<article id="broad-street-pump" lang="en">
+
+  <h1><a href="/s/2016/03/broad-street-pump/" rel="bookmark">Broad Street Pump</a></h1>
+
+  <style>
+#pump svg {
+  font: 10px sans-serif;
+}
+.border path {
+  fill: none;
+  stroke: #faa;
+  stroke-dasharray: 10, 3, 2, 3;
+  stroke-width : 1.6;
+}
+.house {
+  fill: #e4dfd4;
+}
+.square {
+  fill: #d3e2be;
+}
+.pumps path {
+  fill: #0099cc;
+}
+.deaths path {
+  fill: #c88;
+  stroke: #842A2A;
+  stroke-width: 0.5;
+}
+.places {
+  fill: black;
+  font-size: 12px;
+  text-shadow: 0px 2px white;
+  text-anchor: middle;
+}
+.roads {
+  fill: #888;
+  font-size: 9px;
+  text-anchor: middle;
+}
+.legend rect {
+  fill: white;
+  fill-opacity: .75;
+  stroke: white;
+}
+.legend text {
+  font-size: 12px;
+}
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="//d3js.org/queue.v1.min.js"></script>
+<script src="//d3js.org/topojson.v1.min.js"></script>
+
+<div class="viz" id="pump"></div>
+
+<p>This recreates <a href="https://en.wikipedia.org/wiki/John_Snow">John Snow’s</a> famous <a href="https://en.wikipedia.org/wiki/1854_Broad_Street_cholera_outbreak">“Broad Street Pump” map</a>. The london map is a rough reversal of <a href="https://en.wikipedia.org/wiki/Charles_Cheffins">Charles Cheffins’</a> 1854 lithography into geographical data, which is then drawn using D3.</p>
+
+<script>
+var width = 960,
+    height = 800;
+
+var proj = d3.geo.mercator()
+    .scale( 43e5 )
+    .center([ -0.1376, 51.5131 ])
+    .translate([ width/2, height/2 ])
+    .clipExtent([ [ 0, 0 ], [ width, height ] ])
+    .precision( 0 );
+
+var path = d3.geo.path()
+    .projection( proj );
+
+var svg = d3.select( '#pump' ).append( 'svg' )
+    .attr( 'width', width )
+    .attr( 'height', height );
+
+queue()
+    .defer( d3.json, 'soho_1854.json' )
+    .defer( d3.json, 'deaths.json' )
+    .await( ready );
+
+function ready ( err, map, deaths ) {
+  if (err) throw err;
+
+  // houses and squares
+  svg.append( 'g' )
+    .attr( 'class', 'city' )
+    .selectAll( 'path' )
+      .data( topojson.feature(map, map.objects.houses).features )
+    .enter().append( 'path' )
+      .attr( 'class', d => d.properties.type )
+      .attr( 'd', path );
+
+  // area border
+  svg.append( 'g' )
+    .attr( 'class', 'border' )
+    .selectAll( 'path' )
+      .data( topojson.feature(map, map.objects.border).features )
+    .enter().append( 'path' )
+      .attr( 'd', path );
+
+  // houses labels
+  svg.append( 'g' )
+    .attr( 'class', 'places' )
+    .selectAll( 'text' )
+      .data( topojson.feature(map, map.objects.houses).features
+          .filter( d => d.properties.title ) )
+    .enter().append( 'text' )
+      .attr( 'dy', '0.32em' )
+      .text( d => d.properties.title )
+      .attr( 'transform', d => `translate(${path.centroid(d)})` );
+
+  // road labels
+  svg.append( 'g' )
+    .attr( 'class', 'roads' )
+    .selectAll( 'text' )
+      .data( topojson.feature(map, map.objects.roads).features )
+    .enter().append( 'text' )
+      .text( d => d.properties.title )
+      .attr( 'dy', '0.32em' )
+      .attr( 'transform', d => {
+        var xy = proj( d.geometry.coordinates ),
+            deg = d.properties.angle * (180 / Math.PI);
+        return `translate(${xy}) rotate(${deg})`;
+      });
+
+  // pumps
+  var pump = d3.svg.symbol().type( 'square' ).size( 40 );
+  svg.append( 'g' )
+    .attr( 'class', 'pumps' )
+    .selectAll( 'path' )
+      .data( topojson.feature( map, map.objects.pumps ).features )
+    .enter().append( 'path' )
+      .attr( 'd', pump )
+      .attr( 'transform', d => `translate(${proj(d.geometry.coordinates)}) rotate(45)` );
+
+  // deaths
+  var death = d3.svg.symbol().type( 'circle' ).size( 10 );
+  svg.append( 'g' )
+    .attr( 'class', 'deaths' )
+    .selectAll( 'path' )
+      .data( deaths.sort( ( a, b ) => a[0] - b[0] ) )
+    .enter().append( 'path' )
+      .attr( 'd', death )
+      .attr( "transform", d => `translate(${proj(d)})` );
+
+  // legend
+  var legend = svg.append( 'g' )
+      .attr( 'class', 'legend' )
+      .attr( 'transform', 'translate(15,15)' );
+
+  legend.append( 'rect' )
+      .attr( 'width', 180 )
+      .attr( 'height', 66 );
+
+  var label1 = legend.append( 'g' )
+      .attr( 'class', 'deaths' )
+      .attr( 'transform', 'translate(20,22)' );
+  label1.append( 'text' )
+      .attr( 'x', 8 )
+      .text( 'A death from Cholera' )
+      .attr( 'dy', '.32em' );
+  label1.append( 'path' )
+      .attr( 'd', death );
+
+  var label2 = legend.append( 'g' )
+      .attr( 'class', 'pumps' )
+      .attr( 'transform', 'translate(20,44)' );
+  label2.append( 'text' )
+      .attr( 'x', 8 )
+      .text( 'Water pump' )
+      .attr( 'dy', '.32em' );
+  label2.append( 'path' )
+      .attr( 'd', pump );
+
+}
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/03/broad-street-pump/" rel="bookmark">8. March 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/03/prs-b1919-21/" title="PRS B1919+21">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/03/population-pyramid/" title="Population pyramid"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

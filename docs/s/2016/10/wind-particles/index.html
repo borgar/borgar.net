@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Wind Particles &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-10-06">6. October 2016</a>
+</p>
+
+<article id="wind-particles" lang="en">
+
+  <h1><a href="/s/2016/10/wind-particles/" rel="bookmark">Wind Particles</a></h1>
+
+  <style>
+#wind_map {
+  background: black;
+}
+#wind_map svg {
+  font: 15px sans-serif;
+}
+#wind_map .title {
+  font: 20px sans-serif;
+}
+#wind_map text {
+  fill: white;
+}
+#wind_map .progress rect {
+  fill: #555;
+}
+#wind_map .progress circle {
+  fill: #ccc;
+}
+</style>
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script type="text/x-data" id="particle_data" src="/s/2016/10/wind-particles/data.csv"></script>
+
+<div class="viz" id="wind_map"></div>
+
+<div class="gist-readme" data-key="README.md"><p>This is a web version of the wind particle visualisation artwork <a href="http://www.shuyidesign.com/Gola">Gola</a> by visual artist <a href="http://www.shuyidesign.com/">Shu Yi</a>. 1 year of wind and temperature data is looped through in this example.</p>
+
+<p>The <a href="https://www.wunderground.com/history/airport/BIRK/2015/1/1/CustomHistory.html?dayend=1&amp;monthend=1&ayearend=2016&areq_city=&areq_state=&areq_statename=&areqdb.zip=&areqdb.magic=&areqdb.wmo=&aformat=1">data</a> comes from <a href="https://www.wunderground.com/">Weather Underground</a> and is as measured at the Reykjavík Airport which is conveniently located near the heart of the city.</p></div>
+
+<script>
+// Basic dimensions.
+var margin = { top: 40, right: 40, bottom: 40, left: 40 };
+var clientWidth = document.getElementById('wind_map').clientWidth;
+var width = clientWidth - margin.left - margin.right;
+var height = (clientWidth * 0.6) - margin.top - margin.bottom;
+var aspect = height / width;
+
+var datadate = d3.time.format("%Y-%m-%d");
+var dateformat = d3.time.format("%b. %e, %Y");
+
+var disc_radius = Math.min(width,height) * 0.25;
+var expire_time = 2500;
+var max_particles = 400;
+
+var leaves = [];
+var colors = {
+  '-2': ['#A7B8B4', '#dddddd'],
+  '-1': ['#03FBD5', '#A7B8B4'],
+   '0': ['#1BD3F8', '#03FBD5'],
+   '1': ['#03FBD5', '#C4E64B'],
+   '2': ['#C4E64B', '#FED84B'],
+   '3': ['#F29B5A', '#ED5363'],
+};
+colors['-0'] = colors['0'];
+
+function addRandomPos (obj, r) {
+  var a = Math.random(),
+      b = Math.random(),
+      t;
+  if (b < a) {
+    t = b; b = a; a = t;
+  }
+  obj.x = b * r * Math.cos(2 * Math.PI * a / b);
+  obj.y = b * r * Math.sin(2 * Math.PI * a / b);
+  return obj;
+}
+
+function makeParticle (fact, static) {
+  var t = '' + Math.round(fact.temp / 5);
+  return addRandomPos({
+    'birth': Date.now(),
+    'static': Math.random() > .6,
+    'weight': Math.random(),
+    'color': colors[t][Math.random() > .5 ? 1 : 0],
+    'r': 1,
+  }, disc_radius);
+}
+
+function parseRow (d) {
+  return {
+    'time': datadate.parse(d.GMT),
+    'speed': +d[' Mean Wind SpeedKm/h'],
+    'temp': +d['Mean TemperatureC'],
+    'dir': +d.WindDirDegrees
+  };
+}
+
+var svg = d3.select('#wind_map').append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom)
+  .append('g')
+    .attr('transform', `translate(${[ margin.left, margin.top ]})`);
+
+// particles container
+var part = svg.append('g')
+      .attr('transform', 'translate('+[width/2, height/2]+')');
+
+// progess bar
+var progress = svg.append('g')
+    .attr('transform', 'translate('+[0,height]+')')
+    .attr('class', 'progress');
+progress.append('rect')
+    .attr('width', width)
+    .attr('rx', 2)
+    .attr('height', 5);
+var place = progress.append('circle')
+    .attr('cx', 2.5)
+    .attr('cy', 2.5)
+    .attr('r', 2.5);
+
+// legend
+var legend = svg.append('g')
+    .attr('class', 'legend');
+legend.append('text')
+      .attr('class', 'title')
+      .attr('dy', '.5em')
+      .attr('y', 0)
+      .text('Reykjavík');
+var clock = legend.append('text')
+      .attr('class', 'line')
+      .attr('dy', '.5em')
+      .attr('y', 30);
+var line1 = legend.append('text')
+      .attr('class', 'line')
+      .attr('dy', '.5em')
+      .attr('y', 50);
+var line2 = legend.append('text')
+      .attr('class', 'line')
+      .attr('dy', '.5em')
+      .attr('y', 70);
+var line3 = legend.append('text')
+      .attr('class', 'line')
+      .attr('dy', '.5em')
+      .attr('y', 90);
+
+
+d3.csv(d3.select('#particle_data').attr('src'), parseRow, data => {
+
+  data.forEach((d, i) => {
+    var pos = data[i - 1] || { x: 0, y: 0 },
+        a = (d.dir - 90 - 180) * Math.PI / 180,
+        r = d.speed,
+        dx = r * Math.cos(a),
+        dy = r * Math.sin(a);
+    d.x = pos.x + dx;
+    d.y = pos.y + (dy / aspect);
+  })
+  data = data.filter(d => d.time.getUTCFullYear() === 2015);
+
+  var x = d3.time.scale()
+      .domain(d3.extent(data, d => d.time))
+      .nice(d3.time.date)
+      .range([2.5, width-2.5]);
+
+  var starttime = Date.now();
+
+  var frame = () => {
+    var ctime = Date.now() - starttime;
+    var currentPos = ~~(ctime / 1000);
+    var fact = data[currentPos % data.length];
+
+    place.attr('cx', x(fact.time));
+
+    clock.text(dateformat(fact.time));
+    line1.text('Wind speed: ' + Math.round(fact.speed * 0.277778) + ' m/s');
+    line2.text('Wind direction: ' + fact.dir + '°');
+    line3.text('Temparature: ' + fact.temp + ' °C');
+
+    leaves.forEach(d => {
+      var t = (Date.now() - d.birth);
+      if (t > expire_time) { d.dead = true; }
+      d.r = Math.max(0, (expire_time - t) / expire_time);
+
+      var a = (Math.random() * 360) * Math.PI / 180,
+          r = Math.random() * (d.static ? 2 : 1),
+          dx = r * Math.cos(a),
+          dy = r * Math.sin(a);
+      d.x = d.x + dx;
+      d.y = d.y + dy;
+
+      if (!d.static) {
+        var smoothness = Math.round(80 * d.weight) || 1;
+
+        if (d.dir == null) { d.dir = fact.dir; }
+        d.dir = (fact.dir + (d.dir * (smoothness-1))) / smoothness;
+
+        if (d.speed == null) { d.speed = fact.speed; }
+        d.speed = (fact.speed + (d.speed * (smoothness-1))) / smoothness;
+
+        var a = (d.dir - 90 - 180) * Math.PI / 180,
+            r = (d.speed / 10) * d.weight,
+            dx = r * Math.cos(a),
+            dy = r * Math.sin(a);
+        d.x = d.x + dx;
+        d.y = d.y + dy;
+      }
+    });
+
+    leaves = leaves.filter(d => !d.dead);
+
+    if (leaves.length < max_particles) {
+      // add only a few particles at a time
+      leaves.push(makeParticle(fact));
+      leaves.push(makeParticle(fact));
+      leaves.push(makeParticle(fact));
+    }
+
+    var particles = part.selectAll('circle')
+        .data(leaves);
+    particles.enter()
+        .append('circle');
+    particles
+        .attr('fill', d => d.color || '#fff')
+        .attr('r', d => d.r * 2)
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y);
+    particles.exit()
+        .remove();
+  };
+
+
+  function loop () {
+    frame();
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+});
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/10/wind-particles/" rel="bookmark">6. October 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/10/political-compas-heatmap/" title="Political Compass Heatmap">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/10/reykjavik-wind-map/" title="Reykjavík Wind Map"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>A single constituency &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-10-28">28. October 2016</a>
+</p>
+
+<article id="a-single-constituency" lang="en">
+
+  <h1><a href="/s/2016/10/a-single-constituency/" rel="bookmark">A single constituency</a></h1>
+
+  <style>
+#const1 {
+  width: 940px;
+  display: inline-block;
+}
+#const1 text {
+  font: 12px sans-serif;
+  fill: #555;
+}
+#const1 text.title {
+  font-size: 14px;
+}
+#const1 .calc,
+#const1 .real {
+  stroke: white;
+  stroke-width: .75;
+}
+#const1 .calc {
+  fill: #ccc;
+}
+#const1 .axis-y line {
+  stroke: #888;
+  stroke-dasharray: 2 2;
+}
+#const1 .axis-y .zero {
+  stroke-dasharray: none;
+}
+#const1 .axis-y path,
+#const1 .axis-x path {
+  display: none;
+}
+</style>
+<script type="text/x-data" id="el_csv" src="/s/2016/10/a-single-constituency/elections.csv"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<p>One thing Icelanders commonly cite off their laundry list of solutions to "fixing parliament" is to make the whole of Iceland a single constituency.</p>
+
+<p>When questioned though, few people seem to have a firm grasp of how of the current electoral system works. This in itself may be a red-flag as representational systems of government are built on trust and one can only trust a system as far as one understands it.</p>
+
+<p>The question is, what exactly would this change solve? The idea is that disparity of population in the current constituencies <a href="http://www.mbl.is/frettir/kosning/2013/04/15/82_prosent_munur_a_atkvaedavaegi/">introduces an unfair bias</a>. One way to solve this is to move seats between constituencies, and in fact the <a href="http://www.althingi.is/lagas/nuna/1944033.html#G31M5">Icelandic Constitution addresses this</a> to some extent. Another way would be to abolish partioning altogeather.</p>
+
+<div class="viz">
+  <div id="const1"></div>
+</div>
+
+<p>These charts explore what would have happened to the four major parties in past elections if there were only a single constituency. The coloured bars represent the number of seats each party got and the grey bars represent <a href="https://en.wikipedia.org/wiki/D%27Hondt_method">allotted seats</a> had the country been a single constituency.</p>
+
+<p>This ignores all indications that the number and size of constituencies may <a href="https://en.wikipedia.org/wiki/Duverger%27s_law">affect the number and size of the parties</a> the live in it.</p>
+
+<p>It is noteworthy here that, historically, the Progressive Party (Framsóknarflokkur) has the most obvious bias. Their strongest constituency by far is North-East, which has the lowest voters-per-seat. This may go some way to explain the phenomenon explored in <a href="/s/2016/10/polls-vs-elections/">Predictions vs. Elections</a>.</p>
+
+
+<script>
+var margin = {top: 30, right: 10, bottom: 15, left: 40},
+    width = 470 - margin.left - margin.right,
+    height = 250 - margin.top - margin.bottom;
+
+var x = d3.scaleBand().rangeRound([0, width]).padding(0.2),
+    y = d3.scaleLinear().range([height, 0]);
+
+var palette = {
+  'Sjálfstæðisflokkur': '#5DA5DA',
+  'Framsóknarflokkur': '#B276B2',
+  'Alþýðubandalag': '#B2912F',
+  'Vinstrihreyfingin - grænt framboð': '#60BD68',
+  'Alþýðuflokkur': "#F17CB0",
+  'Samfylkingin': "#F15854",
+};
+
+var dhont = ( parties, total_seats ) => {
+  var quot = d => d.percent / ( d._seats + 1 );
+  parties.forEach(d => { d._seats = 0; });
+  for (var round=0; round<total_seats; round++) {
+    var top = parties.sort((a, b) => quot(b) - quot(a))[0];
+    top._seats++;
+  }
+};
+
+var y2d = d => {
+  var y = d % 100;
+  return y < 10 ? `'0${y}` : `'${y}`;
+};
+
+var rowParse = d => {
+  d.year = +d.year;
+  d.percent = (+d.percent)/100;
+  d.seats = +d.seats;
+  return d;
+};
+
+var num_mps = {
+  1963: 60, 1967: 60, 1971: 60, 1974: 60,
+  1978: 60, 1979: 60, 1983: 60, 1987: 63,
+  1991: 63, 1995: 63, 1999: 63, 2003: 63,
+  2007: 63, 2009: 63, 2013: 63, 2016: 63,
+};
+
+d3.csv(d3.select('#el_csv').attr('src'), rowParse, data => {
+  y.domain([0, 26]);
+  x.domain(data.map(d => d.year).sort(d3.ascending));
+
+  // calculate seats as if there was 1 constituency
+  x.domain().forEach(year => {
+    dhont(data.filter(d => d.year === year), num_mps[year]);
+  });
+
+  plot(['Sjálfstæðisflokkur'], data);
+  plot(['Framsóknarflokkur'], data);
+  plot(['Alþýðuflokkur', 'Samfylkingin'], data);
+  plot(['Alþýðubandalag', 'Vinstrihreyfingin - grænt framboð'], data);
+});
+
+
+function plot (parties, data, polls) {
+
+  var svg = d3.select("#const1").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  // axis
+  svg.append("g")
+      .attr("class", "axis axis-x")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x).tickSize(3).tickFormat(y2d));
+  svg.append("g")
+      .attr("class", "axis axis-y")
+      .call(d3.axisLeft(y).tickSize(-width).ticks(5))
+      .selectAll('line')
+        .attr('class', d => d ? '' : 'zero');
+
+  // title
+  svg.append("text")
+      .attr("class", "title")
+      .attr("x", width/2)
+      .attr("y", -18)
+      .attr("dy", ".32em")
+      .attr("text-anchor", "middle")
+      .text(parties.join(' → '));
+
+  // split to seats
+  var dt = [], oc = [];
+  data
+    .filter(d => parties.indexOf(d.party) !== -1)
+    .forEach(d => {
+      for (var i = 0; i < d.seats; i++) {
+        dt.push({
+          party: d.party,
+          seat: i + 1,
+          year: d.year,
+          seats: d.seats,
+          percent: d.percent,
+        });
+      }
+      for (var i = 0; i < d._seats; i++) {
+        oc.push({
+          party: d.party,
+          seat: i + 1,
+          year: d.year,
+          seats: d.seats,
+          percent: d.percent,
+        });
+      }
+    });
+
+  var w = x.bandwidth() / 2;
+  svg.selectAll(".real")
+      .data(dt).enter()
+    .append("rect")
+      .attr("class", "real")
+      .attr("x", d => x(d.year))
+      .attr("y", d => y(d.seat) - 0.5)
+      .attr("width", w)
+      .attr("height", d => y(d.seat) - y(d.seat+1))
+      .attr("fill", d => palette[d.party]);
+
+  // if there was only 1 constituency
+  svg.selectAll(".calc")
+      .data(oc).enter()
+    .append("rect")
+      .attr("class", "calc")
+      .attr("x", d => x(d.year) + w)
+      .attr("y", d => y(d.seat) - 0.5)
+      .attr("width", w)
+      .attr("height", d => y(d.seat) - y(d.seat+1));
+
+}
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/10/a-single-constituency/" rel="bookmark">28. October 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>,</i>
+      <a rel="tag" href="/s/tagged/elections/">elections</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/10/polls-vs-elections/" title="Polls vs. Elections">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/10/possible-majority-coalitions/" title="Possible majority coalitions"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Political Compass Heatmap &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-10-16">16. October 2016</a>
+</p>
+
+<article id="political-compas-heatmap" lang="en">
+
+  <h1><a href="/s/2016/10/political-compas-heatmap/" rel="bookmark">Political Compass Heatmap</a></h1>
+
+  <style>
+#compass {
+  background: #ddd;
+}
+#compass svg {
+  font: 12px sans-serif;
+  background: #ddd;
+  pointer-events: all;
+}
+#compass .heading text {
+  font: 16px sans-serif;
+}
+#compass .tick line {
+  stroke: black;
+  fill: none;
+  stroke-width: .5;
+}
+#compass .domain {
+  stroke: none;
+  fill: none;
+}
+</style>
+
+<div id="compass"></div>
+
+<p>Once again <a href="https://en.wikipedia.org/wiki/Icelandic_parliamentary_election,_2016">it is election time</a> in Iceland. Like most western nations, Icelanders are into their politics. They also love internet quizes so the turnout in a <a href="http://is.helpmevote.eu/">political compass</a> making the rounds has been pretty good. Here is a plot of the scraped results data with the parties plotted on top.</p>
+
+<p>Party placements are those used by the political compass. The individual answers number around 53000, which comes to about 16% of Iceland's population of 332529, assuming one answer per person.</p>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="/s/2016/10/political-compas-heatmap/d3.hexbin.min.js"></script>
+<script type="text/x-data" id="compassdata" src="/s/2016/10/political-compas-heatmap/kosningaviti-15102016.csv"></script>
+<script>
+var parties = [
+  { x:-180, y: 255, id: '1' }, // xS - Samfylking
+  { x:-220, y: -55, id: '2' }, // xF -
+  { x: 290, y: -73, id: '3' }, // xD - Sjálfstæðisfl.
+  { x:-263, y:   5, id: '4' }, // x? - Húmanistar
+  { x:  16, y: 295, id: '5' }, // xA - Björt Framtíð
+  { x:-223, y:   5, id: '6' }, // x? - Dögun
+  { x:  55, y:-310, id: '7' }, // x? - Þjóðfylkingin
+  { x:-312, y: -20, id: '8' }, // x? - Alþýðufylkingin
+  { x: -73, y: 150, id: '9' }, // xÞ - Píratapartíið
+  { x:-290, y: 75, id: '10' }, // xV - VG
+  { x: -56, y:-185, id: '11' }, // xB - Framsókn
+  { x: 127, y: 237, id: '12' }, // xC - Viðreisn
+];
+
+var margin = { top: 60, right: 60, bottom: 60, left: 60 },
+    sqsize = document.getElementById('compass').clientWidth,
+    // sqsize = Math.min(html.clientWidth, html.clientHeight),
+    width = sqsize - margin.left - margin.right,
+    height = sqsize - margin.top - margin.bottom,
+    y = d3.scale.linear().range([ height - 10, 10 ]),
+    x = d3.scale.linear().range([ 10, width - 10 ]);
+
+var axis_placement = {
+  top: { a: 'y2', t: [1, 0, 0], m: [0, -1], p: [0, 0] },
+  left: { a: 'x2', t: [0, 1, -90], m: [-1, 0], p: [0, 0] },
+  right: { a: 'x2', t: [0, 1, 90], m: [1, 0], p: [1, 0] },
+  bottom: { a: 'y2', t: [1, 0, 0], m: [0, 1], p: [0, 1] },
+};
+
+function addAxis ( root, scale, orient, labels, title ) {
+  var or = axis_placement[orient],
+      flip = orient.length > 4 ? -1 : 1;
+
+  var svgAxis = d3.svg.axis()
+        .scale(scale)
+        .orient(orient).tickSize(2)
+        .tickFormat(labels ? String : '' );
+
+  var axg = svg.append('g')
+        .attr('class', `x axis ${orient}`)
+        .attr('transform', `translate(${[ or.p[0] * width, or.p[1] * height ]})`)
+        .call(svgAxis);
+  axg.selectAll('.tick line').attr(or.a, flip * 8);
+  if (title) {
+    axg.append('text')
+        .attr('transform', `translate(${[ (or.t[0] * width / 2) + ((~~labels * 48) || 12) * or.m[0],
+          (or.t[1] * height / 2) + ((~~labels * 28) || 12) * or.m[1] ]}) rotate(${ or.t[2] })`)
+        .attr('text-anchor', 'middle')
+        .attr('dy', '.4em')
+        .text(title);
+  }
+}
+
+var svg = d3.select('#compass').append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom)
+  .append('g')
+    .attr('transform', `translate(${[ margin.left, margin.top ]})`);
+
+svg.append('rect')
+    .attr('class', 'frame')
+    .attr('width', width)
+    .attr('height', height)
+    .style({ 'stroke': 'black', 'fill': 'white' });
+
+svg.append('g')
+    .attr('class', 'heading')
+    .attr('transform', `translate(${[ width/2, -margin.top/2 + 5 ]})`)
+    .append('text')
+      .attr('text-anchor', 'middle')
+      .text('Hexbin heatmap of a political compass result data');
+
+y.domain([ -350, 350 ]);
+x.domain([ -350, 350 ]);
+
+addAxis( svg, x, 'bottom', true, '← Socialism –vs– Capitalism →' );
+addAxis( svg, x, 'top', false );
+addAxis( svg, y, 'left', true, '← Nationalism –vs– Internationalism →' );
+addAxis( svg, y, 'right', false );
+
+var dataUrl = d3.select('#compassdata').attr('src');
+
+d3.csv(
+  dataUrl,
+  (r => [+r.x, +r.y]),
+  data => {
+
+  var hexbin = d3.hexbin()
+      .x(d => x(d[0]))
+      .y(d => y(d[1]))
+      .radius(width*0.035);
+
+  var color = d3.scale.linear()
+      .domain([0, 750])
+      .range(['white', 'steelblue'])
+      .interpolate(d3.interpolateLab);
+
+  svg.append("g")
+    .selectAll(".hexagon")
+      .data(hexbin(data))
+    .enter().append("path")
+      .attr("class", "hexagon")
+      .attr("d", hexbin.hexagon())
+      .attr("transform", d => "translate("+[d.x, d.y]+")")
+      .style("fill", d => color(d.length));
+
+  var z = ~~(width*0.05);
+  svg.selectAll(".logo")
+      .data(parties)
+    .enter().append("image")
+      .attr('class', 'logo')
+      .attr('xlink:href', d => `${dataUrl.replace(/[^\/]+$/, '')}${d.id}.png`)
+      .attr("x", d => x(d.x) - (z/2))
+      .attr("y", d => y(d.y) - (z/2))
+      .attr("width", z)
+      .attr("height", z);
+
+});
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/10/political-compas-heatmap/" rel="bookmark">16. October 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>,</i>
+      <a rel="tag" href="/s/tagged/elections/">elections</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/10/possible-majority-coalitions/" title="Possible majority coalitions">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/10/wind-particles/" title="Wind Particles"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

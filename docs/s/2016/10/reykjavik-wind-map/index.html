@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Reykjavík Wind Map &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-10-05">5. October 2016</a>
+</p>
+
+<article id="reykjavik-wind-map" lang="en">
+
+  <h1><a href="/s/2016/10/reykjavik-wind-map/" rel="bookmark">Reykjavík Wind Map</a></h1>
+
+  <style>
+#wind_map {
+  border-top: 1px solid #888;
+  border-bottom: 1px solid #888;
+  background: #f0f0f0;
+}
+#wind_map svg {
+  font: 12px sans-serif;
+  outline: 1px solid red;
+}
+#wind_map .title {
+  font: 20px sans-serif;
+}
+#wind_map .compass {
+  font: 17px sans-serif;
+  text-anchor: end;
+  fill: #aaa;
+}
+#wind_map text {
+  text-anchor: middle;
+}
+</style>
+<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script type="text/x-data" id="wind_data" src="/s/2016/10/reykjavik-wind-map/data.csv"></script>
+
+<div class="viz" id="wind_map"></div>
+
+<p>This is a d3 version of a <a href="https://gist.github.com/cavedave/6b3862936fefea14c241ea8537c4053d">Wind Map</a>, a fantastic idea by <a href="https://github.com/cavedave">David Curran</a>. A plotter pen is pushed by the wind over a canvas, revealing which way the wind blows.</p>
+
+<p>The <a href="https://www.wunderground.com/history/airport/BIRK/2015/1/1/CustomHistory.html?dayend=1&monthend=1&yearend=2016&req_city=&req_state=&req_statename=&reqdb.zip=&reqdb.magic=&reqdb.wmo=&format=1">data</a> comes from <a href="https://www.wunderground.com/">Weather Underground</a> and is as measured at the Reykjavík Airport which is conveniently located near the heart of the city.</p>
+
+<script>
+var containerElm = document.getElementById('wind_map');
+
+var margin = { top: 70, right: 40, bottom: 40, left: 40 },
+    clientWidth = containerElm.clientWidth,
+    width = clientWidth - margin.left - margin.right,
+    height = (clientWidth * 0.6) - margin.top - margin.bottom
+    aspect = height / width;
+
+var format = d3.time.format("%Y-%m-%d");
+
+function parseRow ( d ) {
+  return {
+    'time': format.parse(d.GMT),
+    'speed': +d[' Mean Wind SpeedKm/h'],
+    'dir': +d.WindDirDegrees
+  };
+}
+
+var svg = d3.select( '#wind_map' ).append( 'svg' )
+    .attr( 'width', width + margin.left + margin.right )
+    .attr( 'height', height + margin.top + margin.bottom )
+  .append( 'g' )
+    .attr( 'transform', `translate(${[ margin.left, margin.top ]})` );
+
+var legend = svg.append( 'g' )
+    .attr( 'transform', 'translate('+[ width/2, -margin.top * .70 ]+')' );
+legend.append( 'text' )
+    .attr( 'class', 'title' )
+    .attr( 'dy', '.32em' )
+    .text( '2015 Reykjavík Wind Map' );
+legend.append( 'text' )
+    .attr( 'y', 20 )
+    .attr( 'dy', '.32em' )
+    .text( 'A path travelled by an object pushed around by the wind.' );
+
+svg.append( 'text' )
+    .attr( 'y', -margin.top / 2 )
+    .attr( 'x', width )
+    .attr( 'class', 'compass' )
+    .text( '↑N' );
+
+d3.csv(d3.select('#wind_data').attr('src'), parseRow, data => {
+
+  data.forEach((d, i) => {
+    var pos = data[i - 1] || { x: 0, y: 0 },
+        a = ( d.dir - 90 - 180 ) * Math.PI / 180,
+        r = d.speed,
+        dx = r * Math.cos( a ),
+        dy = r * Math.sin( a );
+    d.x = pos.x + dx;
+    d.y = pos.y + (dy / aspect);
+  });
+
+  var first = data[0],
+      last = data[data.length - 1];
+
+  var yrange = d3.extent( data, d => d.y ),
+      xrange = d3.extent( data, d => d.x ),
+      yspan = Math.abs( yrange[0] - yrange[1] ),
+      xspan = Math.abs( xrange[0] - xrange[1] ),
+      span = Math.max( yspan, xspan ),
+      yoffs = (( span - yspan ) / 2),
+      xoffs = (( span - xspan ) / 2);
+
+  var x = d3.scale.linear()
+      .domain([ xrange[0] - xoffs, xrange[0] + span - xoffs ])
+      .range([ 0, width ]);
+  var y = d3.scale.linear()
+      .domain([ yrange[0] - yoffs, yrange[0] + span - yoffs ])
+      .range([ 0, height ]);
+
+  var line = d3.svg.line().x( d => x( d.x ) ).y( d => y( d.y ) );
+
+  var path = svg.append( 'path' )
+      .attr( 'd', line( data ) )
+      .style( 'stroke', 'black' )
+      .style( 'fill', 'none' );
+
+  var totalLength = path.node().getTotalLength();
+  path.attr( 'stroke-dasharray', totalLength + ' ' + totalLength )
+      .attr( 'stroke-dashoffset', totalLength )
+      .transition()
+        .duration( 7000 )
+        .ease( 'linear' )
+        .attr( 'stroke-dashoffset', 0 )
+        .each( 'end', plotFinal );
+
+  svg.append( 'text' )
+      .attr( 'x', x( first.x ) )
+      .attr( 'y', y( first.y ) )
+      .attr( 'class', 'label' )
+      .attr( 'dy', '1.1em' )
+      .text( 'Jan. 1st' );
+  svg.append( 'circle' )
+      .attr( 'cx', x( first.x ) )
+      .attr( 'cy', y( first.y ) )
+      .attr( 'class', 'start' )
+      .attr( 'r', 2 );
+
+  function plotFinal () {
+      svg.append( 'text' )
+      .attr( 'x', x( last.x ) )
+      .attr( 'y', y( last.y ) )
+      .attr( 'class', 'label' )
+      .attr( 'dy', '-.32em' )
+      .text( 'Dec. 31st' );
+  svg.append( 'circle' )
+      .attr( 'cx', x( last.x ) )
+      .attr( 'cy', y( last.y ) )
+      .attr( 'class', 'start' )
+      .attr( 'r', 2 );
+  }
+
+});
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/10/reykjavik-wind-map/" rel="bookmark">5. October 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/10/wind-particles/" title="Wind Particles">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/09/us-murder-rate/" title="U.S. murder rate from 1960 to 2012"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

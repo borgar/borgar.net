@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Gecko &amp; Webkit &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2009-07-12">12. July 2009</a>
+</p>
+
+<article id="gecko-and-webkit" lang="en">
+
+  <h1><a href="/s/2009/07/gecko-and-webkit/" rel="bookmark">Gecko &amp; Webkit</a></h1>
+
+  <p>I stumbled over <a href="http://www.zeldman.com/2009/07/12/web-standards-secret-sauce-webkit-in-iphone/">Zeldman&#39;s opening statement</a>:</p>
+<blockquote>
+<p>When Apple chose Webkit rather than Mozilla Gecko as the basis for its Safari browser, some of us in the web standards community scratched our heads. Sure, Webkit was open-source and standards-compliant.</p>
+</blockquote>
+<p>Really? People were puzzled by this? This always seemed the obvious choice to me. </p>
+<p>First of all, Apple didn&#39;t choose WebKit, they chose KHTML to become WebKit. And while Firefox may have been more mature as a browser, the Gecko engine was not mature in ways that mean &quot;sophisticated&quot;.</p>
+<p>At the time (7-8 years ago today) the Gecko codebase was a notorious mess and the rewrite work only so far along the way. It was such as mess that it was a running joke on Slashdot and cited as a perfect example of the code equivalent of spaghetti. Gecko still needed a completely new text layout handler to do things like &#39;<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=9458">inline-block display</a>&#39; and &#39;<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=9101">hyphenation</a>&#39;. </p>
+<p>Additionally, the Mozilla developers&#39; &quot;if you want this feature so much then you are welcome to implement it yourself&quot; vitriol towards web developers wasn&#39;t much better than the apathy Microsoft had. And while it was certainly technically right, it was neither reasonable nor to their credit. But that may not have been so much a factor for Apple.</p>
+<p>KHTML, on the other hand, was in heavy development with a much fresher codebase and had nice things that only IE supported, like right-to-left language text. Things that are important to corporations that intend to sell computers to the millions of non-english speakers of the world.</p>
+<p>From a purely technical point of view KHTML was a much better choice. Dave Hyatt, who probably had a large say in the selecting KHTML to become WebKit, knew this all to well having worked with, and written some of, the mess Gecko was at the time. </p>
+<p>Time passes and we may not remember all of this so clearly or, as things change, these things cease to matter. I am a bit surprised to hear that web developers, even heavy weights like Zeldman, were unaware of the state of the browsers they worked on. Are they still?</p>
+
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2009/07/gecko-and-webkit/" rel="bookmark">12. July 2009</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/browser/">browser</a><i>,</i>
+      <a rel="tag" href="/s/tagged/history/">history</a><i>,</i>
+      <a rel="tag" href="/s/tagged/internet/">internet</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2009/07/sokoban/" title="Sōkoban">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2008/11/opin-ordabok/is/" title="Islenska.org opin almenningi"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

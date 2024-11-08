@@ -1,0 +1,75 @@
+#dfpr {
+  font: 14px sans-serif;
+}
+#controls {
+  padding: 0;
+  overflow: hidden;
+}
+#dfpr label {
+  cursor: pointer;
+  float : left;
+  width : 24%;
+  font-size : 12px;
+}
+#dfpr label:hover span {
+  text-decoration: underline;
+}
+#dfpr label span {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 20px;
+}
+#dfpr .rule line {
+  stroke: #999;
+  stroke-dasharray: 2 2;
+}
+#dfpr .rule text {
+  font: 12px sans-serif;
+}
+
+#dfpr .point {
+  stroke: #aaa;
+  stroke-width: 1;
+  fill: #ccc;
+  fill-opacity: .5;
+  stroke-opacity: 1;
+  transition: stroke-opacity .5s, fill-opacity .5s;
+}
+#dfpr .point.inactive {
+  fill: none;
+  stroke: #444;
+  stroke-width: 1;
+  stroke-dasharray: 1 2;
+}
+#dfpr .point.hovered {
+  fill-opacity: 1;
+}
+
+#dfpr .hovering .point:not(.hovered) {
+  stroke-opacity: .25;
+  fill-opacity: .2;
+}
+
+#dfpr .xR { fill: #bcbd22; stroke: #bcbd22; }
+#dfpr .xA { fill: #9467bd; stroke: #9467bd; }
+#dfpr .xT { fill: #ff7f0e; stroke: #ff7f0e; }
+#dfpr .xI { fill: #c5b0d5; stroke: #c5b0d5; }
+#dfpr .xB { fill: #2ca02c; stroke: #2ca02c; }
+#dfpr .xG { fill: #17becf; stroke: #17becf; }
+#dfpr .xF { fill: #c49c94; stroke: #c49c94; }
+#dfpr .xM { fill: #ffbb78; stroke: #ffbb78; }
+#dfpr .xC { fill: #8c564b; stroke: #8c564b; }
+#dfpr .xP { fill: #7f7f7f; stroke: #7f7f7f; }
+#dfpr .xJ { fill: #e377c2; stroke: #e377c2; }
+#dfpr .xS { fill: #d62728; stroke: #d62728; }
+#dfpr .xD { fill: #1f77b4; stroke: #1f77b4; }
+#dfpr .xV { fill: #98df8a; stroke: #98df8a; }
+
+#dfpr .tooltip rect {
+  fill: rgba(255, 255, 255, .9);
+}
+#dfpr .tooltip text {
+  fill: black;
+  font-size: 12px;
+  stroke: none;
+}

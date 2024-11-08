@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Election turnout pyramid &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-11-29">29. November 2016</a>
+</p>
+
+<article id="election-turnout-pyramid" lang="en">
+
+  <h1><a href="/s/2016/11/election-turnout-pyramid/" rel="bookmark">Election turnout pyramid</a></h1>
+
+  <style>
+#elpy {
+  font: 12px sans-serif;
+}
+.female .registered {
+  fill: #F8CC98;
+}
+.female .voted {
+  fill: #FAA43A;
+}
+.male .registered {
+  fill: #A1BFE3;
+}
+.male .voted {
+  fill: #5DA5DA;
+}
+.female .label {
+  text-anchor: start;
+}
+.male .label {
+  text-anchor: end;
+}
+.label {
+  font: 11px sans-serif;
+  fill: #fff;
+  fill-opacity: .9;
+}
+.axislabel {
+  fill: #000;
+  font: 13px sans-serif;
+}
+.avg line {
+  stroke: black;
+  stroke-dasharray: 2 2;
+}
+.avg text, .y_label {
+  fill: black;
+  text-anchor: middle;
+}
+.axis, .avg {
+  shape-rendering: crispEdges;
+}
+</style>
+
+<div id="elpy" class="viz">
+  <svg width="960" height="500"></svg>
+</div>
+
+<p>The <a href="https://en.wikipedia.org/wiki/Reykjav%C3%ADk">city of Reykjavík</a> performed a study on voting by age for the first time in 2014 for Reykjavík's two constituencies. So breakdown of the election turnout is a relatively new addition to elections in Iceland.</p>
+
+<p>The pending numbers for the most recent election have not been published yet, but the city has published an <a href="http://reykjavik.is/frettir/minnsta-kjorsokn-i-borgarstjornarkosningum-fra-1928">excellent analysis</a> on the <a href="https://en.wikipedia.org/wiki/Icelandic_municipal_elections,_2014">2014 municipality elections</a>, which had the lowest turnout since 1928.</p>
+
+<p>The Reykjavík turnout data is plotted here as a population pyramid of the registered voters, with the turnout highlighted. It's very obvious, as it was in the analysis, that the "younger generation" doesn't show up to vote. Why? We don't know. Has it maybe always been this way? We also don't know. This was the first time the breakdown was available.</p>
+
+<p>Another curiosity is the lower turnout amongst females over 70 years old, compared to males over 70. Women have had full voting rights in Iceland <a href="http://kvennasogusafn.is/index.php?page=womens-suffrage">since 1915</a>, and even longer in municipality elections, so there are very few women alive in Iceland today that haven't always had the right to vote. We can guess that this might still be a sign of times past but since we don't have data, again, we just don't know why.</p>
+
+<script type="text/x-data" id="elpy-data" src="/s/2016/11/election-turnout-pyramid/data.csv"></script>
+
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script>
+// no margins
+var svg = d3.select('#elpy svg'),
+    width = +svg.attr('width'),
+    height = +svg.attr('height');
+
+// with margins
+var pad = { top: 25, right: 65, bottom: 30, left: 65 },
+    width = +svg.attr('width') - pad.left - pad.right,
+    height = +svg.attr('height')- pad.top - pad.bottom;
+svg = svg.append('g')
+    .attr('transform', `translate(${pad.left},${pad.top})`);
+
+var percent = (d, s) => Math.round(d) + '% ' + (s||'');
+
+var parse = r => {
+  r.male = +r.male;
+  r.female = +r.female;
+  r.turnout = parseFloat(r.turnout);
+  r.turnout_f = parseFloat(r.turnout_f);
+  r.turnout_m = parseFloat(r.turnout_m);
+  return r;
+};
+
+d3.csv(d3.select('#elpy-data').attr('src'), parse, (err, data) => {
+
+  var size = 420;
+  var age = d3.scaleBand()
+      .domain(data.map(d => d.age))
+      .range([size, 0])
+      .padding(.15);
+
+  var _males = data.map(d => d.male);
+  var _females = data.map(d => d.female);
+  var total = d3.sum(_males.concat(_females));
+  var maxCount = d3.max(_males.concat(_females));
+
+  var voted_f = 0;
+  var voted_m = 0;
+  data.forEach(d => {
+    d.voted_f = (d.turnout_f / 100) * d.female;
+    d.voted_m = (d.turnout_m / 100) * d.male;
+    voted_f += d.voted_f;
+    voted_m += d.voted_m;
+  });
+
+  var turnout_m = voted_m / d3.sum(_males) * 100;
+  var turnout_f = voted_f / d3.sum(_females) * 100;
+
+  var count = d3.scaleLinear()
+      .domain([0, maxCount])
+      .range([0, size]);
+
+  var axy = svg.append('g')
+      .attr('class', 'y_label')
+      .attr('transform', d => `translate(${width/2},0)`);
+
+  axy.selectAll('.y_label')
+      .data(data).enter()
+    .append('text')
+      .attr('dy', '.34em')
+      .attr('transform', d => `translate(0,${age(d.age)+age.bandwidth()/2})`)
+      .text(d => d.age);
+
+  axy.append('text')
+      .attr('dy', '-.34em')
+      .text('Age');
+
+  // === === === === ===
+
+  var females = svg.append('g')
+      .attr('class', 'females')
+      .attr('transform', d => `translate(${width/2+25},0)`);
+
+  var count_f = d3.scaleLinear()
+      .domain([0, maxCount])
+      .range([0, size]);
+
+  var g = females.selectAll('.female')
+      .data(data).enter()
+    .append('g')
+      .attr('class', 'female')
+      .attr('transform', d => `translate(0, ${age(d.age)})`);
+
+  g.append('rect')
+      .attr('class', 'registered')
+      .attr('height', age.bandwidth())
+      .attr('width', d => count_f(d.female));
+
+  g.append('rect')
+      .attr('class', 'voted')
+      .attr('height', age.bandwidth())
+      .attr('width', d => count_f(d.voted_f));
+
+  g.append('text')
+      .attr('class', 'label')
+      .attr('dy', '.34em')
+      .attr('transform', `translate(5,${age.bandwidth() / 2})`)
+      .text(d => percent(d.turnout_f));
+
+  females.append('g')
+      .attr('class', 'axis')
+      .attr('transform', `translate(0,${size+5})`)
+      .call(d3.axisBottom().scale(count_f).tickFormat(String).ticks(5))
+      .append('text')
+        .attr('class', 'axislabel')
+        .attr('x', count_f(maxCount/2))
+        .attr('y', 35)
+        .text('Number of female voters');
+
+  var avg = females.append('g')
+      .attr('class', 'avg')
+      .attr('transform', `translate(${count_f(voted_f/data.length)},0)`);
+  avg.append('text')
+      .attr('dy', '-.34em')
+      .text(percent(turnout_f, 'avg.'));
+  avg.append('line')
+      .attr('y2', size+5);
+
+  // === === === === ===
+
+  var males = svg.append('g')
+      .attr('class', 'males')
+      .attr('transform', d => `translate(${width/2-25},0)`);
+
+  var count_m = d3.scaleLinear()
+      .domain([maxCount, 0])
+      .range([-size, 0]);
+
+  var g = males.selectAll('.male')
+      .data(data).enter()
+    .append('g')
+      .attr('class', 'male')
+      .attr('transform', d => `translate(0, ${age(d.age)})`);
+
+  g.append('rect')
+      .attr('class', 'registered')
+      .attr('x', d => -count_f(d.male))
+      .attr('height', age.bandwidth())
+      .attr('width', d => count_f(d.male));
+
+  g.append('rect')
+      .attr('class', 'voted')
+      .attr('x', d => -count_f(d.voted_m))
+      .attr('height', age.bandwidth())
+      .attr('width', d => count_f(d.voted_m));
+
+  g.append('text')
+      .attr('class', 'label')
+      .attr('dy', '.34em')
+      .attr('transform', `translate(-5,${age.bandwidth() / 2})`)
+      .text(d => percent(d.turnout_m));
+
+  males.append('g')
+      .attr('class', 'axis')
+      .attr('transform', `translate(0,${size+5})`)
+      .call(d3.axisBottom().scale(count_m).tickFormat(String).ticks(5))
+      .append('text')
+        .attr('class', 'axislabel')
+        .attr('x', count_m(maxCount/2))
+        .attr('y', 35)
+        .text('Number of male voters');
+
+  var avg = males.append('g')
+      .attr('class', 'avg')
+      .attr('transform', `translate(${-count_f(voted_m/data.length)},0)`);
+  avg.append('text')
+      .attr('dy', '-.34em')
+      .text(percent(turnout_m, 'avg.'));
+  avg.append('line')
+      .attr('y2', size+5);
+
+});
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/11/election-turnout-pyramid/" rel="bookmark">29. November 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>,</i>
+      <a rel="tag" href="/s/tagged/elections/">elections</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2017/09/possible-majority-coalitions-2/" title="Possible majority coalitions">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/11/proportional-housing-markets/" title="Proportional housing markets"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

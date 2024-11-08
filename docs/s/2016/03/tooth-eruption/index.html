@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Tooth Eruption &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2016-03-18">18. March 2016</a>
+</p>
+
+<article id="tooth-eruption" lang="en">
+
+  <h1><a href="/s/2016/03/tooth-eruption/" rel="bookmark">Tooth Eruption</a></h1>
+
+  <style>
+#teeth svg {
+  font: 11px sans-serif;
+}
+
+svg .heading {
+  font: 30px sans-serif;
+}
+
+svg .case rect, svg .case path {
+  fill: #bbb;
+}
+svg .male rect, svg .male path {
+  fill: #3388EE;
+}
+svg .female rect, svg .female path {
+  fill: #EEAACC;
+}
+svg .case .mean {
+  fill: white;
+  stroke: black;
+  stroke-width: .5;
+}
+svg .case .deviation {
+  fill: black;
+}
+
+svg .gums {
+  fill: #fdd;
+}
+svg .tooth path {
+  stroke: #555;
+  stroke-width: 1.5;
+  fill: white;
+}
+svg rect.focus, svg .focus path {
+  fill: #eef;
+}
+svg .focus path {
+  stroke: #000;
+  stroke-width: 2;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #ddd;
+  shape-rendering: crispEdges;
+  stroke-dasharray: 2, 2;
+}
+.frame,
+.axis .major line {
+  fill: none;
+  stroke: #ddd;
+  stroke-dasharray: none;
+}
+.label {
+  font: 12px sans-serif;
+}
+
+.legend rect {
+  fill: white;
+  fill-opacity: .75;
+}
+.legend line {
+  stroke: #888;
+  stroke-dasharray: 1,1;
+}
+.dev-range {
+  fill: none;
+  stroke: #888;
+  stroke-dasharray: 1,1;
+}
+
+</style>
+
+<div class="viz" id="teeth"></div>
+
+<p>My dentist has a great framed infographics poster on the wall of his operating room. It plots, in two parts, the results of a study of tooth eruptions. I have aproximately replicated the part showing primary teeth.</p>
+
+<p>The infographic is good for many reasons. It is action packed and makes the data easy to read for novices. It does have an issue that bothers me: The range of [µ-1σ, µ+1σ] is drawn as a whole rectangle, which doesn't reflect <a href="https://en.wikipedia.org/wiki/Normal_distribution#/media/File:Empirical_Rule.PNG">what normal distribution looks like</a>.</p>
+
+<p>I have partly built this as an experiment with a better representation of where the measured cases actually belong. There are other ways to do this, but the goal here was to indicate the statistical sizes, rather than presenting a very detailed view.</p>
+
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="/s/2016/03/tooth-eruption/teeth.js"></script>
+<script src="/s/2016/03/tooth-eruption/d3.svg.devbox.js"></script>
+<script type="text/x-data" id="eruption-data" src="/s/2016/03/tooth-eruption/eruptions.csv"></script>
+<script>
+var margin = { top: 10, right: 10, bottom: 40, left: 65 },
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom,
+    y = d3.scale.ordinal().rangeBands([ 0, height ]),
+    x = d3.scale.linear().range([ 0, width ]);
+
+var svg = d3.select( '#teeth' ).append( 'svg' )
+    .attr( 'width', width + margin.left + margin.right )
+    .attr( 'height', height + margin.top + margin.bottom )
+  .append( 'g' )
+    .attr( 'transform', `translate(${margin.left},${margin.top})` );
+
+var defs = svg.append( 'defs' )
+  .append( 'clipPath' )
+    .attr( 'id', 'plotclip' )
+  .append( 'rect' )
+    .attr( 'id', 'plotrect' )
+    .attr( 'x', 0 )
+    .attr( 'y', 0 )
+    .attr( 'width', width )
+    .attr( 'height', height );
+
+d3.csv(d3.select('#eruption-data').attr('src'), eruptions => {
+  var data = d3.nest()
+    .key( d => d.sex + '/' + d.teeth )
+    .rollup( values => {
+      return {
+        'mean': d3.mean( values, d => d.months ),
+        'std': d3.deviation( values, d => d.months ),
+        'sex': values[0].sex,
+        'teeth': values[0].teeth
+      };
+    })
+    .entries( eruptions );
+
+  y.domain( data.map( d => d.key ) );
+  x.domain([ 0, 12 * 3 ]); // 3 years
+
+  // hover focus
+  var hover_line = svg.append( 'rect' )
+    .attr( 'class', 'mouseline focus' )
+    .attr( 'width', width )
+    .attr( 'height', y.rangeBand() )
+    .style( 'display', 'none' );
+
+
+  // X-Axis
+  var xAxisBottom = d3.svg.axis()
+      .scale( x )
+      .ticks( 30 )
+      .tickPadding( 6 )
+      .tickSize( -height )
+      .orient( "bottom" );
+
+  var axx = svg.append( "g" )
+      .attr( "class", "x axis" )
+      .attr( "transform", `translate(0,${height})` )
+      .call( xAxisBottom );
+
+  axx.selectAll( '.tick' )
+      .attr( 'class', d => !( d % 12 ) ? 'major tick' : 'tick' )
+
+  axx.append( 'text' )
+      .attr( 'class', 'label' )
+      .attr( 'x', width/2 )
+      .attr( 'y', 30 )
+      .text( 'Age in months' )
+      .style( 'text-anchor', 'middle' );
+
+
+  // Y-Axis
+  var yAxisBottom = d3.svg.axis()
+      .scale( y )
+      .tickPadding( 8 )
+      .tickSize( -width )
+      .orient( "left" )
+      .tickFormat( d => d.split( '/' )[1] );
+
+  var axy = svg.append( "g" )
+      .attr( "class", "y axis" )
+      .call( yAxisBottom );
+
+  axy.append( 'text' )
+      .attr( 'class', 'label' )
+      .attr( 'transform', `translate(-45,${height/2}) rotate(-90)` )
+      .text( 'Teeth ID pairs by ISO 3950 notation' )
+      .style( 'text-anchor', 'middle' );
+
+
+  // Plot frame
+  svg.append( 'use' )
+      .attr( 'xlink:href', '#plotrect' )
+      .attr( 'class', 'frame' );
+
+
+  // Legend
+  var legend_width = x(35) - x(24);
+
+  var legend = svg.append( 'g' )
+      .attr( 'class', 'legend' )
+      .attr( 'transform', d => `translate(${x(24.5)},15)` );
+
+  legend.append( 'rect' )
+      .attr( 'width', legend_width )
+      .attr( 'height', 278 )
+      .attr( 'rx', 7 );
+
+  // description
+  legend.append( 'text' )
+      .attr( 'class', 'heading' )
+      .attr( 'x', legend_width * .5 )
+      .attr( 'y', 40 )
+      .style( 'text-anchor', 'middle' )
+      .text( 'Primary Teeth' )
+
+  var population = d3.set( eruptions.map( d => d.id ) ).size();
+  legend.append( 'text' )
+      .attr( 'y', 53 )
+      .style( 'font', '12px sans-serif' )
+      .style( 'text-anchor', 'start' )
+      .selectAll( 'tspan' )
+        .data([
+          'Eruption of teeth and the dental maturity',
+          'of Icelandic children. From a study of ' + population,
+          'children between the ages of 0-83 months',
+          'in the winter of 1978-1979'
+        ]).enter()
+      .append( 'tspan' )
+        .attr( 'x', x(1) )
+        .attr( 'dy', '1.2em' )
+        .text( String );
+
+  var f_label = legend.append( 'g' )
+      .attr( 'class', 'female' )
+      .attr( 'transform', 'translate('+(legend_width*.6)+',130)' );
+  f_label.append( 'text' )
+      .attr( 'class', 'label' )
+      .attr( 'dy', '.32em' )
+      .attr( 'x', 10 )
+      .text( 'Girls' );
+  f_label.append( 'path' )
+      .attr( 'd', d3.svg.symbol().type( 'square' ).size( 60 ) );
+
+  var m_label = legend.append( 'g' )
+      .attr( 'class', 'male' )
+      .attr( 'transform', 'translate('+(legend_width*.3)+',130)' );
+  m_label.append( 'text' )
+      .attr( 'class', 'label' )
+      .attr( 'dy', '.32em' )
+      .attr( 'x', 10 )
+      .text( 'Boys' );
+  m_label.append( 'path' )
+      .attr( 'd', d3.svg.symbol().type( 'square' ).size( 60 ) );
+
+  var sdlegend = d3.svg.devbox()
+      .scale( x )
+      .height( y.rangeBand() )
+      .tickFormat( d => (d > 0 ? '+' : '' ) + d + 'σ' );
+
+  var stdlabel = legend.append( 'g' )
+      .attr( 'transform', `translate(${legend_width/2},173)` );
+
+  stdlabel.append( 'g' )
+      .datum({ mean: 0, deviation: 1.5 })
+      .attr( 'class', 'case' )
+      .call( sdlegend );
+
+  stdlabel.append( 'line' )
+      .attr( 'y1', 0 - 10 )
+      .attr( 'y2', 0 );
+
+  stdlabel.append( 'text' )
+      .attr( 'y', 0 - y.rangeBand() + 5 )
+      .attr( 'dy', '.32em' )
+      .style( 'text-anchor', 'middle' )
+      .text( 'Average' );
+
+  // single stdev
+  stdlabel.append( 'path' )
+      .attr( 'transform', 'translate(0,35)' )
+      .attr( 'd', `m${-x(1.5)},0s 0,5, 5,5 l${x(1.5*2)-10},0 s5,0 5,-5` )
+      .attr( 'class', 'dev-range' );
+
+  stdlabel.append( 'text' )
+      .attr( 'y', 50 )
+      .attr( 'dy', '.32em' )
+      .style( 'text-anchor', 'middle' )
+      .text( '68.27% of measures' );
+
+  // double stdev
+  stdlabel.append( 'path' )
+      .attr( 'transform', 'translate(0,35)' )
+      .attr( 'd', `m${-x(1.5*2)},0 l0,30 s 0,5, 5,5 l${x(1.5*4)-10},0 s5,0 5,-5 l0,-30` )
+      .attr( 'class', 'dev-range' );
+
+  stdlabel.append( 'text' )
+      .attr( 'y', 80 )
+      .attr( 'dy', '.32em' )
+      .style( 'text-anchor', 'middle' )
+      .text( '95.45% of measures' );
+
+
+  // Teething cases
+  var sdplot = d3.svg.devbox()
+      .scale( x )
+      .height( y.rangeBand() )
+      .mean( d => d.values.mean )
+      .deviation( d => d.values.std )
+      ;
+  var cases = svg.append( 'g' )
+      .attr( 'class', 'group' )
+      .selectAll( '.case' ).data( data ).enter()
+    .append( 'g' )
+      .attr( 'class', d => 'case ' + d.values.sex )
+      .attr( 'transform', d => `translate(0,${y(d.key)})` )
+      .call( sdplot )
+      .selectAll( 'path.box' )
+        .attr( 'clip-path', 'url(#plotclip)' )
+        ;
+
+  // Mouth illustration
+  var mouth = svg.append( 'g' )
+      .attr( 'transform', 'translate(100,210) scale(.4,.4)' );
+
+  mouth.append( 'path' )
+      .attr( 'd', teeth.path.gum )
+      .attr( 'class', 'gums' );
+
+  mouth.append( 'path' )
+      .attr( 'transform', 'translate(0,510) scale(1,-1)' )
+      .attr( 'd', teeth.path.gum )
+      .attr( 'class', 'gums' );
+
+  mouth.selectAll('.label')
+      .data([ 'Upper', 'teeth' ]).enter()
+    .append( 'text' )
+      .text( String )
+      .attr( 'dy', (d,i) => i * 40 )
+      .attr( 'y', d => 140 )
+      .style( 'text-anchor', 'middle' )
+      .style( 'font-size', '32px' )
+
+  mouth.selectAll('.label')
+      .data([ 'Lower', 'teeth' ]).enter()
+    .append( 'text' )
+      .text( String )
+      .attr( 'dy', (d,i) => i * 40 )
+      .attr( 'y', d => 200 + 150 )
+      .style( 'text-anchor', 'middle' )
+      .style( 'font-size', '32px' )
+
+  var teethg = mouth.selectAll( '.tooth' )
+      .data( teeth.deciduous )
+      .enter()
+    .append( 'g' )
+      .attr( 'class', 'tooth' );
+
+  teethg.append( 'path' )
+      .attr( 'd', d => teeth.path[ d.type ] )
+      .attr( 'id', d => 'tooth_' + d.id )
+      .attr( 'transform', d => {
+        var s = [ 1, 1 ],
+            p = d.pos.concat();
+        if ( d.pos[0] > 0 ) { s[0] = -1; }
+        if ( d.pos[1] < 0 ) { s[1] = -1; p[1] += 510; }
+        return `translate(${p}) scale(${s}) rotate(${d.r})`;
+      });
+
+  // extend a line running from a centerpoint to a
+  // destination point by a given length
+  function expandBy ( cpos, dpos, l ) {
+    var alpha = Math.atan2( dpos[0] - cpos[0], dpos[1] - cpos[1] ),
+        dist = Math.sqrt( Math.pow( dpos[0] - cpos[0], 2 ) +
+                          Math.pow( dpos[1] - cpos[1], 2 ) );
+    return [ cpos[0] + ( dist + l ) * Math.sin( alpha )
+           , cpos[1] + ( dist + l ) * Math.cos( alpha ) ];
+  }
+
+  teethg.append( 'text' )
+      .attr( 'dy', '.32em' )
+      .attr( 'x', d => {
+        var cx = ( d.pos[1] < 0 ) ? -180 : 180;
+        return expandBy( [ 0, cx ], d.pos, 40 )[ 0 ];
+      })
+      .attr( 'y', d => {
+        var cx = ( d.pos[1] < 0 ) ? -180 : 180,
+            yp = ( d.pos[1] < 0 ) ? 510 : 0;
+        return expandBy( [ 0, cx ], d.pos, 40 )[ 1 ] + yp;
+      })
+      .text( d => d.id )
+      .style( 'text-anchor', d => ( d.pos[0] > 0 ) ? 'start' : 'end' )
+      .style( 'font-size', '24px' );
+
+
+  // Mouse events
+  svg.attr( 'pointer-events', 'all' )
+      .on( 'mouseout', function () {
+        hover_line.style( 'display', 'none' );
+        mouth.selectAll( '.tooth' ).attr( 'class', 'tooth' );
+      })
+      .on( 'mousemove', function () {
+        var pos = d3.mouse( this ),
+            ypos = Math.max( pos[1], 0 );
+        if ( ypos > 0 && ypos < height ) {
+          var ent = y.domain()[ d3.bisect( y.range(), ypos ) - 1 ],
+              tgt = ent.split( '/' )[1].split( ' ' );
+          mouth.selectAll( '.tooth' )
+              .attr( 'class', d => tgt.indexOf( d.id ) > -1 ? 'tooth focus' : 'tooth');
+          hover_line
+              .style( 'display', '' )
+              .attr( 'y', y( ent ) );
+        }
+      });
+});
+</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2016/03/tooth-eruption/" rel="bookmark">18. March 2016</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/dataviz/">dataviz</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2016/03/will-burtins-antibiotics/" title="Will Burtin’s Antibiotics">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2016/03/octopus/" title="Octopus"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Orðla means Wordle &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2023-01-02">2. January 2023</a>
+</p>
+
+<article id="ordla-means-wordle" lang="en">
+
+  <h1><a href="/s/2023/01/ordla-means-wordle/" rel="bookmark">Orðla means Wordle</a></h1>
+
+  <p><img src="/s/2023/01/ordla-means-wordle/ordla-skaup-2.png" alt="ordla-skaup-1.png"></p>
+<p>In January 2022 when the <a href="https://en.wikipedia.org/wiki/Wordle">Wordle</a> was the talk of the internet, I adapted the game to Icelandic. A few other attempts were made to do this but mine, found <a href="https://ordla.us">at ordla.us</a>, was the most successful clone - enough so to be featured in the <a href="https://en.wikipedia.org/wiki/%C3%81ram%C3%B3taskaupi%C3%B0">Áramótaskaup</a>, a highly popular yearly comedy special which recaps the highlight of the passing year&#39;s events.</p>
+<p>It&#39;s now been quite a while since its release but I am still playing it, and have even managed to be lucky enough to guess the word first try. I think that a few of the challenges with adapting it were interesting enough to merit a retro&shy;spective.</p>
+<h2>Orðla</h2>
+<p>Accoring to <a href="https://www.ruv.is/frettir/innlent/2023-01-04-landsmenn-leitudu-ad-arnari-grant-verbudinni-heimsmeistaramotinu-og-ordlu">a news article at RÚV</a> (Iceland&#39;s national public-service broadcasting organization) &quot;orðla&quot; was the second most popular search term submitted to Google.</p>
+<p>The name <em>Orðla</em> is a nonsense word, like <em>Wordle</em>. It was already going around as the name for the game, and I used it in a blatant attempt to usurp the place as the “official” clone.</p>
+<p>A quick witted coworker suggested that I should register a .us domain name for it as <em>orðlaus</em> does mean something in Icelandic: Wordless.</p>
+<h2>The alphabet</h2>
+<p>The English alphabet has 26 letters, whereas the Icelandic one has 32 letters. This makes it harder to guess words for the same reason we&#39;re always being told to add special letters to our passwords.</p>
+<p>I had been playing the game in English and anticipated that switching to my mother tongue would make it easier. But no, what I found was that it became harder. I solved this aspect of it by adding a a <em>handicap</em> button: Click it at the start of the game and it will exclude 6 unused letters. This lowers the difficulty to match the original.</p>
+<h2>The keyboard</h2>
+<p>The on-screen keyboard was a pain. It needs more letters on screen than is comfortable and players had very different opinions on what was a good layout. The game has 2 settings: ABCD or QWERTY order, and 3 or 4 rows. I say QWERTY, but Icelandic does not include Q or W, despite Icelandic keyboards having them. So the design players are used to typing on does not work well in the game.</p>
+<p>Icelandic keyboard layout also does not feature accented letters, just a single accent character. But the accented letters need to feature on screen. Players may also type the letters on a keyboard if they are playing on desktop, and that must account for accented character composition. This is the sort of thing that is easy to omit (all other clones did) but is the sort of detail that can enormously frustrate users.</p>
+<h2>The dictionary</h2>
+<p>Because of its inflection and compound system, the Icelandic language also has <em>way more</em> words than English. The <a href="https://en.wikipedia.org/wiki/Icelandic_grammar">Icelandic inflection system</a> is complex. A word exists in many forms and a big proportion of those forms may exist mostly because of the system, while not ever seeing much use. So an Icelandic player is likely to struggle guessing an unusual word-form.</p>
+<p>The game uses two dictionaries, a dictionary of valid guesses, and a dictionary of solutions which is a subset of the former. For English, you would download a scrabble dictionary and filter it down to 5 letter words. But this is not the sort of thing that exists for Icelandic, so I had to create these.</p>
+<p>Wordle has a simple randomized list of solution which it goes through linearly to pick the word of the day. To keep the application compact I had to compress my dictionaries, which means an alternative approach to picking word of the day is needed. To find the word of the day, Ordla <a href="https://github.com/borgar/ordla/blob/02362f248f851536e1431bcd64002798cbd70b38/src/dictionary.js#L80">generates whole bunch of random words</a> until it finds one from the valid solutions list.</p>
+<p>After filtering down to a subset of words that only included words in their root (or most basic) forms I ended up with about 23,000 words. Which is 10 times the size of Wordle&#39;s original dictionary. I then &quot;simply&quot; had go through all of them to hand pick a acceptable subset for solution, removing proper nouns, obscenities and obscure forms, as well as all words that feature a letter twice. I had noticed the double letters to be a source of Wordle players feeling the game wasn&#39;t fair.</p>
+<p>The end result is a solution dictionary of about 2,300 words, same as the original game.</p>
+<p>Amusingly I had made a mistake in the dictionary generation logic that caused obscenities to be excluded from the valid guesses. This <a href="brund">was pointed out to me</a> within half an hour from release.</p>
+<h2>The code is free</h2>
+<p>As with most projects like this that I do, the <a href="https://github.com/borgar/ordla">code is open source</a>. Do with it what you will. But most importantly have fun!</p>
+
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2023/01/ordla-means-wordle/" rel="bookmark">2. January 2023</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/game/">game</a><i>,</i>
+      <a rel="tag" href="/s/tagged/icelandic/">icelandic</a><i>,</i>
+      <a rel="tag" href="/s/tagged/javascript/">javascript</a><i>,</i>
+      <a rel="tag" href="/s/tagged/release/">release</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  
+  <a rel="prev" href="/s/2019/12/barneignir-a-islandi/is/" title="Barneignir á Íslandi"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

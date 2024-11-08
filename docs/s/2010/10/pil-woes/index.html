@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Building PIL against MacPorts on Snow Leopard &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2010-10-11">11. October 2010</a>
+</p>
+
+<article id="pil-woes" lang="en">
+
+  <h1><a href="/s/2010/10/pil-woes/" rel="bookmark">Building PIL against MacPorts on Snow Leopard</a></h1>
+
+  <p>I spent hours getting this to work so I thought it best to share it, esp. since so many others seem
+to be having the <a href="http://www.google.com/search?q=_jpeg_resync_to_restart">_jpeg_resync_to_restart error</a>. The problem affected me in the
+following way: PIL depends on <em>libjpeg</em>, which was present on my system but failing to load and
+caused import errors the <code>_imaging</code> package. </p>
+<pre><code>&gt;&gt;&gt; from PIL import _imaging
+Traceback (most recent call last):
+File &quot;&quot;, line 1, in
+ImportError: dlopen(/Library/Python/2.6/site-packages/PIL/_imaging.so, ↩
+  2): Symbol not found: _jpeg_resync_to_restart
+Referenced from: /Library/Python/2.6/site-packages/PIL/_imaging.so
+Expected in: flat namespace in /Library/Python/2.6/site-packages/PIL/_imaging.so
+</code></pre>
+<p>After flailing about for a while, I had discovered that I could get the thing to
+compile and work fine on Python 2.6, but not Python 2.5 (which I need). The significant
+difference between these with regard to <em>libjpeg</em> is that 2.5 runs in 32bit while 2.6 runs in 64bit.
+This was confirmed by doing this: </p>
+<pre><code>&gt;&gt; import platform
+&gt;&gt;&gt; platform.architecture()
+(&#39;32bit&#39;, &#39;&#39;)
+</code></pre>
+<p>I spent what seemed like en eternity trying out possible combinations of
+<em>gcc</em>, <code>-arch</code> flags, <em>Imaging</em> and <em>libjpeg</em> builds. What finally worked for me was to build
+against the <a href="http://www.macports.org/">MacPorts</a> installation of <em>libjpeg</em>. </p>
+<h2>The process</h2>
+<p>This assumes you have MacPorts installed. If not, then I guess you are some
+sort of developer god who wouldn&#39;t need my help with trivial matters such as this one. </p>
+<ol>
+<li><p>Make sure there are universal binaries of <em>libjpeg</em>. I made sure I had both versions
+   available (just in case): </p>
+<pre><code>sudo port install jpeg +universal
+sudo port install jpeg6b +universal
+</code></pre>
+</li>
+<li><p>Get <em>Imaging</em> (1.1.7 is the latest when this is written): </p>
+<pre><code>curl -C - -O http://effbot.org/media/downloads/Imaging-1.1.7.tar.gz
+tar xzf Imaging-1.1.7.tar.gz
+</code></pre>
+</li>
+<li><p>Direct the <em>Imaging</em> build process to the libraries:I did this by editing
+   <em>Imaging-1.1.7/setup.py</em> to make sure <code>JPEG_ROOT</code> was set like this: </p>
+<pre><code>JPEG_ROOT = &quot;/opt/local&quot;
+</code></pre>
+</li>
+<li><p>Make sure you are building for all architectures: </p>
+<pre><code>export CC=&quot;gcc -arch i386 -arch x86_64 -arch ppc&quot;
+</code></pre>
+</li>
+<li><p>Build and install <em>Imaging</em>. I needed this to work for for 2.5 so I did it this way: </p>
+<pre><code>cd Imaging-1.1.7
+python2.5 setup.py build
+sudo python2.5 setup.py install --optimize=1
+</code></pre>
+<p>You may want to do it in an active virtualenv or simply for your normal
+Python install: </p>
+<pre><code>cd Imaging-1.1.7
+python setup.py build
+sudo python setup.py install --optimize=1
+</code></pre>
+</li>
+</ol>
+<p>   You may have to do this step for any (virtual or otherwise) environment you work
+   in to ensure that PIL gets installed in site-packages for every environment you
+   need it in.</p>
+<hr>
+<p>And that&#39;s all I know. If this doesn&#39;t work for you then please don&#39;t ask me for help
+because I am simply not qualified to provide it.</p>
+
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2010/10/pil-woes/" rel="bookmark">11. October 2010</a><i>.</i>
+    </small>
+    
+    
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2011/06/free-sokoban-skins/" title="Free Sokoban skins">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2010/03/ordavinda/" title="Orðavinda"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>
