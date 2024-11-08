@@ -11,6 +11,6 @@
   "author": "Borgar Þorsteinsson <borgar@borgar.net> (http://borgar.net/)",
   "license": "MIT",
   "dependencies": {
-    "@borgar/gannet": "3.0.0-rc1"
+    "@borgar/gannet": "3.0.1"
   }
 }
