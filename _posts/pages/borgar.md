@@ -11,10 +11,13 @@ Borgar is employed by [GRID][work] as a data visualization and JavaScript progra
 
 ## Other fragments of Borgar's online presence
 
+* [Please support me on ko-fi](https://ko-fi.com/borgar)
 * [GitHub account](https://github.com/borgar)
+* [Bluesky account](https://bsky.app/profile/borgar.net)
+* [Mastodon account](https://mastodon.art/@borgar)
 * [Twitter account](http://twitter.com/borgar)
 * [Facebook account](https://www.facebook.com/borgarbest)
-* [And an infrequently updated Soundcloud](https://soundcloud.com/borgar)
+* [And a very infrequently updated Soundcloud](https://soundcloud.com/borgar)
 
 ## Send your fan letters to
 
