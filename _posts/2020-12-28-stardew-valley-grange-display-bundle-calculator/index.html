@@ -1,0 +1,149 @@
+Title: Grange Display Bundle Calculator
+Slug: stardew-valley-grange-display-bundle-calculator
+Date: 2020-12-28 23:29:48
+Lang: en
+Tags: game, calculator
+
+<style>
+.calc label {
+  font-size: .84em;
+  padding-right: 4px;
+}
+.calc td {
+  vertical-align: top;
+}
+.calc td p {
+  margin-top: 0;
+}
+.calc td output {
+  font-size: .84em;
+}
+.calc table {
+  border: 0;
+}
+.calc table th,
+.calc table td {
+  border: 0;
+}
+.calc table th:first-of-type,
+.calc table td:first-of-type {
+  padding-left: 0;
+}
+.calc table th:last-of-type,
+.calc table td:last-of-type {
+  padding-right: 0;
+}
+.form td input {
+  box-sizing: border-box;
+  width: 100%;
+}
+</style>
+<div class="calc">
+
+<p>The Stardew Valley Fair takes place on Tuesday, the 16th of Fall every year. The Fair has a Grange Display contest where products of the farm can be shown to gain Star Tokens. Mayor Lewis judges the products which should be a variety of quality products.</p>
+
+<hr />
+
+<table width="100%" class="form">
+  <thead>
+    <tr>
+      <th width="15%">Quality</th>
+      <th width="">Item</th>
+      <th width="30%">Category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="line1">
+      <td><select data-target="UI!B3" data-options="UI!G20:G23" /></td>
+      <td><input data-target="UI!C3" list="itemlist" /></td>
+      <td><output data-target="UI!F3"></output></td>
+    </tr>
+    <tr id="line2">
+      <td><select data-target="UI!B4" data-options="UI!G20:G23" /></td>
+      <td><input data-target="UI!C4" list="itemlist" /></td>
+      <td><output data-target="UI!F4"></output></td>
+    </tr>
+    <tr id="line3">
+      <td><select data-target="UI!B5" data-options="UI!G20:G23" /></td>
+      <td><input data-target="UI!C5" list="itemlist" /></td>
+      <td><output data-target="UI!F5"></output></td>
+    </tr>
+    <tr id="line4">
+      <td><select data-target="UI!B6" data-options="UI!G20:G23" /></td>
+      <td><input data-target="UI!C6" list="itemlist" /></td>
+      <td><output data-target="UI!F6"></output></td>
+    </tr>
+    <tr id="line5">
+      <td><select data-target="UI!B7" data-options="UI!G20:G23" /></td>
+      <td><input data-target="UI!C7" list="itemlist" /></td>
+      <td><output data-target="UI!F7"></output></td>
+    </tr>
+    <tr id="line6">
+      <td><select data-target="UI!B8" data-options="UI!G20:G23" /></td>
+      <td><input data-target="UI!C8" list="itemlist" /></td>
+      <td><output data-target="UI!F8"></output></td>
+    </tr>
+    <tr id="line7">
+      <td><select data-target="UI!B9" data-options="UI!G20:G23" /></td>
+      <td><input data-target="UI!C9" list="itemlist" /></td>
+      <td><output data-target="UI!F9"></output></td>
+    </tr>
+    <tr id="line8">
+      <td><select data-target="UI!B10" data-options="UI!G20:G23" /></td>
+      <td><input data-target="UI!C10" list="itemlist" /></td>
+      <td><output data-target="UI!F10"></output></td>
+    </tr>
+    <tr id="line9">
+      <td><select data-target="UI!B11" data-options="UI!G20:G23" /></td>
+      <td><input data-target="UI!C11" list="itemlist" /></td>
+      <td><output data-target="UI!F11"></output></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3>Total points: <output data-target="UI!E16">0</output></h3>
+
+<p>
+  <output data-target="UI!C36"></output>
+  <output data-target="UI!C37"></output>
+</p>
+
+<p>Don't forget to pick up your items before you leave the fair!</p>
+
+<hr />
+
+<h2>Character level proficiencies</h2>
+
+<table><tr><td width="40%">
+<p>Level proficiencies are unlikely to matter in the calculations except in a few circumstances but are calculated for completeness sake.</p>
+</td><td>
+<p>
+Farming:<br/>
+<label><input type="checkbox" data-target="UI!D19" /> Rancher</label>
+<label><input type="checkbox" data-target="UI!D20" /> Tiller</label>
+<label><input type="checkbox" data-target="UI!D21" /> Artisan</label>
+<br/>Fishing:<br/>
+<label><input type="checkbox" data-target="UI!D22" /> Fisher</label>
+<label><input type="checkbox" data-target="UI!D23" /> Angler</label>
+<br/>Foraging:<br/>
+<label><input type="checkbox" data-target="UI!D24" /> Forester</label>
+<label><input type="checkbox" data-target="UI!D25" /> Tapper</label>
+<br/>Mining:<br/>
+<label><input type="checkbox" data-target="UI!D26" /> Blacksmith</label>
+<label><input type="checkbox" data-target="UI!D27" /> Gemologist</label>
+<br/>Special:<br/>
+<label><input type="checkbox" data-target="UI!D28" /> Bear's knowledge</label>
+<label><input type="checkbox" data-target="UI!D29" /> Spring Onion Master</label>
+</p>
+</td></tr></table>
+
+<datalist id="itemlist" data-options="Data!B3:B1862">
+</datalist>
+
+</div>
+
+<script src="grid-runner.js"></script>
+<script>GridRunner.runDocument('stardew-valley-grange-calculator.xlsx');</script>
+

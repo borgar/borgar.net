@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+
+<title>Minecraft fall damage &mdash; Borgar.net</title>
+
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="format-detection" content="telephone=no">
+
+<link rel="start" href="/" title="Borgar.net"> 
+<link rel="index" href="/" title='Borgar.net'>
+
+<!--
+<meta property="og:site_name" content="Borgar.net" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="..." />
+<meta property="og:image" content="foo.jpg" />
+ -->
+
+<link rel="stylesheet" href="/theme/style.css">
+
+<link rel="alternate feed" type="application/rss+xml"  href="/feed/">
+<link rel="alternate feed" type="application/atom+xml" href="/feed/atom/">
+
+<script>
+document.write(unescape('%3Cscript src="/theme/codecolor.js"%3E%3C/script%3E'));
+</script>
+
+<!-- OpenID --> 
+<link rel="openid.server" href="http://pip.verisignlabs.com/server" />
+<link rel="openid.delegate" href="http://borgar.pip.verisignlabs.com" />
+<link rel="openid2.provider" href="http://pip.verisignlabs.com/server" />
+<link rel="openid2.local_id" href="http://borgar.pip.verisignlabs.com" />
+<meta http-equiv="X-XRDS-Location" content="http://pip.verisignlabs.com/user/borgar/yadisxrds" />
+
+</head>
+<body class="single">
+<div id="top">
+
+<header>
+<h1><a href="/" rel="home">Borgar.net</a></h1>
+<small class="aux">&mdash; Go straight to <a href="#pages">page navigation</a></small>
+<hr class="aux"> 
+</header> 
+
+<section id="main">
+
+
+
+
+<p class="date">
+  <a href="/s/archives/#dated-2019-05-20">20. May 2019</a>
+</p>
+
+<article id="minecraft-fall-damage" lang="en">
+
+  <h1><a href="/s/2019/05/minecraft-fall-damage/" rel="bookmark">Minecraft fall damage</a></h1>
+
+  <style>
+.calculator {
+  background: #faf2e7;
+  padding: 1px 20px;
+  border: 1px solid #d19f5b;
+  border-radius: 6px;
+}
+.calculator select {
+  field-sizing: content;
+}
+.calculator input {
+  min-width: 2.5em;
+  field-sizing: content;
+}
+</style>
+
+<div style="text-align:right">
+  <small><a href="#calc">Skip to calculator ↓</a></small>
+</div>
+
+<p>Some very clever Minecraft players have encountered a strange phenomenon: There is something weird going on with much damage players or <a href="https://minecraft.wiki/w/Mob">mobs</a> take from falling down.</p>
+
+<p>The Minecraft community's main source of truth, "<a href="https://minecraft.wiki/">the wiki</a>", provides a formula for <a href="https://minecraft.wiki/w/Damage#Fall_damage">how fall damage works</a>:</p>
+
+<blockquote>1 point (half a heart) for each block of fall distance after the third.</blockquote>
+
+<p>But this does not seem to be exactly what happens when players try to fall and measure the results.</p>
+
+<h3>Formula vs. measured player damage</h3>
+<svg
+  viewBox="0 0 602 378"
+  aria-label="Line Chart"
+  role="img"
+  data-chart="line"
+  data-data="Measured!B2:C49"
+  data-labels="Measured!A2:A49"
+  data-legend="Measured!B1:C1"
+  data-interpolate="step-after"
+  data-axiscat-title="Number of blocks fallen"
+  data-axisval-title="Half hearts of damage taken"
+>
+<rect fill="silver" height="378" width="602" />
+</svg>
+
+<p>According to the formula a 23 block fall should kill a player, but does not! The formula isn't wrong though, there is simply something slighty more complicated happening.</p>
+
+<p>Imagine a falling anvil. Let's say it takes that anvil exactly 2 seconds to touch the ground. A standard movie camera which captures 25 images a second would grab 50 images of the event. However, there were really infinitely many other potential images in-between what the camera caught. The anvil didn't move through the air in 50 separate jerks, it came down in a constant fluid motion.</p>
+
+<h3>Staggered vs fluid motion</h3>
+<svg
+  viewBox="0 0 602 378"
+  aria-label="Line Chart"
+  role="img"
+  data-chart="line"
+  data-data="Anvil!C2:D802"
+  data-labels="Anvil!A2:A802"
+  data-legend="Anvil!C1:D1"
+  data-interpolate="step-after"
+  data-axiscat-title="Time in seconds"
+  data-axiscat-format="0.0;-0.0;0"
+  data-axisval-title="Height of the anvil in air"
+>
+<rect fill="silver" height="378" width="602" />
+</svg>
+
+<p>Minecraft works in a sort-of simliar way. 20 times a second the game performs a "tick" where it
+  does most of the work of moving things around. Also to see if objects are colliding with each
+  other (such as an anvil and the ground).</p>
+
+<p>What the game does for falling objects every tick, is to:</p>
+
+<ol>
+  <li>Increase their speed towards a maximum speed-limit.</li>
+  <li>Move them by their speed downwards.</li>
+  <li>Check if something has hit the ground, and if it needs to go splat!</li>
+</ol>
+
+<p>Like our camera recording, Minecraft does only work with moments of time. Unlike the anvil in the
+  above example, the objects in Minecraft do only move in separate jerks. It just happens so fast
+  that our human brains can't tell the difference.</p>
+
+<h3>One second of falling</h3>
+<svg
+  viewBox="0 0 602 378"
+  aria-label="Line Chart"
+  role="img"
+  data-chart="column"
+  data-stacked="true"
+  data-data="Falling!D2:E21"
+  data-labels="Falling!B2:B21"
+  data-legend="Falling!D1:E1"
+  data-axiscat-title="Time in seconds"
+  data-axiscat-format="0.0;-0.0;0"
+  data-axisval-title="Distance in blocks"
+  data-axisval-format="0;-0.0;0"
+  data-axisval-max="14"
+  data-axisval-reverse="true"
+>
+<rect fill="silver" height="378" width="602" />
+</svg>
+
+<p>But it also means that things are less exact.</p>
+
+<p>Keep in mind that speed can be more than 1 block at a time, and things can't move through the
+  ground: When something does go <em>splat!</em>, the game needs to find the closest block to where that
+  thing was <em>before</em> it hit the ground. Last "ticks'" number. That number will be in fractions of
+  a block and will be moved to the nearest block.</p>
+
+<p>So, because:</p>
+
+<ol>
+  <li>The object is falling in steps.</li>
+  <li>The distance is made equal (rounded) to a block size.</li>
+  <li>Last "tick's" number is used.</li>
+</ol>
+
+<p>When determining the damage value, sometimes these added up make more of a difference than you
+  would expect! 💥</p>
+
+<div class="calculator">
+
+<h2 id="calc">How to kill mobs?</h2>
+
+<p>Knowing that falling damage has these quirks, you may wander: How far does a
+<select data-target="A2" data-options="Mobs!A2:A100"></select> have to fall to die?</p>
+
+<p>
+  A <output data-target="LOWER(A2)"></output> starts with
+  <output data-target="B17"></output> of health.
+</p>
+
+<p>It will die if it falls <output data-target="D5"></output> blocks or more!</p>
+
+<p>
+  The highest fall it can survive is <output data-target="D8"></output> blocks,
+  which will leave it with <output data-target="INDEX(Hearts!C2:C102,UI!C11+1)"></output>
+  of health.
+</p>
+
+<p>
+  A drop of
+  <input type="number" data-target="D13" min="1" max="64" step="0.5" />
+  blocks will cause
+  <output data-target="INDEX(Hearts!C2:C102,UI!C13+1)"></output>
+  of damage to a
+  <output data-target="LOWER(A2)"></output>.
+</p>
+
+</div>
+
+<script src="/s/2019/05/minecraft-fall-damage/grid-runner.js"></script>
+<script>GridRunner.runDocument('minecraft-fall-damage.xlsx');</script>
+
+  <section class="meta">
+
+    <small class="time">
+      <b>Published:</b>
+      <a href="/s/2019/05/minecraft-fall-damage/" rel="bookmark">20. May 2019</a><i>.</i>
+    </small>
+    
+    <small class="tags">
+      <b>Tagged:</b>
+      <a rel="tag" href="/s/tagged/game/">game</a><i>,</i>
+      <a rel="tag" href="/s/tagged/calculator/">calculator</a><i>.</i>
+    </small>
+
+    
+    
+  </section>
+
+</article>
+
+
+
+<nav id="pager">
+  <a rel="next" href="/s/2019/12/barneignir-a-islandi/is/" title="Barneignir á Íslandi">Newer entry <i>&rarr;</i></a>
+  <a rel="prev" href="/s/2019/02/fifa-world-cup-appearances/" title="FIFA World Cup Appearances"><i>&larr;</i> Older entry</a>
+</nav>
+
+
+
+<hr class="aux">
+</section>
+
+
+<footer>
+
+<nav id="pages">
+<h1>Other pages on Borgar.net</h1>
+<ul>
+
+<li><a href="/s/archives/">Archives</a></li>
+
+
+<li><a href="/borgar/">About Borgar</a></li>
+
+
+<li><a href="/software/">Software</a></li>
+
+</ul>
+<hr class="aux">
+</nav>
+
+<p id="license">
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"><img src="/theme/cc.png"></a> 
+<span>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons - Attribution - NonCommercial - NoDerivs - 3.0 License</a>.</span>
+</p>
+
+</footer>
+
+</div>
+
+
+<script> 
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js'%3E%3C/script%3E"));
+</script> 
+<script>
+try {
+var pageTracker = _gat._getTracker("UA-680642-1");
+pageTracker._trackPageview();
+} catch(err) {}
+</script> 
+
+
+</body> 
+</html>

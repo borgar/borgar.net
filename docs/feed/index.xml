@@ -17,6 +17,24 @@
       <category>release</category>
     </item>
     <item>
+      <title>Grange Display Bundle Calculator</title>
+      <link>http://borgar.net/s/2020/12/stardew-valley-grange-display-bundle-calculator/</link>
+      <description>&lt;style&gt;
+.calc label {
+  font-size: .84em;
+  padding-right: 4px;
+}
+.calc td {
+  vertical-align: top;
+}
+.calc td p {
+  margin-top: 0;
+} …&lt;/style&gt;</description>
+      <pubDate>Mon, 28 Dec 2020 23:29:48 GMT</pubDate>
+      <category>game</category>
+      <category>calculator</category>
+    </item>
+    <item>
       <title>Barneignir á Íslandi</title>
       <link>http://borgar.net/s/2019/12/barneignir-a-islandi/is/</link>
       <description>&lt;style&gt;
@@ -33,6 +51,24 @@
 .slider input …&lt;/style&gt;</description>
       <pubDate>Wed, 11 Dec 2019 09:39:00 GMT</pubDate>
       <category>dataviz</category>
+    </item>
+    <item>
+      <title>Minecraft fall damage</title>
+      <link>http://borgar.net/s/2019/05/minecraft-fall-damage/</link>
+      <description>&lt;style&gt;
+.calculator {
+  background: #faf2e7;
+  padding: 1px 20px;
+  border: 1px solid #d19f5b;
+  border-radius: 6px;
+}
+.calculator select {
+  field-sizing: content;
+}
+.calculator …&lt;/style&gt;</description>
+      <pubDate>Mon, 20 May 2019 09:39:32 GMT</pubDate>
+      <category>game</category>
+      <category>calculator</category>
     </item>
     <item>
       <title>FIFA World Cup Appearances</title>
@@ -127,42 +163,6 @@
 #el2018b text {
   cursor: …&lt;/style&gt;</description>
       <pubDate>Sun, 13 May 2018 16:40:20 GMT</pubDate>
-      <category>dataviz</category>
-      <category>elections</category>
-    </item>
-    <item>
-      <title>Samanburður á frambjóðendum 2018</title>
-      <link>http://borgar.net/s/2018/05/samanburdur-a-frambjodendum-2018/is/</link>
-      <description>&lt;style&gt;
-#el2018a {
-  font-family: sans-serif;
-  font-size: 12px;
-  position: relative;
-}
-#el2018a svg {
-  font-family: sans-serif;
-  font-size: 12px;
-}
-#el2018a text {
-  cursor: …&lt;/style&gt;</description>
-      <pubDate>Fri, 11 May 2018 23:11:11 GMT</pubDate>
-      <category>dataviz</category>
-      <category>elections</category>
-    </item>
-    <item>
-      <title>Dreifing frambjóðenda á pólitíska rófinu</title>
-      <link>http://borgar.net/s/2017/10/dreifing-a-politiska-rofinu/is/</link>
-      <description>&lt;script src=&quot;//d3js.org/d3.v4.min.js&quot;&gt;&lt;/script&gt;
-&lt;script src=&quot;/s/2017/10/dreifing-a-politiska-rofinu/is/survey.json&quot; type=&quot;text/x-data&quot; id=&quot;ruv_survey_json&quot;&gt;&lt;/script&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;/s/2017/10/dreifing-a-politiska-rofinu/is/style.css&quot;&gt;
-&lt;div class=&quot;viz&quot; id=&quot;dfpr&quot;&gt;
-  &lt;svg width=&quot;960&quot; height=&quot;470&quot;&gt;&lt;/svg&gt;
-  &lt;div id=&quot;controls&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-&lt;script src=&quot;/s/2017/10/dreifing-a-politiska-rofinu/is/driver.js&quot;&gt;&lt;/script&gt;
-
-&lt;p&gt;Reynt er hér að giska á staðsetningu hvers frambjóðanda á &lt;a href=&quot;http://en.wikipedia.org/wiki/Political_compass&quot;&gt;pólitíska rófinu&lt;/a&gt; með því að reikna samtölur byggðar á völdum svörum …&lt;/p&gt;</description>
-      <pubDate>Sun, 22 Oct 2017 10:00:00 GMT</pubDate>
       <category>dataviz</category>
       <category>elections</category>
     </item>
